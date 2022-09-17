@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.youwu.shopowner.utils_view.CustomRoundAngleImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sp_image"
+    android:layout_width="@dimen/size_100dp"
+    android:layout_height="@dimen/size_100dp"
+    roundiv:radius="@dimen/size_5dp"
+    android:scaleType="fitXY"
+    android:src="@mipmap/loading"
+    android:layout_margin="@dimen/size_3dp"
+    />

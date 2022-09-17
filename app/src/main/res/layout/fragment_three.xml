@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.fragment.ThreeViewModel" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="ThreeViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|left"
+        android:orientation="vertical"
+        android:background="@color/viewLineColor"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+
+            android:layout_marginTop="@dimen/size_6dp"
+            android:paddingBottom="@dimen/size_10dp"
+            android:layout_marginStart="@dimen/size_10dp"
+            android:layout_marginEnd="@dimen/size_10dp"
+            android:layout_marginBottom="@dimen/size_10dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="@drawable/radius_white_10dp"
+                >
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/main_color"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorHeight="4dp"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/main_color"
+                    app:tabTextColor="#545454"
+                    app:tabIndicator="@drawable/shape_indicator_radius"
+                    android:layout_gravity="center"
+                    app:tabMinWidth="40dip"
+                    app:tabContentStart="20dp"
+                    app:tabMaxWidth="00dp"
+                    app:tabPaddingStart="10dp"
+                    app:tabPaddingEnd="10dp"
+                    app:tabRippleColor="@null"
+                    >
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="全部" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="待接单" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="待出餐" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="待取餐" />
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="退款" />
+
+                </com.google.android.material.tabs.TabLayout>
+            </RelativeLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wm_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:layout_marginTop="@dimen/size_10dp"
+                android:layout_weight="1"
+                android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                />
+
+            <!-- 空视图 -->
+            <LinearLayout
+                android:id="@+id/null_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/radius_white_10dp"
+                android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                >
+                <ImageView
+                    android:layout_width="@dimen/size_175dp"
+                    android:layout_height="@dimen/size_175dp"
+                    android:src="@mipmap/null_view"
+                    android:scaleType="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无订单"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_15sp"
+                    android:textColor="@color/main_color"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</layout>

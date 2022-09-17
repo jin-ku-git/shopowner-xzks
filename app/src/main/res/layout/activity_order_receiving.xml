@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.order_goods.OrderReceivingViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="OrderReceivingViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:orientation="vertical"
+        android:background="@color/viewLineColor">
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="订单
+"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/radius_white"
+                android:layout_marginTop="@dimen/size_6dp"
+                android:paddingBottom="@dimen/size_10dp"
+                android:layout_marginStart="@dimen/size_10dp"
+                android:layout_marginEnd="@dimen/size_10dp"
+                android:layout_marginBottom="@dimen/size_10dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/main_color"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabIndicatorHeight="4dp"
+                        app:tabMode="fixed"
+                        app:tabSelectedTextColor="@color/main_color"
+                        app:tabTextColor="#545454"
+                        app:tabIndicator="@drawable/shape_indicator_radius"
+                        android:layout_gravity="center"
+                        app:tabMinWidth="40dip"
+                        app:tabContentStart="20dp"
+                        app:tabMaxWidth="00dp"
+                        app:tabPaddingStart="10dp"
+                        app:tabPaddingEnd="10dp"
+                        app:tabRippleColor="@null"
+                        >
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="待接单" />
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="待出餐" />
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="退款" />
+
+                    </com.google.android.material.tabs.TabLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/size_5dp"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:visibility="@{viewModel.order_wait_count==0?View.INVISIBLE:View.VISIBLE}"
+
+                            >
+                            <TextView
+                                android:id="@+id/receivingText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.order_wait_count+@string/main_null}"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10dp"
+                                android:background="@drawable/bth_yuan_red"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/size_30dp"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:visibility="@{viewModel.order_mak_count==0?View.INVISIBLE:View.VISIBLE}"
+
+                            >
+                            <TextView
+                                android:id="@+id/DiningOutText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.order_mak_count+@string/main_null}"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10dp"
+                                android:background="@drawable/bth_yuan_red"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="@dimen/size_30dp"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:visibility="@{viewModel.order_refund_count==0?View.INVISIBLE:View.VISIBLE}"
+                            >
+                            <TextView
+                                android:id="@+id/refundText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.order_refund_count+@string/main_null}"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_10dp"
+                                android:background="@drawable/bth_yuan_red"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="@dimen/size_30dp"
+                                />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/wm_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_weight="1"
+                    android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                    />
+
+                <!-- 空视图 -->
+                <LinearLayout
+                    android:id="@+id/null_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@color/main_white"
+                    android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/size_175dp"
+                        android:layout_height="@dimen/size_175dp"
+                        android:src="@mipmap/null_view"
+                        android:scaleType="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="暂无订单"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/text_15sp"
+                        android:textColor="@color/main_color"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/OneClickOrder"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_45dp"
+                android:text="一键接单"
+                android:textSize="@dimen/size_18dp"
+                android:textColor="@color/white"
+                android:background="@drawable/radius_blue_8dp"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/size_60dp"
+                android:layout_marginEnd="@dimen/size_60dp"
+                android:layout_marginTop="@dimen/size_10dp"
+                android:visibility="gone"
+                />
+
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.fragment.OneViewModel" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="OneViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7F7F7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:layout_width="@dimen/size_125dp"
+                android:layout_height="@dimen/size_40dp"
+                android:background="@drawable/radius_blue_right_xia_10"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.store_name}"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_13dp"
+                    android:textColor="@color/main_white"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/size_10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="门店统计"
+                    android:textSize="@dimen/dp15"
+                    android:textColor="@color/main_black_85"
+                    android:textStyle="bold"
+                    />
+                <LinearLayout
+                    android:layout_width="@dimen/dp150"
+                    android:layout_height="@dimen/dp80"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:background="@drawable/radius_white_10dp"
+
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="商品总量"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="待处理"
+                    android:textSize="@dimen/dp15"
+                    android:textColor="@color/main_black_85"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_marginBottom="@dimen/size_10dp"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp50"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_white_10dp"
+                        android:layout_margin="@dimen/size_8dp"
+                        binding:onClickCommand="@{viewModel.order_wait_countOnClick}"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/order_wait_count+viewModel.order_wait_count+@string/right_brackets}"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp50"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_white_10dp"
+                        android:layout_margin="@dimen/size_8dp"
+                        binding:onClickCommand="@{viewModel.order_mak_countOnClick}"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/order_mak_count+viewModel.order_mak_count+@string/right_brackets}"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14"
+                            />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp50"
+                        android:layout_weight="1"
+                        android:background="@drawable/radius_white_10dp"
+                        android:layout_margin="@dimen/size_8dp"
+                        binding:onClickCommand="@{viewModel.order_refund_countOnClick}"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/order_refund_count+viewModel.order_refund_count+@string/right_brackets}"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14"
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

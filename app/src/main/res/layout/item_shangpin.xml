@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:id="@+id/CommodityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名称"
+            android:textSize="@dimen/size_14dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="@color/color_red"
+            android:textSize="@dimen/size_12dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/CommodityPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7.9"
+            android:textStyle="bold"
+            android:textColor="@color/color_red"
+            android:textSize="@dimen/size_18dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+        <View
+            android:layout_width="@dimen/size_20dp"
+            android:layout_height="0dp"
+            />
+        <TextView
+            android:id="@+id/CommodityNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x1"
+            android:textSize="@dimen/size_14dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

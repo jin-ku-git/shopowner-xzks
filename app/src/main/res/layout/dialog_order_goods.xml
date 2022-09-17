@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/radius_white"
+    android:id="@+id/layout_view"
+    android:padding="@dimen/size_10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购物清单"
+        android:layout_gravity="center"
+        android:textColor="@color/main_black_85"
+        android:layout_marginBottom="@dimen/size_5dp"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopping_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:layout_above="@+id/linear_view"
+        />
+
+
+
+</LinearLayout>

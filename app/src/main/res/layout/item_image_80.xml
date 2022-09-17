@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp90"
+    android:layout_height="@dimen/dp90"
+    android:orientation="vertical"
+    android:background="@drawable/radius_white_10dp"
+    android:layout_margin="@dimen/dp5"
+    >
+<com.youwu.shopowner.utils_view.CustomRoundAngleImageView
+
+    android:id="@+id/sp_image"
+    android:layout_width="@dimen/dp60"
+    android:layout_height="@dimen/dp60"
+    roundiv:radius="@dimen/size_5dp"
+    android:scaleType="fitXY"
+    android:src="@mipmap/loading"
+    android:layout_gravity="center"
+    />
+    <TextView
+        android:id="@+id/goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="@dimen/dp13"
+        android:textColor="@color/main_black_85"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        />
+
+</LinearLayout>

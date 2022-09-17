@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.fragment.FourViewModel" />
+
+        <variable
+            name="viewModel"
+            type="FourViewModel" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F7F7F7"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/radius_white"
+            android:padding="18dp"
+            binding:onClickCommand="@{viewModel.SetonClick}"
+            >
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:src="@mipmap/avtor"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/user_image">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.nameEvent}"
+                    android:textColor="#181818"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvAcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@={viewModel.telEvent}"
+                    android:textColor="#666666"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivSetting"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="4dp"
+                android:src="@mipmap/shezhi"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp45"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp12"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:background="@drawable/radius_white_10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15dp"
+            android:paddingRight="@dimen/size_15dp"
+            binding:onClickCommand="@{viewModel.StoreSetonClick}"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="门店设置"
+                android:textSize="@dimen/size_14dp"
+                android:textColor="@color/main_black_85"
+                android:layout_gravity="center"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:layout_gravity="center"
+                android:src="@mipmap/you_sanjiao"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

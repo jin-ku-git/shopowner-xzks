@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle"
+    android:useLevel="false">
+    <!--这里设置badge的颜色-->
+    <solid android:color="@color/color_red"/>
+    <corners android:radius="@dimen/size_45dp" />
+
+    <!--这里设置badge的大小-->
+    <size
+        android:width="@dimen/size_16dp"
+        android:height="@dimen/size_16dp"/>
+</shape>
