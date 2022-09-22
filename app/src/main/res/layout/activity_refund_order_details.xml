@@ -47,6 +47,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +85,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="11111111"
+                            android:text="@{viewModel.OrderDetails.order_sn}"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
 
@@ -97,7 +98,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="待审核"
+                            android:text="@{viewModel.OrderDetails.refund_status_name}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             />
@@ -107,8 +108,6 @@
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -126,7 +125,35 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.TotalPrice}"
+                            android:text="@{@string/rmb+viewModel.OrderDetails.actual_refund_money}"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp35"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/dp5"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="拒绝原因"
+                            android:textSize="@dimen/size_14dp"
+                            android:textColor="@color/main_black_85"
+                            android:layout_gravity="center"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.OrderDetails.refund_reason}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
@@ -141,13 +168,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
                         android:layout_marginBottom="@dimen/dp5"
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="取餐时间"
+                            android:text="退款时间"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -160,7 +186,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="A000"
+                            android:text="@{viewModel.OrderDetails.reviewer_at}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
@@ -191,171 +217,19 @@
 
                     </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/goods_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:overScrollMode="never"
                         android:layout_marginTop="@dimen/dp5"
                         />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        android:layout_marginTop="@dimen/dp10"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        >
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/gong+viewModel.TotalType+@string/species_heji}"
-                            android:textSize="@dimen/dp14"
-                            android:textColor="@color/main_black_85"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.TotalPrice}"
-                            android:textSize="@dimen/dp14"
-                            android:textColor="@color/color_red"
-                            />
-                    </LinearLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/radius_white_10dp"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:padding="@dimen/dp10"
-                    >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="订单总额"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.TotalPrice}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="优惠金额"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.TotalPrice}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="实付金额"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.TotalPrice}"
-                            android:textColor="@color/color_red"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-                <!-- 会员信息 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/radius_white_10dp"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:padding="@dimen/dp10"
-                    >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
+                        android:layout_marginTop="@dimen/dp15"
 
                         >
                         <TextView
@@ -374,29 +248,22 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="张三"
+                            android:text="@{viewModel.OrderDetails.member_info.nick_name}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="下单时间"
+                            android:text="退款类型"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -409,29 +276,22 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="111111"
+                            android:text="@{viewModel.OrderDetails.refund_type_name}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="支付方式"
+                            android:text="退款原因"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -444,29 +304,46 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="11111111"
+                            android:text="@{viewModel.OrderDetails.refund_reason}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
 
+                    <LinearLayout
+                        android:id="@+id/refund_image_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="支付时间"
+                            android:text="退款凭证"
+                            android:textSize="@dimen/size_14dp"
+                            android:textColor="@color/main_black_85"
+                            android:layout_gravity=""
+                            />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/image_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="@dimen/dp15"
+                            android:overScrollMode="never"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp35"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="退款描述"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -479,29 +356,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="11111111"
+                            android:text="@{viewModel.OrderDetails.mark}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="所需餐具"
+                            android:text="退款金额"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -514,29 +383,21 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="11111111"
+                            android:text="@{viewModel.OrderDetails.actual_refund_money}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp35"
                         android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-
                         >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="备注"
+                            android:text="申请时间"
                             android:textSize="@dimen/size_14dp"
                             android:textColor="@color/main_black_85"
                             android:layout_gravity="center"
@@ -549,13 +410,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="11111111"
+                            android:text="@{viewModel.OrderDetails.created_at}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"
                             />
                     </LinearLayout>
+
                 </LinearLayout>
+
+
 
 
             </LinearLayout>

@@ -11,6 +11,7 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.bean.UpDateBean;
 import com.youwu.shopowner.databinding.ActivityLoginBinding;
+import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -75,6 +76,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     public void initData() {
         super.initData();
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //修改状态栏是状态栏透明
+        StatusBarUtil.setTransparentForWindow(this);
+        StatusBarUtil.setDarkMode(this);//使状态栏字体变为白色
         /**
          * 检查更新
          */

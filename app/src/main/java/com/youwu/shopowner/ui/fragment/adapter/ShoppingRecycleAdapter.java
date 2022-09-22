@@ -56,16 +56,16 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
         final ScrollBean.SAASOrderBean data = goodsEntityList.get(position);
 //        holder.mItemGoodsImg;
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
-//        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getOrder_quantity()),2)+"";
+//        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getQuantity()),2)+"";
 
         holder.goods_price.setText(data.getOrder_price());//获取实体类中的name字段并设置
-        holder.tv_number.setText(data.getOrder_quantity()+"");
+        holder.tv_number.setText(data.getQuantity()+"");
 
 
         holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.setOrder_quantity(data.getOrder_quantity()+1);
+                data.setQuantity(data.getQuantity()+1);
                 /**
                  * 加操作
                  */
@@ -78,7 +78,7 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
         holder.iv_edit_subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.getOrder_quantity()==1){
+                if (data.getQuantity()==1){
                     /**
                      * 删除操作
                      */
@@ -86,7 +86,7 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
                         mDeleteListener.onDelete(data,position);
                     }
                 }else {
-                    data.setOrder_quantity(data.getOrder_quantity()-1);
+                    data.setQuantity(data.getQuantity()-1);
                     /**
                      * 减操作
                      */

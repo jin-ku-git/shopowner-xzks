@@ -60,13 +60,29 @@
                     android:layout_marginTop="@dimen/dp10"
                     android:background="@drawable/radius_white_10dp"
 
+                    android:gravity="center"
+
                     >
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="商品总量"
-                        android:layout_gravity="center"
-                        android:gravity="center"
+                        android:text="商品总量("
+                        android:textColor="@color/main_black_85"
+                        android:textSize="@dimen/size_15dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.goods_count}"
+                        android:textColor="@color/main_black_85"
+                        android:textSize="@dimen/size_15dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=")"
+                        android:textColor="@color/main_black_85"
+                        android:textSize="@dimen/size_15dp"
                         />
                 </LinearLayout>
 

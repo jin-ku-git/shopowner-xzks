@@ -1,4 +1,4 @@
-package com.youwu.shopowner.ui.order_goods;
+package com.youwu.shopowner.ui.order_goods.bean;
 
 
 import com.google.gson.annotations.SerializedName;
@@ -26,7 +26,8 @@ public class OrderItemBean implements Serializable {
     private String goods_name;
     private String order_price;
 
-    private int  order_quantity;//订货数量
+    private int  quantity;//订货数量
+    private int  type;
     /**
      * id : 1
      * store_id : 1
@@ -100,12 +101,12 @@ public class OrderItemBean implements Serializable {
         this.order_price = order_price;
     }
 
-    public int getOrder_quantity() {
-        return order_quantity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setOrder_quantity(int order_quantity) {
-        this.order_quantity = order_quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getId() {

@@ -72,7 +72,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
                     android:text="自动接单："
                     android:textSize="@dimen/size_14dp"
@@ -114,7 +114,7 @@
                 android:layout_marginTop="@dimen/size_15dp"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
                     android:text="营业时间："
                     android:textColor="@color/main_black_85"
@@ -182,22 +182,65 @@
 
                 </LinearLayout>
             </LinearLayout>
-            <View
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_0_5dp"
-                android:background="@color/color_hui"
-                android:layout_marginTop="@dimen/dp8"
-                android:layout_marginBottom="@dimen/size_8dp"
-                />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp10"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="取餐方式："
+                    android:textColor="@color/main_black_85"
+                    android:layout_marginTop="@dimen/dp6"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <CheckBox
+                        android:id="@+id/mode_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="外卖"
+                        />
+                    <CheckBox
+                        android:id="@+id/mode_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="门店自提"
+                        />
+                    <CheckBox
+                        android:id="@+id/mode_three"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="取餐点自提"
+                        />
+                    <CheckBox
+                        android:id="@+id/mode_four"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="堂食"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40dp"
                 android:orientation="horizontal"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
-                    android:text="飞鹅打印"
+                    android:text="飞鹅打印："
                     android:textColor="@color/main_black_85"
                     android:layout_gravity="center"
                     android:textSize="@dimen/size_14dp"
@@ -207,24 +250,32 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     />
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/switch_btn_status"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/feie_radius_group"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/size_10dp"
-                    app:kswThumbHeight="20dp"
-                    app:kswThumbWidth="20dp"
-                    app:kswBackColor="#a9a9a9"
-                    app:kswTextAdjust="-2dp"
-                    app:kswTextExtra="18dp"
-                    app:kswThumbRadius="45dp"
-                    app:kswThumbColor="@color/white"
-                    app:kswBackRadius="45dp"
-                    android:layout_alignParentRight="true"
-                    />
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/feie_radius_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="连接"
+                        android:clickable="true"
+                        android:layout_weight="1"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/feie_radius_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:text="不连接"
+                        android:layout_weight="1"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
+
             </LinearLayout>
 
             <LinearLayout
@@ -234,28 +285,70 @@
                 android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
-                    android:text="Key值"
+                    android:text="飞鹅账号："
                     android:textColor="@color/main_black_85"
                     android:layout_gravity="center"
                     android:textSize="@dimen/size_14dp"
                     />
-                <View
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    />
-                <EditText
-                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@null"
-                    android:hint="请输入Key值"
-                    android:text="@={viewModel.KeyName}"
-                    android:textColor="@color/textColor"
-                    android:gravity="right|center"
-                    android:textColorHint="@color/textColorHint"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:background="@drawable/xian_hui_4dp"
+                    android:paddingLeft="@dimen/dp10"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入飞蛾账号"
+                        android:text="@={viewModel.Email}"
+                        android:textColor="@color/textColor"
+                        android:gravity="left|center"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
+                android:layout_marginTop="@dimen/dp10"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp80"
+                    android:layout_height="wrap_content"
+                    android:text="Key："
+                    android:textColor="@color/main_black_85"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/size_14dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/xian_hui_4dp"
+                    android:paddingLeft="@dimen/dp10"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入Key值"
+                        android:text="@={viewModel.KeyName}"
+                        android:textColor="@color/textColor"
+                        android:gravity="left|center"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -263,30 +356,36 @@
                 android:layout_height="@dimen/dp40"
                 android:orientation="horizontal"
                 android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
+                android:layout_marginTop="@dimen/dp10"
                 >
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
-                    android:text="Value值"
+                    android:text="Value："
                     android:textColor="@color/main_black_85"
                     android:layout_gravity="center"
                     android:textSize="@dimen/size_14dp"
                     />
-                <View
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    />
-                <EditText
-                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@null"
-                    android:hint="请输入Value值"
-                    android:text="@={viewModel.ValueName}"
-                    android:gravity="right|center"
-                    android:textColor="@color/textColor"
-                    android:textColorHint="@color/textColorHint"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:background="@drawable/xian_hui_4dp"
+                    android:paddingLeft="@dimen/dp10"
+                    >
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:hint="请输入Value值"
+                        android:text="@={viewModel.ValueName}"
+                        android:gravity="left|center"
+                        android:textColor="@color/textColor"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/dp15" />
+                </LinearLayout>
+
             </LinearLayout>
 
             
@@ -330,9 +429,23 @@
                     />
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bottom_text"
+                android:textSize="@dimen/dp14"
+                android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dp10"
+                />
         </LinearLayout>
+
+
     </LinearLayout>
 
 </layout>

@@ -35,17 +35,17 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         ScrollBean.SAASOrderBean t = item.t;
         helper.setText(R.id.goods_name, t.getGoods_name());
         helper.setText(R.id.goods_price, t.getOrder_price());
-        helper.setText(R.id.tv_number, t.getOrder_quantity()+"");
+        helper.setText(R.id.tv_number, t.getQuantity()+"");
         helper.setText(R.id.initial_order, "份起订");
 
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.t.getOrder_quantity()==0){
+                if (item.t.getQuantity()==0){
                     RxToast.normal("不能再减了");
                 }else {
-                    item.t.setOrder_quantity(item.t.getOrder_quantity()-1);
+                    item.t.setQuantity(item.t.getQuantity()-1);
                     /**
                      * 减操作
                      */
@@ -60,13 +60,16 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         helper.setOnClickListener(R.id.iv_edit_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item.t.setOrder_quantity(item.t.getOrder_quantity()+1);
-                /**
-                 * 加操作
-                 */
-                if (mChangeListener != null) {
-                    mChangeListener.onChange(item);
-                }
+
+                    item.t.setQuantity(item.t.getQuantity()+1);
+                    /**
+                     * 加操作
+                     */
+                    if (mChangeListener != null) {
+                        mChangeListener.onChange(item);
+                    }
+
+
 
             }
         });
@@ -82,4 +85,15 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
     }
 
     private OnChangeListener mChangeListener;
+
+    //报损原因的监听的回调
+    public interface OnReasonListener {
+        void onReason(ScrollBean lists);
+    }
+
+    public void setOnReasonListener(OnReasonListener listener) {
+        mReasonListener = listener;
+    }
+
+    private OnReasonListener mReasonListener;
 }

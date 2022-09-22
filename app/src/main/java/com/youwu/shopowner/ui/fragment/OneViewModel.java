@@ -13,6 +13,7 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.bean.UpDateBean;
 import com.youwu.shopowner.data.DemoRepository;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.fragment.bean.GoodsNumber;
 import com.youwu.shopowner.ui.fragment.bean.UserBean;
 import com.youwu.shopowner.ui.fragment.bean.XXCOrderBean;
 import com.youwu.shopowner.ui.fragment.bean.XXCOrderCountBean;
@@ -42,11 +43,13 @@ import static com.youwu.shopowner.app.AppApplication.toPrettyFormat;
 
 public class OneViewModel extends BaseViewModel<DemoRepository> {
 
-//    public ObservableField<UserBean.RoleBean> entity = new ObservableField<>();
+
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
 
     //更新监听
     public SingleLiveEvent<UpDateBean> upDateEvent = new SingleLiveEvent<>();
+
+    public ObservableField<String> goods_count=new ObservableField<>();
 
 
     public OneViewModel(@NonNull Application application, DemoRepository repository) {
@@ -123,6 +126,7 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
                 });
     }
 
+
     /**
      * 获取个人信息
      */
@@ -188,7 +192,7 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-//                        showDialog();
+                        showDialog();
                     }
                 })
                 .subscribe(new DisposableObserver<BaseBean<Object>>() {
@@ -204,6 +208,50 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
                             order_wait_count.set(xxcOrderCountBean.getOrder_wait_count());
                             order_mak_count.set(xxcOrderCountBean.getOrder_mak_count());
                             order_refund_count.set(xxcOrderCountBean.getOrder_refund_count());
+
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+
+
+    public void goods_count(String store_id){
+        model.GOODS_COUNT(store_id)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+//                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            String JsonData = new Gson().toJson(response.data);
+
+                            GoodsNumber goodsNumber= JSON.parseObject(toPrettyFormat(JsonData), GoodsNumber.class);
+                            goods_count.set(goodsNumber.getGoods_count()+"");
+
+                            KLog.d("返回数据："+JsonData);
+
+
 
                         }else {
                             RxToast.normal(response.getMessage());

@@ -21,10 +21,14 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivityStoreSetUpBinding;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
@@ -36,6 +40,7 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
 
 
     private int type;
+    private int feie_type;//1 连接 2 不连接
     private TimePickerView pvCustomTime;//时间选择器
 
     private int time_state;//1 开始 2 结束
@@ -71,8 +76,9 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
                         pvCustomTime.show(); //弹出自定义时间选择器
                         break;
                     case 3://点击确认
-                        KLog.d("是否自动接单："+((type==1)?"是":"否")+"\n营业时间："+viewModel.start_time.get()+"至"+viewModel.end_time.get());
-                        viewModel.update_store(type);
+
+
+                        initUpdate();
                         break;
                     case 4://
                         RxToast.showTipToast(StoreSetUpActivity.this, "更新成功");
@@ -93,9 +99,37 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
         });
     }
 
+    private void initUpdate() {
+        KLog.d("是否自动接单："+((type==1)?"是":"否")+"\n营业时间："+viewModel.start_time.get()+"至"+viewModel.end_time.get());
+        List<Integer> list=new ArrayList<>();
+
+        if (binding.modeOne.isChecked()){
+            list.add(1);
+        }
+        if (binding.modeTwo.isChecked()){
+            list.add(2);
+        }
+        if (binding.modeThree.isChecked()){
+            list.add(3);
+        }
+        if (binding.modeFour.isChecked()){
+            list.add(4);
+        }
+        String delivery_method="";
+        for (int i=0;i<list.size();i++){
+            delivery_method+=list.get(i)+",";
+        }
+
+        viewModel.update_store(type,delivery_method,feie_type+"");
+    }
+
     @Override
     public void initData() {
         super.initData();
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //修改状态栏是状态栏透明
+        StatusBarUtil.setTransparentForWindow(this);
+        StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
 
         viewModel.state.setValue(false);
 
@@ -122,15 +156,22 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
             }
         });
 
-        binding.switchBtnStatus.setOnClickListener(new View.OnClickListener() {
+        binding.feieRadiusGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (binding.switchBtnStatus.isChecked()) {
-                    viewModel.state.setValue(true);
-                    binding.switchBtnStatus.setBackColor(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.main_color)));
-                } else {
-                    viewModel.state.setValue(false);
-                    binding.switchBtnStatus.setBackColor(ColorStateList.valueOf(ContextCompat.getColor(getBaseContext(), R.color.gray_a9)));
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.feie_radius_yes:
+                        feie_type=1;
+                        viewModel.state.setValue(true);
+                        break;
+
+                    case R.id.feie_radius_no:
+                        feie_type=2;
+                        viewModel.state.setValue(false);
+                        break;
+
+                    default:
+                        break;
                 }
             }
         });

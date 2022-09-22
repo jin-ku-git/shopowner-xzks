@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAG"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
     <!-- 访问网络，网络定位需要上网-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--9.0后前台服务需要申请权限-->
@@ -59,6 +59,19 @@
         <activity android:name=".ui.order_goods.ConfirmOrderActivity"/>
         <activity android:name=".ui.order_goods.OrderReceivingActivity"/>
         <activity android:name=".ui.order_goods.OrderDetailsActivity"/>
+        <activity android:name=".ui.order_goods.RefundOrderDetailsActivity"/>
+        <activity android:name=".ui.order_record.OrderGoodsListActivity"/>
+        <activity android:name=".ui.report_form.SalesOverviewActivity"/>
+        <activity android:name=".ui.set_up.ModifyPasswordActivity"/>
+        <activity android:name=".ui.goods_operate.LossReportingActivity"/>
+        <activity android:name=".ui.goods_operate.LossReportingDetailsActivity"/>
+        <activity android:name=".ui.goods_operate.InventoryActivity"/>
+        <activity android:name=".ui.goods_operate.InventoryDetailsActivity"/>
+        <activity android:name=".ui.goods_operate.SellOffActivity"/>
+        <activity android:name=".ui.goods_operate.SellOffDetailsActivity"/>
+        <activity android:name=".ui.goods_operate.ReturnGoodsActivity"/>
+        <activity android:name=".ui.goods_operate.ReturnGoodsDetailsActivity"/>
+        <activity android:name=".ui.order_record.RecordActivity"/>
 
 
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--//自带服务-->

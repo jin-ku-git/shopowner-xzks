@@ -60,11 +60,11 @@ public class SAASOrderBean implements Serializable {
         this.order_price = order_price;
     }
 
-    public String getOrder_quantity() {
+    public String getQuantity() {
         return order_quantity;
     }
 
-    public void setOrder_quantity(String order_quantity) {
+    public void setQuantity(String order_quantity) {
         this.order_quantity = order_quantity;
     }
 }

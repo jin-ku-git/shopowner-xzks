@@ -13,6 +13,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener
 import com.lxj.xpopup.interfaces.XPopupImageLoader
 import com.youwu.shopowner.R
+import com.youwu.shopowner.ui.fragment.bean.SaleBillBean
 import com.youwu.shopowner.utils_view.CustomRoundAngleImageView
 
 
@@ -24,7 +25,7 @@ import java.util.*
  * 查看图片适配器
  * @author qdafengzi
  */
-class ImageAdapter(private val mContext: Context, private val mList: List<String>?, private var mPosition: Int) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(private val mContext: Context, private val mList: List<SaleBillBean.OrderDetailsBean>?, private var mPosition: Int) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
     var list = ArrayList<Any>()
 
@@ -45,9 +46,9 @@ class ImageAdapter(private val mContext: Context, private val mList: List<String
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         list.add(mList!![position])
 
-        holder.goods_name.setText(mList!![position])
+        holder.goods_name.setText(mList!![position].goods_name)
 
-        Glide.with(mContext).load(mList!![position]).placeholder(R.mipmap.loading).into(holder.sp_image)
+        Glide.with(mContext).load(mList!![position].goods_thumb).placeholder(R.mipmap.loading).into(holder.sp_image)
 
         holder.sp_image.setOnClickListener {
             XPopup.Builder(holder.itemView.context).asImageViewer(holder.sp_image, position, list,
@@ -97,7 +98,7 @@ class ImageAdapter(private val mContext: Context, private val mList: List<String
          * @param view 点击的item的视图
          * @param data 点击的item的数据
          */
-        fun OnItemClick(view: View?, data: String?)
+        fun OnItemClick(view: View?, data: SaleBillBean.OrderDetailsBean?)
     }
 
     //需要外部访问，所以需要设置set方法，方便调用

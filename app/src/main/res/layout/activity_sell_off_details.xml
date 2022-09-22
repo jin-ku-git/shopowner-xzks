@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <import type="com.youwu.shopowner.ui.goods_operate.SellOffDetailsViewModel" />
+
+        <variable
+            name="viewModel"
+            type="SellOffDetailsViewModel" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45dp"
+        android:background="@drawable/bg_white_bottom"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/fanhui_img_30dp"
+            android:layout_height="@dimen/fanhui_img_30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:padding="@dimen/size_3dp"
+            android:src="@mipmap/fanhui"
+            binding:onClickCommand="@{viewModel.returnOnClick}"
+            />
+
+        <TextView
+            android:id="@+id/text_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="提交沽清"
+            android:textColor="@color/md_black_1000"
+            android:textSize="@dimen/size_16dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_white"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="@dimen/size_15dp"
+            android:layout_marginBottom="@dimen/size_15dp"
+            android:padding="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="沽清信息"
+                android:textColor="@color/main_black_85"
+                android:textStyle="bold"
+                android:textSize="@dimen/dp15"
+                android:layout_marginTop="@dimen/dp10"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_0_5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/size_5dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:orientation="horizontal"
+                binding:onClickCommand="@{viewModel.remarksOnClick}"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="沽清备注"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    android:layout_gravity="center"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.remarks}"
+                    android:textSize="@dimen/dp14"
+                    android:textColor="@color/main_black_85"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/dp15"
+                    android:layout_height="@dimen/dp15"
+                    android:src="@mipmap/black_sanjiao"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_5dp"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_0_5dp"
+                android:background="@color/divider"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="沽清商品清单"
+                    android:textSize="@dimen/size_15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/main_black_85"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="种类："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/size_12dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.TotalType}"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/size_15dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=",数量："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/size_12dp"
+                    android:layout_marginLeft="@dimen/size_10dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.TotalQuantity}"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp15"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_0_5dp"
+                android:background="@color/divider"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/size_5dp"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goods_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/btLoginOut"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/radius_blue_8dp"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="#ffffffff"
+            android:textSize="17sp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/size_15dp"
+            binding:onClickCommand="@{viewModel.ConfirmOrder}"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
+</layout>

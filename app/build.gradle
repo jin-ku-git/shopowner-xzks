@@ -94,6 +94,7 @@ dependencies {
     implementation project(path: ':baselibrary')
     implementation files('libs\\com.baidu.tts_2.6.3.f684811_20220114193233.jar')
     implementation project(path: ':mvvmhabit')
+    implementation project(path: ':MPChartLib')
     //MVVMHabit
     //    implementation rootProject.ext.dependencies.MVVMHabit
     //内存泄漏测试
@@ -129,6 +130,9 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
     //扫描二维码
     implementation 'com.google.zxing:core:3.4.0'
+    // Permission
+    implementation 'com.guolindev.permissionx:permissionx:1.5.1'
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.hyman:flowlayout-lib:1.1.2'

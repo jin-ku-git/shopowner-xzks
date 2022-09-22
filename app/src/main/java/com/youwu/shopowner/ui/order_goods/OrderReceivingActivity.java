@@ -34,6 +34,7 @@ import com.youwu.shopowner.ui.fragment.bean.MqttBean;
 import com.youwu.shopowner.ui.fragment.bean.XXCOrderBean;
 import com.youwu.shopowner.ui.main.MainViewModel;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
+import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +45,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
 /**
+ * 推送订单页面
  * @author: Administrator
  * @date: 2022/9/16
  */
@@ -94,11 +96,12 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
     @Override
     public void initData() {
         super.initData();
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //修改状态栏是状态栏透明
+        StatusBarUtil.setTransparentForWindow(this);
+        StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
         getScreenSize();
-        /**
-         * 检查更新
-         */
-        viewModel.getAppVersion();
+
 
         //获取收银员信息
         viewModel.getMe();
@@ -170,12 +173,6 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
                         break;
 
                 }
-            }
-        });
-        viewModel.upDateEvent.observe(this, new Observer<UpDateBean>() {
-            @Override
-            public void onChanged(UpDateBean upDateBean) {
-                UpData.UpData(upDateBean);
             }
         });
 

@@ -7,6 +7,8 @@ import com.youwu.shopowner.entity.DemoEntity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.base.BaseModel;
 import me.goldze.mvvmhabit.http.BaseBean;
@@ -171,6 +173,26 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     }
 
     /**
+     * 获取退货商品列表
+     * @param store_id  店铺id
+     * @param category_id         分类id
+     * @return
+     */
+    public Observable<BaseBean<Object>> CARGO_REFUND_GOODS_LIST(String store_id,String category_id) {
+        return mHttpDataSource.CARGO_REFUND_GOODS_LIST(store_id,category_id);
+    }
+
+    /**
+     * 获取报损商品列表
+     * @param store_id  店铺id
+     * @param id         分类id
+     * @return
+     */
+    public Observable<BaseBean<Object>> LOSS_GOODS_LIST(String store_id,String id) {
+        return mHttpDataSource.LOSS_GOODS_LIST(store_id,id);
+    }
+
+    /**
      *  更新门店自动接单
      * @return
      */
@@ -186,5 +208,125 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList) {
         return mHttpDataSource.ADD_ORDER(storeId,arrival_time,saasList);
+    }
+
+    /**
+     *获取在售商品数量
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GOODS_COUNT(String store_id) {
+        return mHttpDataSource.GOODS_COUNT(store_id);
+    }
+
+    /**
+     * 获取订货列表
+     * @param store_id  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> ORDER_LIST(String store_id) {
+        return mHttpDataSource.ORDER_LIST(store_id);
+    }
+
+    /**
+     * 订单列表
+     * @param start  开始时间戳
+     * @param end     结束时间戳
+     * @return
+     */
+    public Observable<BaseBean<Object>> ORDER_List(String start,String end,int page,String delivery_method,String tel,String store_id,String order_taking_status,String order_sn) {
+        return mHttpDataSource.ORDER_List(start,end,page,delivery_method,tel,store_id,order_taking_status,order_sn);
+    }
+
+    /**
+     * 获取销售概况
+     * @param type   1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    public Observable<BaseBean<Object>> SALES_SITUATION(String type,String store_id) {
+        return mHttpDataSource.SALES_SITUATION(type,store_id);
+    }
+
+    /**
+     * 核销
+     * @param order_sn  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> CLOSE_ORDER(String order_sn) {
+        return mHttpDataSource.CLOSE_ORDER(order_sn);
+    }
+
+    /**
+     * 订单详情
+     * @param order_sn  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> ORDER_DETAILS(String order_sn) {
+        return mHttpDataSource.ORDER_DETAILS(order_sn);
+    }
+
+    /**
+     * 退款订单详情
+     * @param order_sn  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> REFUND_DETAILS(String order_sn) {
+        return mHttpDataSource.REFUND_DETAILS(order_sn);
+    }
+
+    /**
+     * 报损原因
+     * @return
+     */
+    public Observable<BaseBean<Object>> REASON() {
+        return mHttpDataSource.REASON();
+    }
+
+    /**
+     * 报损
+     * @return
+     */
+    public Observable<BaseBean<Object>> ADD_LOSS_REPORT(String store_id,String mark,String goods_list) {
+        return mHttpDataSource.ADD_LOSS_REPORT(store_id,mark,goods_list);
+    }
+
+    /**
+     * 盘点
+     * @return
+     */
+    public Observable<BaseBean<Object>> SORTING_INVENTORY(String goods_list,String type,String remarks) {
+        return mHttpDataSource.SORTING_INVENTORY(goods_list,type,remarks);
+    }
+
+    /**
+     * 报损列表
+     * @return
+     */
+    public Observable<BaseBean<Object>> LOSS_REPORT_LIST(String page,String limit,String store_id) {
+        return mHttpDataSource.LOSS_REPORT_LIST(page,limit,store_id);
+    }
+    /**
+     * 盘点列表
+     * @return
+     */
+    public Observable<BaseBean<Object>> INVENTORY_REPORT_LIST(String page,String limit,String store_id) {
+        return mHttpDataSource.INVENTORY_REPORT_LIST(page,limit,store_id);
+    }
+
+    /**
+     * 沽清列表
+     * @return
+     */
+    public Observable<BaseBean<Object>> SELL_OFF_REPORT_LIST(String page,String limit,String store_id) {
+        return mHttpDataSource.SELL_OFF_REPORT_LIST(page,limit,store_id);
+    }
+
+    /**
+     *  门店设置
+     *
+     * @return
+     */
+    public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user) {
+        return mHttpDataSource.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,ukey,sn,user);
     }
 }

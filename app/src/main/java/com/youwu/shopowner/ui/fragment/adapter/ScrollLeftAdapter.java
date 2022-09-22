@@ -2,6 +2,7 @@ package com.youwu.shopowner.ui.fragment.adapter;
 
 
 import android.text.TextUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -24,7 +25,7 @@ import static com.xuexiang.xui.utils.ResUtils.getResources;
 public class ScrollLeftAdapter extends BaseQuickAdapter<GroupBean, BaseViewHolder> {
 
     private List<TextView> tv = new ArrayList<>();
-
+    private List<RelativeLayout> layout_all = new ArrayList<>();
     public ScrollLeftAdapter(int layoutResId, @Nullable List<GroupBean> data) {
         super(layoutResId, data);
     }
@@ -35,6 +36,7 @@ public class ScrollLeftAdapter extends BaseQuickAdapter<GroupBean, BaseViewHolde
                 .addOnClickListener(R.id.item);
         //将左侧item中的TextView添加到集合中
         tv.add((TextView) helper.getView(R.id.left_text));
+        layout_all.add((RelativeLayout) helper.getView(R.id.layout_all));
         //设置进入页面之后,左边列表的初始状态
         if (tv != null && getData() != null && tv.size() == getData().size()) {
             selectItem(0);
@@ -47,7 +49,7 @@ public class ScrollLeftAdapter extends BaseQuickAdapter<GroupBean, BaseViewHolde
     public void selectItem(int position) {
         for (int i = 0; i < getData().size(); i++) {
             if (position == i) {
-                tv.get(i).setBackgroundColor(getResources().getColor(R.color.blue_color));
+                layout_all.get(i).setBackgroundResource(R.drawable.radius_ban_blue);
                 tv.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.white));
 
                 //以下是指定某一个TextView滚动的效果
@@ -56,9 +58,8 @@ public class ScrollLeftAdapter extends BaseQuickAdapter<GroupBean, BaseViewHolde
                 tv.get(i).setFocusableInTouchMode(true);
                 tv.get(i).setMarqueeRepeatLimit(-1);
             } else {
-                tv.get(i).setBackgroundColor(0xffffffff);
                 tv.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.black));
-
+                layout_all.get(i).setBackgroundResource(R.color.main_touming);
                 //失去焦点则停止滚动
                 tv.get(i).setEllipsize(TextUtils.TruncateAt.END);
                 tv.get(i).setFocusable(false);

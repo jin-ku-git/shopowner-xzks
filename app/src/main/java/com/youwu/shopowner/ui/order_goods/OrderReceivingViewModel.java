@@ -40,11 +40,8 @@ import static com.youwu.shopowner.app.AppApplication.toPrettyFormat;
 
 public class OrderReceivingViewModel extends BaseViewModel<DemoRepository> {
 
-//    public ObservableField<UserBean.RoleBean> entity = new ObservableField<>();
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
 
-    //更新监听
-    public SingleLiveEvent<UpDateBean> upDateEvent = new SingleLiveEvent<>();
 
 
     public OrderReceivingViewModel(@NonNull Application application, DemoRepository repository) {
@@ -74,46 +71,7 @@ public class OrderReceivingViewModel extends BaseViewModel<DemoRepository> {
             finish();
         }
     });
-    /**
-     * 检查更新
-     **/
-    public void getAppVersion() {
 
-        model.GET_APP_VERSION()
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog();
-                    }
-                })
-                .subscribe(new DisposableObserver<BaseBean<Object>>() {
-                    @Override
-                    public void onNext(BaseBean response) {
-                        String submitJson = new Gson().toJson(response.data);
-                        if (response.isOk()){
-                            UpDateBean upDateBean = JSON.parseObject(toPrettyFormat(submitJson), UpDateBean.class);
-                            upDateEvent.setValue(upDateBean);
-                        }else {
-                            RxToast.normal(response.getMessage());
-                        }
-                    }
-                    @Override
-                    public void onError(Throwable throwable) {
-                        //关闭对话框
-                        dismissDialog();
-                        if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
-                        }
-                    }
-                    @Override
-                    public void onComplete() {
-                        //关闭对话框
-                        dismissDialog();
-                    }
-                });
-    }
 
     /**
      * 获取个人信息

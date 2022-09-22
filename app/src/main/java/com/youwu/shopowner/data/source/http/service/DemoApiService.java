@@ -112,6 +112,26 @@ public interface DemoApiService {
     Observable<BaseBean<Object>> GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String id);
 
     /**
+     * 获取退货商品列表
+     *
+     * @param store_id 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("return_cargo/cargo_refund_goods_list")
+    Observable<BaseBean<Object>> CARGO_REFUND_GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String id);
+
+    /**
+     * 获取报损商品列表
+     *
+     * @param store_id 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("loss_report/goods_list")
+    Observable<BaseBean<Object>> LOSS_GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String id);
+
+    /**
      * 更新门店自动接单
      *
      * @param is_order       是都自动接单 1自动接单 2 手动接单
@@ -132,4 +152,143 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("cargo/add_order")
     Observable<BaseBean<Object>> ADD_ORDER(@Field("store_id") String store_id,@Field("arrival_time") String arrival_time,@Field("goods_list") String goods_list);
+
+    /**
+     * 在售商品数量
+     *
+     * @param store_id 店铺id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods/goods_count")
+    Observable<BaseBean<Object>> GOODS_COUNT(@Field("store_id") String store_id);
+
+    /**
+     * 获取订货列表
+     * @param store_id 店铺id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("cargo/order_list")
+    Observable<BaseBean<Object>> ORDER_LIST(@Field("store_id") String store_id);
+
+    /**
+     * 订单列表
+     *
+     * @param start           开始时间
+     * @param end             结束时间
+     * @param page            页数
+     * @param delivery_method 配送方式
+     * @param tel             手机号
+     * @param store_id             店铺id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/store_terminal_order_list")
+    Observable<BaseBean<Object>> ORDER_List(@Field("start") String start, @Field("end") String end, @Field("page") int page, @Field("limit") String limit, @Field("delivery_method") String delivery_method, @Field("tel") String tel, @Field("store_id") String store_id, @Field("order_taking_status") String order_taking_status, @Field("order_sn") String order_sn);
+
+
+    /**
+     * 获取销售概况
+     *
+     * @param type 1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("sales_situation")
+    Observable<BaseBean<Object>> SALES_SITUATION(@Field("type") String type,@Field("store_id") String store_id);
+
+    /**
+     * 核销
+     *
+     * @param order_sn 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/close_order")
+    Observable<BaseBean<Object>> CLOSE_ORDER(@Field("order_sn") String order_sn);
+
+    /**
+     * 订单详情
+     *
+     * @param order_sn 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/order_details")
+    Observable<BaseBean<Object>> ORDER_DETAILS(@Field("order_sn") String order_sn);
+
+    /**
+     * 退款订单详情
+     *
+     * @param order_sn 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/refund_details")
+    Observable<BaseBean<Object>> REFUND_DETAILS(@Field("order_sn") String order_sn);
+
+    /**
+     * 报损原因
+     *
+     * @return
+     */
+
+    @POST("loss_report/reason")
+    Observable<BaseBean<Object>> REASON();
+
+    /**
+     * 报损
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("loss_report/add")
+    Observable<BaseBean<Object>> ADD_LOSS_REPORT(@Field("store_id") String store_id,@Field("mark") String mark,@Field("goods_list") String goods_list);
+
+    /**
+     * 盘点
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("stock/sorting_inventory")
+    Observable<BaseBean<Object>> SORTING_INVENTORY(@Field("goods_list") String goods_list,@Field("type") String type,@Field("mark") String mark);
+
+    /**
+     * 报损列表
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("loss_report/list")
+    Observable<BaseBean<Object>> LOSS_REPORT_LIST(@Field("page") String page,@Field("limit") String limit,@Field("store_id") String store_id);
+
+    /**
+     * 盘点列表
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("stock/sorting_inventory_list")
+    Observable<BaseBean<Object>> INVENTORY_REPORT_LIST(@Field("page") String page,@Field("limit") String limit,@Field("store_id") String store_id);
+
+    /**
+     * 沽清列表
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("stock/out_stock_list")
+    Observable<BaseBean<Object>> SELL_OFF_REPORT_LIST(@Field("page") String page,@Field("limit") String limit,@Field("store_id") String store_id);
+
+    /**
+     * 门店设置
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("update_store_terminal")
+    Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(@Field("is_order") String is_order,@Field("start") String start,@Field("end") String end
+            ,@Field("delivery_method") String delivery_method,@Field("is_link") String is_link,@Field("ukey") String ukey,@Field("sn") String sn,@Field("user") String user);
 }

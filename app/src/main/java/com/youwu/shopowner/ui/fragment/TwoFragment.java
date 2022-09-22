@@ -244,7 +244,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
                         for (int i=0;i<lsit.size();i++) {
                             if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setOrder_quantity(lists.t.getOrder_quantity());
+                                ShoppingEntityList.get(i).setQuantity(lists.t.getQuantity());
                             }else {
                                 ShoppingEntityList.add(scrollBean.t);
                             }
@@ -332,8 +332,11 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         if (leftAdapter == null) {
             leftAdapter = new ScrollLeftAdapter(R.layout.scroll_left, null);
             binding.recLeft.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-            binding.recLeft.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
             binding.recLeft.setAdapter(leftAdapter);
+            //设置item的分割线
+            if (binding.recLeft.getItemDecorationCount()==0) {
+                binding.recLeft.addItemDecoration(new DividerItemDecorations(mContext, DividerItemDecorations.VERTICAL));
+            }
         } else {
             leftAdapter.notifyDataSetChanged();
         }
@@ -444,7 +447,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
             @Override
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
-                ShoppingEntityList.get(position).setOrder_quantity(data.getOrder_quantity());
+                ShoppingEntityList.get(position).setQuantity(data.getQuantity());
 
                 cll(2);
 
@@ -456,7 +459,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         mShoppingRecycleAdapter.setOnDeleteListener(new ShoppingRecycleAdapter.OnDeleteListener() {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
-                ShoppingEntityList.get(position).setOrder_quantity(0);
+                ShoppingEntityList.get(position).setQuantity(0);
                 ShoppingEntityList.remove(position);
 
                 cll(2);
@@ -476,8 +479,12 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         double prick=0.0;
         int quantity=0;
         for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getOrder_quantity()),2);
-            quantity+=ShoppingEntityList.get(i).getOrder_quantity();
+            if (ShoppingEntityList.get(i).getQuantity()==0){
+                ShoppingEntityList.remove(i);
+            }else {
+                prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
+                quantity+=ShoppingEntityList.get(i).getQuantity();
+            }
         }
         if(TotalPrice!=null){
             TotalPrice.setText(prick+"");

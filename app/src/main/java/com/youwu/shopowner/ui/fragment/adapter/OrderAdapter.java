@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.youwu.shopowner.R;
+import com.youwu.shopowner.ui.fragment.bean.SaleBillBean;
 import com.youwu.shopowner.ui.fragment.bean.XXCOrderBean;
 import com.youwu.shopowner.utils_view.GridSpacingItemDecoration;
 
@@ -24,11 +25,11 @@ import java.util.List;
  */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler> {
     private Context context;
-    private List<String> mList;
+    private List<SaleBillBean> mList;
 
 
     //创建构造函数
-    public OrderAdapter(Context context, List<String> orderEntityList) {
+    public OrderAdapter(Context context, List<SaleBillBean> orderEntityList) {
         //将传递过来的数据，赋值给本地变量
         this.context = context;//上下文
         this.mList = orderEntityList;//实体类数据ArrayList
@@ -58,13 +59,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
     public void onBindViewHolder(final myViewHodler holder, @SuppressLint("RecyclerView") final int position) {
 
         //根据点击位置绑定数据
-        String data = mList.get(position);
+        SaleBillBean data = mList.get(position);
 
-
+        holder.time.setText(data.getCreated_at());
+        holder.order_state_name.setText(data.getShipping_type_name());
+        holder.state_name.setText(data.getOrder_status_name());
+        holder.goods_num.setText("共"+data.getOrder_count()+"件");
+        holder.pay_amount.setText("￥"+data.getPay_amount());
 
             //图片列表
             if (holder.refundImageAdapter == null) {
-                holder.refundImageAdapter = new ImageAdapter(context, mList, position);
+                holder.refundImageAdapter = new ImageAdapter(context, mList.get(position).getOrder_details(), position);
                 GridLayoutManager layoutManage = new GridLayoutManager(context, 1);
                 holder.RefundImageRecycle.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.HORIZONTAL));
                 if (holder.RefundImageRecycle.getItemDecorationCount()==0) {
@@ -95,6 +100,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
     class myViewHodler extends RecyclerView.ViewHolder {
 
 
+        private TextView time;
+        private TextView order_state_name;
+        private TextView state_name;
+        private TextView goods_num;
+        private TextView pay_amount;
 
         RecyclerView RefundImageRecycle;//图片
 
@@ -107,6 +117,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
 
 
             RefundImageRecycle = itemView.findViewById(R.id.RefundImageRecycle);
+            time = itemView.findViewById(R.id.time);
+            order_state_name = itemView.findViewById(R.id.order_state_name);
+            state_name = itemView.findViewById(R.id.state_name);
+            pay_amount = itemView.findViewById(R.id.pay_amount);
+            goods_num = itemView.findViewById(R.id.goods_num);
 
 
             //点击事件放在adapter中使用，也可以写个接口在activity中调用
@@ -140,7 +155,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
          * @param view 点击的item的视图
          * @param data 点击的item的数据
          */
-        public void OnItemClick(View view, String data, int position);
+        public void OnItemClick(View view, SaleBillBean data, int position);
     }
 
     //需要外部访问，所以需要设置set方法，方便调用
@@ -150,3 +165,4 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
         this.onItemClickListener = onItemClickListener;
     }
 }
+

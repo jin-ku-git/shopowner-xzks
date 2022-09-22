@@ -1,22 +1,14 @@
 package com.youwu.shopowner.ui.order_goods;
 
-import android.app.Dialog;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -34,8 +26,10 @@ import com.youwu.shopowner.databinding.ActivityConfirmOrderBinding;
 import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
+import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
+import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +43,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
 /**
+ * 确认订货页面
  * @author: Administrator
  * @date: 2022/9/16
  */
@@ -117,17 +112,17 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                                             OrderItemBean orderItemBean=new OrderItemBean();
                                             orderItemBean.setGoods_id(ShoppingEntityList.get(i).getGoods_id()+"");
                                             orderItemBean.setGoods_sku(ShoppingEntityList.get(i).getGoods_sku());
-                                            if (ShoppingEntityList.get(i).getOrder_quantity()==0){
-                                                orderItemBean.setOrder_quantity(0);
+                                            if (ShoppingEntityList.get(i).getQuantity()==0){
+                                                orderItemBean.setQuantity(0);
 
                                             }else {
-                                                orderItemBean.setOrder_quantity(ShoppingEntityList.get(i).getOrder_quantity());
+                                                orderItemBean.setQuantity(ShoppingEntityList.get(i).getQuantity());
                                             }
 
                                             orderItemBean.setOrder_price(ShoppingEntityList.get(i).getOrder_price()+"");
                                             orderItemBean.setGoods_name(ShoppingEntityList.get(i).getGoods_name());
 
-                                            if (orderItemBean.getOrder_quantity()!=0){
+                                            if (orderItemBean.getQuantity()!=0){
                                                 saasOrderList.add(orderItemBean);
                                             }
 
@@ -155,6 +150,10 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
     @Override
     public void initData() {
         super.initData();
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true);
+        //修改状态栏是状态栏透明
+        StatusBarUtil.setTransparentForWindow(this);
+        StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
 
         store_id= AppApplication.spUtils.getString("StoreId");
         viewModel.TotalPrice.set(TotalPrice);
@@ -192,7 +191,7 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
             @Override
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
-                ShoppingEntityList.get(position).setOrder_quantity(data.getOrder_quantity());
+                ShoppingEntityList.get(position).setQuantity(data.getQuantity());
 
                 cll();
 
@@ -204,7 +203,7 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
         mShoppingRecycleAdapter.setOnDeleteListener(new ShoppingRecycleAdapter.OnDeleteListener() {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
-                ShoppingEntityList.get(position).setOrder_quantity(0);
+                ShoppingEntityList.get(position).setQuantity(0);
                 ShoppingEntityList.remove(position);
 
                 cll();
@@ -220,8 +219,8 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
         double prick=0.0;
         int quantity=0;
         for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getOrder_quantity()),2);
-            quantity+=ShoppingEntityList.get(i).getOrder_quantity();
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
+            quantity+=ShoppingEntityList.get(i).getQuantity();
         }
 
         viewModel.TotalPrice.set(prick+"");

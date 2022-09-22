@@ -42,12 +42,11 @@ import com.youwu.shopowner.ui.fragment.bean.MqttBean;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
-import static com.blankj.utilcode.util.ServiceUtils.unbindService;
-import static com.youwu.shopowner.app.AppApplication.toPrettyFormat;
 
 /**
  * 2021/12/12
@@ -66,7 +65,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private FragmentManager manager;
     private FragmentTransaction transaction;
 
-    public String type="0";
+
 
     /**
      * MQTT
@@ -96,7 +95,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public void initParam() {
         super.initParam();
-        type=getIntent().getStringExtra("type");
+
     }
 
 
@@ -108,15 +107,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
         // 可以调用该方法，设置不允许滑动退出
         setSwipeBackEnable(false);
-        if ("2".equals(type)){
-            setSwPage(2);
-            binding.twoHome.setonSelected(true);
-            binding.oneHome.setonSelected(false);
-            binding.threeHome.setonSelected(false);
-            binding.fourHome.setonSelected(false);
-        }else {
+
             setSwPage(1);
-        }
+
 
 
         //初始化
@@ -127,13 +120,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         Intent intent=new Intent(this, NotificationClickReceiver.class);
         intent.putExtra("type","2");
         pendingIntent =PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        //检查是否已经注册
+        if(!EventBus.getDefault().isRegistered(this)){//是否注册eventbus的判断
+            EventBus.getDefault().register(this);
+        }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    //MainActivity传递的数据
+    @Subscribe
+    public void onMQttBean(EventBusBean eventBusBean) {
+        viewModel.IntegerEvent.setValue(eventBusBean.getType());
 
-    }
+    };
+
 
     @Override
     public void initViewObservable() {
@@ -372,6 +372,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void onDestroy() {
         super.onDestroy();
         unbindService(serviceConnection);
+        //反注册
+        EventBus.getDefault().unregister(this);
 
 
     }

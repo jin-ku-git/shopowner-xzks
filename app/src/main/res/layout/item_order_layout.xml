@@ -25,6 +25,7 @@
             android:layout_marginBottom="@dimen/dp5"
             >
             <TextView
+                android:id="@+id/order_state_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="自提"
@@ -42,6 +43,7 @@
                 android:layout_weight="1"
                 />
             <TextView
+                android:id="@+id/state_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="待审核"
@@ -69,6 +71,7 @@
                 android:gravity="center"
                 >
                 <TextView
+                    android:id="@+id/pay_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥55"
@@ -76,6 +79,7 @@
                     android:textColor="@color/color_red"
                     />
                 <TextView
+                    android:id="@+id/goods_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="共3件"
@@ -87,6 +91,7 @@
             </LinearLayout>
         </LinearLayout>
         <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="04月05号 10:00:00"

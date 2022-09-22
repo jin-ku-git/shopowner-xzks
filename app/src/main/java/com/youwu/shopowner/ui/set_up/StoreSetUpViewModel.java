@@ -33,6 +33,8 @@ public class StoreSetUpViewModel extends BaseViewModel<DemoRepository> {
     //开始时间的绑定
     public ObservableField<String> end_time = new ObservableField<>("");
 
+    //账号的绑定
+    public ObservableField<String> Email = new ObservableField<>("");
     //key的绑定
     public ObservableField<String> KeyName = new ObservableField<>("");
     //Value的绑定
@@ -95,8 +97,8 @@ public class StoreSetUpViewModel extends BaseViewModel<DemoRepository> {
      * 更新门店自动接单
      * @param type
      */
-    public void update_store(int type) {
-        model.UPDATE_STORE(type+"",start_time.get(),end_time.get())
+    public void update_store(int type,String delivery_method,String feie_type) {
+        model.UPDATE_STORE_TERMINAL(type+"",start_time.get(),end_time.get(),delivery_method,feie_type,KeyName.get(),ValueName.get(),Email.get())
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {
