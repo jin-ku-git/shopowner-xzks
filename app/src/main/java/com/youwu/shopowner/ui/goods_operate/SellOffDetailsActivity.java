@@ -108,37 +108,16 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
                             RxToast.normal("请选择预计收货时间");
                             return;
                         }
-                        new  XPopup.Builder(getBaseContext())
-                                .maxWidth((int) (widths * 0.7))
-                                .maxHeight((int) (height*0.4))
-                                .asConfirm("提示", "确认订货信息无误后，是否选择订货？", "取消", "确认", new OnConfirmListener() {
+                        new  XPopup.Builder(SellOffDetailsActivity.this)
+                                .maxWidth((int) (widths * 0.8))
+                                .maxHeight((int) (height*0.5))
+                                .asConfirm("提示", "确认沽清信息无误后，是否选择沽清？", "取消", "确认", new OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
-                                        List<OrderItemBean> saasOrderList=new ArrayList<>();
 
-                                        for (int i=0;i<ShoppingEntityList.size();i++){
+                                        String saasList = new Gson().toJson(ShoppingEntityList);
 
-                                            OrderItemBean orderItemBean=new OrderItemBean();
-                                            orderItemBean.setGoods_id(ShoppingEntityList.get(i).getGoods_id()+"");
-                                            orderItemBean.setGoods_sku(ShoppingEntityList.get(i).getGoods_sku());
-                                            if (ShoppingEntityList.get(i).getQuantity()==0){
-                                                orderItemBean.setQuantity(0);
-
-                                            }else {
-                                                orderItemBean.setQuantity(ShoppingEntityList.get(i).getQuantity());
-                                            }
-
-                                            orderItemBean.setOrder_price(ShoppingEntityList.get(i).getOrder_price()+"");
-                                            orderItemBean.setGoods_name(ShoppingEntityList.get(i).getGoods_name());
-
-                                            if (orderItemBean.getQuantity()!=0){
-                                                saasOrderList.add(orderItemBean);
-                                            }
-
-                                        }
-                                        String saasList = new Gson().toJson(saasOrderList);
-
-                                        viewModel.add_order(store_id,saasList);
+                                        viewModel.sorting_inventory(saasList);
                                     }
                                 }, null,false)
                                 .show();
@@ -363,6 +342,7 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
         TextView top_text = dialogView.findViewById(R.id.top_text);//
 
         top_text.setText("沽清备注");
+        content_text.setHint("请填写沽清备注");
 
         if (text!=null){
             content_text.setText(text);

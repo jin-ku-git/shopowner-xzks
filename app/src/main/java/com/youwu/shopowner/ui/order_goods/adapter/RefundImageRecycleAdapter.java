@@ -7,15 +7,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.ImageViewerPopupView;
+import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener;
+import com.lxj.xpopup.interfaces.XPopupImageLoader;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.ui.fragment.bean.OrderDetailsBean;
 import com.youwu.shopowner.ui.fragment.bean.SaleBillBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static me.goldze.mvvmhabit.http.NetworkUtil.url;
 
 
 public class RefundImageRecycleAdapter extends RecyclerView.Adapter<RefundImageRecycleAdapter.myViewHodler> {
@@ -57,6 +69,22 @@ public class RefundImageRecycleAdapter extends RecyclerView.Adapter<RefundImageR
         final String data = goodsEntityList.get(position);
 
         Glide.with(context).load(data).placeholder(R.mipmap.loading).into(holder.goods_image);
+
+        List<Object> list= new ArrayList<>();
+        list.addAll(goodsEntityList);
+
+        holder.goods_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               new XPopup.Builder(context).asImageViewer(holder.goods_image, position, list, new OnSrcViewUpdateListener() {
+                           @Override
+                           public void onSrcViewUpdate(@NonNull ImageViewerPopupView popupView, int position) {
+                               popupView.updateSrcView(holder.goods_image);
+                           }
+                       }, new ImageLoader())
+                    .show();
+            }
+        });
 
 
     }
@@ -157,4 +185,23 @@ public class RefundImageRecycleAdapter extends RecyclerView.Adapter<RefundImageR
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+    public class  ImageLoader implements XPopupImageLoader {
+
+        //必须指定Target.SIZE_ORIGINAL，否则无法拿到原图，就无法享用天衣无缝的动画
+        @Override
+        public void loadImage(int position, @NonNull Object uri, @NonNull ImageView imageView) {
+            Glide.with(imageView).load(url).apply(new RequestOptions().placeholder(R.mipmap.loading).override(Target.SIZE_ORIGINAL)).into(imageView);
+//            Glide.with(imageView).load(url).into(imageView);
+        }
+
+        @Override
+        public File getImageFile(@NonNull Context context, @NonNull Object uri) {
+            try {
+                return Glide.with(context).downloadOnly().load(uri).submit().get();
+            } catch (Exception e ) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    };
 }

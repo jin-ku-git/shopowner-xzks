@@ -33,12 +33,21 @@ public class RefundDetailsBean implements Serializable {
     private MemberInfoBean member_info;
     private String refund_type_name;
     private String refund_status_name;
+    private int refund_status;
     private String refund_reason;
     private String mark;
     private String actual_refund_money;
     private String created_at;
     private List<DetailsBean> details;
     private List<String> image;
+
+    public int getRefund_status() {
+        return refund_status;
+    }
+
+    public void setRefund_status(int refund_status) {
+        this.refund_status = refund_status;
+    }
 
     public List<String> getImage() {
         return image;

@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +84,8 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
     String delivery_method="0";
     String StoreId;//店铺id
 
+
+
     String order_sn;
 
     private TimePickerView pvCustomTime;//时间选择器
@@ -132,20 +135,7 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
                 }
 
                 list.addAll(saleBillBeans);
-
-                if (page!=1){
-                    initRecyclerView();
-                    if (list.size()!=0){
-                        order_sn=list.get(0).getOrder_sn();
-//                        initOrderDetails(list.get(0).getOrder_sn());
-                    }
-                }else {
-                    initRecyclerView();
-                    if (saleBillBeans.size()!=0){
-                        order_sn=list.get(0).getOrder_sn();
-//                        initOrderDetails(saleBillBeans.get(0).getOrder_sn());
-                    }
-                }
+                initRecyclerView();
             }
         });
     }
@@ -215,7 +205,7 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //0所有 1.待接单2,待出餐  4.待取餐 5.退款
-
+                page=1;
                 if (tab.getPosition()==3||tab.getPosition()>3){
                     order_status = tab.getPosition()+1;
                 }else {
@@ -318,6 +308,23 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
         LinearLayout start_time_layout = dialogView.findViewById(R.id.start_time_layout);//开始时间
         LinearLayout end_time_layout = dialogView.findViewById(R.id.end_time_layout);//结束时间
 
+        CheckBox modeOne =dialogView.findViewById(R.id.mode_one);
+        CheckBox modeTwo =dialogView.findViewById(R.id.mode_two);
+        CheckBox modeThree =dialogView.findViewById(R.id.mode_three);
+        CheckBox modeFour =dialogView.findViewById(R.id.mode_four);
+
+        if (tel!=null){
+            user_tel.setText(tel);
+        }
+        if (order_sn!=null){
+            order.setText(order_sn);
+        }
+        if (start_time!=null){
+            start_time_text.setText(start_time);
+        }
+        if (end_time!=null){
+            end_time_text.setText(end_time);
+        }
 
         start_time_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,6 +347,14 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
         cancel_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tel="";
+                order_sn="";
+                start_time="";
+                end_time="";
+                user_tel.setText("");
+                order.setText("");
+                start_time_text.setText("");
+                end_time_text.setText("");
                 dialog.cancel();
             }
         });
@@ -350,6 +365,26 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
                 dialog.cancel();
                 tel=user_tel.getText().toString();
                 order_sn=order.getText().toString();
+
+
+                List<Integer> list=new ArrayList<>();
+
+                if (modeOne.isChecked()){
+                    list.add(1);
+                }
+                if (modeTwo.isChecked()){
+                    list.add(2);
+                }
+                if (modeThree.isChecked()){
+                    list.add(3);
+                }
+                if (modeFour.isChecked()){
+                    list.add(4);
+                }
+                 delivery_method="";
+                for (int i=0;i<list.size();i++){
+                    delivery_method+=list.get(i)+",";
+                }
 
                 initOrderList();
 

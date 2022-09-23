@@ -62,6 +62,9 @@ public interface HttpDataSource {
     //申请订货
     Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList);
 
+    //申请退货
+    Observable<BaseBean<Object>> CARGO_REFUND(String storeId,String remarks,String saasList);
+
     //在售商品数量
     Observable<BaseBean<Object>> GOODS_COUNT(String store_id);
 
@@ -97,4 +100,9 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> SELL_OFF_REPORT_LIST(String page,String limit,String store_id);
     //门店设置
     Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user);
+
+    //打印
+    Observable<BaseBean<Object>> PRINT(String order_sn, String store_id);
+    //沽清
+    Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks);
 }

@@ -99,9 +99,9 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                             RxToast.normal("请选择预计收货时间");
                             return;
                         }
-                        new  XPopup.Builder(getBaseContext())
-                                .maxWidth((int) (widths * 0.7))
-                                .maxHeight((int) (height*0.4))
+                        new  XPopup.Builder(ConfirmOrderActivity.this)
+                                .maxWidth((int) (widths * 0.8))
+                                .maxHeight((int) (height*0.5))
                                 .asConfirm("提示", "确认订货信息无误后，是否选择订货？", "取消", "确认", new OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
@@ -113,10 +113,10 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                                             orderItemBean.setGoods_id(ShoppingEntityList.get(i).getGoods_id()+"");
                                             orderItemBean.setGoods_sku(ShoppingEntityList.get(i).getGoods_sku());
                                             if (ShoppingEntityList.get(i).getQuantity()==0){
-                                                orderItemBean.setQuantity(0);
+                                                orderItemBean.setOrder_quantity(0);
 
                                             }else {
-                                                orderItemBean.setQuantity(ShoppingEntityList.get(i).getQuantity());
+                                                orderItemBean.setOrder_quantity(ShoppingEntityList.get(i).getQuantity());
                                             }
 
                                             orderItemBean.setOrder_price(ShoppingEntityList.get(i).getOrder_price()+"");
@@ -268,11 +268,6 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                 }else {
                     viewModel.estimate_time.set(getTime(date));
                 }
-
-
-
-
-
             }
         })
                 .setLayoutRes(R.layout.pickerview_custom_time, new CustomListener() {

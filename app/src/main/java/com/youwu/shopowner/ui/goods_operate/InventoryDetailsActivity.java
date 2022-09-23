@@ -334,6 +334,7 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
         TextView top_text = dialogView.findViewById(R.id.top_text);//
 
         top_text.setText("盘点备注");
+        content_text.setHint("请填写盘点备注");
         if (text!=null){
             content_text.setText(text);
         }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.tabs.TabLayout;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuexiang.xui.widget.button.SmoothCheckBox;
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
@@ -61,7 +65,7 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
     int widths;//屏幕长
     int height;//屏幕宽
 
-
+    int page=1;
 
     @Override
     public OrderReceivingViewModel initViewModel() {
@@ -105,6 +109,32 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
 
         //获取收银员信息
         viewModel.getMe();
+        //刷新
+        binding.scSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                xxcOrderBeans.clear();
+                page=1;
+                //获取订单列表
+                initWMData(order_status);
+
+                viewModel.getxcx_order_count();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+        //加载
+        binding.scSmartrefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                xxcOrderBeans.clear();
+                page++;
+                //获取订单列表
+                initWMData(order_status);
+
+                viewModel.getxcx_order_count();
+                refreshLayout.finishLoadMore(true);//加载完成
+            }
+        });
 
 
 
@@ -215,9 +245,9 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
             public void onClick(final XXCOrderBean data, int position, final int status) {
 
                 if (status==3){
-                    new  XPopup.Builder(getBaseContext())
-                            .maxWidth((int) (widths * 0.7))
-                            .maxHeight((int) (height*0.4))
+                    new  XPopup.Builder(OrderReceivingActivity.this)
+                            .maxWidth((int) (widths * 0.8))
+                            .maxHeight((int) (height*0.5))
                             .asConfirm("提示", "拒单会退款，是否拒单?", "取消", "确认", new OnConfirmListener() {
                                 @Override
                                 public void onConfirm() {
@@ -226,9 +256,9 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
                             }, null,false)
                             .show();
                 }else if (status==4){
-                    new  XPopup.Builder(getBaseContext())
-                            .maxWidth((int) (widths * 0.7))
-                            .maxHeight((int) (height*0.4))
+                    new  XPopup.Builder(OrderReceivingActivity.this)
+                            .maxWidth((int) (widths * 0.8))
+                            .maxHeight((int) (height*0.5))
                             .asConfirm("提示", "是否出餐？", "取消", "确认", new OnConfirmListener() {
                                 @Override
                                 public void onConfirm() {

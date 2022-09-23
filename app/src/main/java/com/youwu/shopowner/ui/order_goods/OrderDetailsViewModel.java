@@ -61,7 +61,8 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
     public BindingCommand ConfirmOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-           RxToast.normal("打印小票");
+            IntegerEvent.setValue(1);
+
         }
     });
 
@@ -89,6 +90,46 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
                             OrderDetailsLiveEvent.setValue(saleBillBean);
                             OrderDetails.set(saleBillBean);
                             TotalType.set(saleBillBean.getGoods_list().size()+"");
+
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+
+    /**
+     * 打印
+     * @param order_sn
+     */
+    public void Print(String order_sn, String store_id) {
+        model.PRINT(order_sn,store_id)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            RxToast.normal("打印成功");
 
                         }else {
                             RxToast.normal(response.getMessage());

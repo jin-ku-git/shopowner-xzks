@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.youwu.shopowner.ui.order_goods.RefundOrderDetailsViewModel" />
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -44,386 +45,441 @@
                 android:textSize="@dimen/size_16dp" />
         </RelativeLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
             >
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/size_8dp"
-                android:layout_marginEnd="@dimen/size_8dp"
+                android:layout_marginBottom="@dimen/dp70"
+                android:overScrollMode="never"
                 >
-
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:background="@drawable/radius_white_10dp"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:paddingLeft="@dimen/size_10dp"
-                    android:paddingRight="@dimen/size_10dp"
+                    android:layout_marginStart="@dimen/size_8dp"
+                    android:layout_marginEnd="@dimen/size_8dp"
                     >
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
+                        android:background="@drawable/radius_white_10dp"
                         android:layout_marginTop="@dimen/dp10"
-                        android:layout_marginBottom="@dimen/dp5"
+                        android:paddingLeft="@dimen/size_10dp"
+                        android:paddingRight="@dimen/size_10dp"
                         >
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="单号："
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:paddingLeft="5dp"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.order_sn}"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginBottom="@dimen/dp5"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="单号："
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:paddingLeft="5dp"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.order_sn}"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
 
-                            />
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.refund_status_name}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dp5"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款总金额"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{@string/rmb+viewModel.OrderDetails.actual_refund_money}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:visibility="@{viewModel.OrderDetails.refund_status==3?View.VISIBLE:View.GONE}"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="拒绝原因"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.refund_reason}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_height="@dimen/size_0_5dp"
+                            android:background="@color/color_hui"
                             />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.refund_status_name}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp5"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款总金额"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/rmb+viewModel.OrderDetails.actual_refund_money}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp5"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="拒绝原因"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:visibility="@{viewModel.OrderDetails.refund_status==3?View.VISIBLE:View.GONE}"
+
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="拒绝时间"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.reviewer_at}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.refund_reason}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_0_5dp"
-                        android:background="@color/color_hui"
-                        />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp5"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款时间"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.reviewer_at}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:background="@drawable/radius_white_10dp"
-                    android:padding="@dimen/size_10dp"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款商品"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/dp14"
-                            />
-
-                    </LinearLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/goods_recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:overScrollMode="never"
-                        android:layout_marginTop="@dimen/dp5"
-                        />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/dp15"
-
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="会员"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.member_info.nick_name}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="@dimen/dp5"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款时间"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.reviewer_at}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款类型"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.refund_type_name}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款原因"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.refund_reason}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/refund_image_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:background="@drawable/radius_white_10dp"
+                        android:padding="@dimen/size_10dp"
                         >
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="退款凭证"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity=""
-                            />
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款商品"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/dp14"
+                                />
 
+                        </LinearLayout>
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/image_recyclerview"
+                            android:id="@+id/goods_recyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="@dimen/dp15"
                             android:overScrollMode="never"
+                            android:layout_marginTop="@dimen/dp5"
                             />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款描述"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
+
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.mark}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="退款金额"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/dp15"
+
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="会员"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.member_info.nick_name}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.actual_refund_money}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp35"
-                        android:orientation="horizontal"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="申请时间"
-                            android:textSize="@dimen/size_14dp"
-                            android:textColor="@color/main_black_85"
-                            android:layout_gravity="center"
-                            />
-                        <View
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款类型"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.refund_type_name}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款原因"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.refund_reason}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/refund_image_layout"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.OrderDetails.created_at}"
-                            android:textColor="@color/main_black_85"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            />
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款凭证"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity=""
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/image_recyclerview"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="@dimen/dp15"
+                                android:overScrollMode="never"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款描述"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.mark}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="退款金额"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.actual_refund_money}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp35"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="申请时间"
+                                android:textSize="@dimen/size_14dp"
+                                android:textColor="@color/main_black_85"
+                                android:layout_gravity="center"
+                                />
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.OrderDetails.created_at}"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp"
+                                android:layout_gravity="center"
+                                />
+                        </LinearLayout>
+
                     </LinearLayout>
+
+
+
 
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:text="打印小票"
+                android:textSize="@dimen/size_14dp"
+                android:textColor="@color/main_white"
+                android:background="@drawable/radius_blue_8dp"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/size_5dp"
+                android:layout_marginEnd="@dimen/size_5dp"
+                binding:onClickCommand="@{viewModel.ConfirmOnClick}"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp15"
+                />
+        </RelativeLayout>
 
 
-
-
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
 
 
 

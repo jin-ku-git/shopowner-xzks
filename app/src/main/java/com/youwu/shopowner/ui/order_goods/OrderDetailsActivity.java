@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
+import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivityOrderDetailsBinding;
+import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.OrderDetailsBean;
 import com.youwu.shopowner.ui.fragment.bean.SaleBillBean;
@@ -39,6 +41,7 @@ public class OrderDetailsActivity extends BaseActivity<ActivityOrderDetailsBindi
     private ArrayList<OrderDetailsBean.GoodsListBean> mList = new ArrayList<>();
 
     String order_sn;
+    String store_id;
     @Override
     public void initParam() {
         super.initParam();
@@ -69,6 +72,7 @@ public class OrderDetailsActivity extends BaseActivity<ActivityOrderDetailsBindi
             public void onChanged(Integer integer) {
                 switch (integer){
                     case 1:
+                        initPrint();
                         break;
 
                 }
@@ -92,11 +96,17 @@ public class OrderDetailsActivity extends BaseActivity<ActivityOrderDetailsBindi
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
-
+        store_id= AppApplication.spUtils.getString("StoreId");
         KLog.d("order_sn:"+order_sn);
         initOrderDetails();
     }
 
+    /**
+     * 打印
+     */
+    private void initPrint() {
+        viewModel.Print(order_sn,store_id);
+    }
     /**
      * 查询订单详情
      */

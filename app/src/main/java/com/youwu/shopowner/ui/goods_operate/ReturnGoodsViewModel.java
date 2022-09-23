@@ -127,7 +127,7 @@ public class ReturnGoodsViewModel extends BaseViewModel<DemoRepository> {
     }
 
     /**
-     * 获取订货商品列表
+     * 获取退货商品列表
      * @param storeId
      * @param name
      * @param id

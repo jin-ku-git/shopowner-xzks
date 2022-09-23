@@ -200,6 +200,15 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     /**
+     * 申请退货
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> CARGO_REFUND(String storeId,String remarks,String saasList) {
+        return apiService.CARGO_REFUND(storeId,remarks,saasList);
+    }
+
+    /**
      * 在售商品数量
      * @return
      */
@@ -330,5 +339,23 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user) {
         return apiService.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,ukey,sn,user);
+    }
+
+    /**
+     * 打印
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> PRINT(String order_sn, String store_id) {
+        return apiService.PRINT(order_sn,store_id);
+    }
+
+    /**
+     * 沽清
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks) {
+        return apiService.OUT_STOCK(goods_list,remarks);
     }
 }

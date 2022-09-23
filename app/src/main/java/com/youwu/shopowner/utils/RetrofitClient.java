@@ -48,7 +48,7 @@ public class RetrofitClient {
     //服务端根路径
 
     public static String baseUrl = "https://xzkstest.youwuu.com/app/";//测试 20022-08-09
-//    public static String baseUrl = "https://xzks-api.youwuu.com/app/";//正式
+//    public static String baseUrl = "https://xzks-api.youwuu.com/app/";//正式develop
 
 
     private static Context mContext = Utils.getContext();

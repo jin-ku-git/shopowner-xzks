@@ -129,6 +129,52 @@
             android:paddingLeft="@dimen/dp15"
             android:layout_marginTop="@dimen/size_10dp"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取餐方式："
+                android:textColor="@color/main_black_85"
+                android:layout_marginTop="@dimen/dp6"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <CheckBox
+                    android:id="@+id/mode_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="外卖"
+                    />
+                <CheckBox
+                    android:id="@+id/mode_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="门店自提"
+                    />
+                <CheckBox
+                    android:id="@+id/mode_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="取餐点自提"
+                    />
+                <CheckBox
+                    android:id="@+id/mode_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="堂食"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -152,7 +198,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:text="取消"
+                android:text="重置"
                 android:gravity="center"
                 android:textColor="@color/black_222222"
                 android:layout_weight="1"

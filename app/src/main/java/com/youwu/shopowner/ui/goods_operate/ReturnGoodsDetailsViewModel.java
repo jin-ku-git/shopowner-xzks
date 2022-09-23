@@ -41,8 +41,7 @@ public class ReturnGoodsDetailsViewModel extends BaseViewModel<DemoRepository> {
     public ObservableField<String> TotalQuantity =new ObservableField<>();
     //备注
     public ObservableField<String> remarks =new ObservableField<>();
-    //预计到货时间的绑定
-    public ObservableField<String> estimate_time = new ObservableField<>("");
+
 
 
     //返回的点击事件
@@ -65,8 +64,8 @@ public class ReturnGoodsDetailsViewModel extends BaseViewModel<DemoRepository> {
      * @param storeId
      * @param saasList
      */
-    public void add_order(String storeId, String saasList) {
-        model.ADD_ORDER(storeId,estimate_time.get(),saasList)
+    public void CargoRefund(String storeId, String saasList) {
+        model.CARGO_REFUND(storeId,remarks.get(),saasList)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {

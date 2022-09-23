@@ -27,7 +27,7 @@ public interface DemoApiService {
      * 检查更新
      * @return
      */
-    @GET("app_version")
+    @GET("dzd_app_version")
     Observable<BaseBean<UpDateBean>> GET_APP_VERSION();
 
     /**
@@ -152,6 +152,16 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("cargo/add_order")
     Observable<BaseBean<Object>> ADD_ORDER(@Field("store_id") String store_id,@Field("arrival_time") String arrival_time,@Field("goods_list") String goods_list);
+
+    /**
+     * 申请退货
+     *
+     * @param store_id 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("cargo/add_order")
+    Observable<BaseBean<Object>> CARGO_REFUND(@Field("store_id") String store_id,@Field("mark") String mark,@Field("goods_list") String goods_list);
 
     /**
      * 在售商品数量
@@ -291,4 +301,24 @@ public interface DemoApiService {
     @POST("update_store_terminal")
     Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(@Field("is_order") String is_order,@Field("start") String start,@Field("end") String end
             ,@Field("delivery_method") String delivery_method,@Field("is_link") String is_link,@Field("ukey") String ukey,@Field("sn") String sn,@Field("user") String user);
+
+    /**
+     * 打印
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("print")
+    Observable<BaseBean<Object>> PRINT(@Field("order_sn") String order_sn,@Field("store_id") String store_id);
+
+    /**
+     * 沽清
+     *
+     * @param goods_list 商品列表
+     * @param mark       备注
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("stock/out_stock")
+    Observable<BaseBean<Object>> OUT_STOCK(@Field("goods_list") String goods_list,@Field("mark") String mark);
 }

@@ -40,10 +40,20 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
         private String order_price;
         private int change_stock;
         private int quantity;
+        private int order_quantity;
         private int type;
         private String reason_name;
 
 
+
+
+        public int getOrder_quantity() {
+            return order_quantity;
+        }
+
+        public void setOrder_quantity(int order_quantity) {
+            this.order_quantity = order_quantity;
+        }
 
         public int getChange_stock() {
             return change_stock;
@@ -126,11 +136,11 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
         }
 
         public int getQuantity() {
-            return change_stock;
+            return quantity;
         }
 
         public void setQuantity(int quantity) {
-            this.change_stock = quantity;
+            this.quantity = quantity;
         }
     }
 

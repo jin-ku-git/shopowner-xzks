@@ -103,41 +103,17 @@ public class ReturnGoodsDetailsActivity extends BaseActivity<ActivityReturnGoods
             public void onChanged(Integer integer) {
                 switch (integer){
                     case 1://确认下单
-                        if (viewModel.estimate_time.get()==null||"".equals(viewModel.estimate_time.get())){
-                            RxToast.normal("请选择预计收货时间");
-                            return;
-                        }
-                        new  XPopup.Builder(getBaseContext())
-                                .maxWidth((int) (widths * 0.7))
-                                .maxHeight((int) (height*0.4))
-                                .asConfirm("提示", "确认订货信息无误后，是否选择订货？", "取消", "确认", new OnConfirmListener() {
+
+                        new  XPopup.Builder(ReturnGoodsDetailsActivity.this)
+                                .maxWidth((int) (widths * 0.8))
+                                .maxHeight((int) (height*0.5))
+                                .asConfirm("提示", "确认退货信息无误后，是否选择退货？", "取消", "确认", new OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
-                                        List<OrderItemBean> saasOrderList=new ArrayList<>();
 
-                                        for (int i=0;i<ShoppingEntityList.size();i++){
+                                        String saasList = new Gson().toJson(ShoppingEntityList);
 
-                                            OrderItemBean orderItemBean=new OrderItemBean();
-                                            orderItemBean.setGoods_id(ShoppingEntityList.get(i).getGoods_id()+"");
-                                            orderItemBean.setGoods_sku(ShoppingEntityList.get(i).getGoods_sku());
-                                            if (ShoppingEntityList.get(i).getQuantity()==0){
-                                                orderItemBean.setQuantity(0);
-
-                                            }else {
-                                                orderItemBean.setQuantity(ShoppingEntityList.get(i).getQuantity());
-                                            }
-
-                                            orderItemBean.setOrder_price(ShoppingEntityList.get(i).getOrder_price()+"");
-                                            orderItemBean.setGoods_name(ShoppingEntityList.get(i).getGoods_name());
-
-                                            if (orderItemBean.getQuantity()!=0){
-                                                saasOrderList.add(orderItemBean);
-                                            }
-
-                                        }
-                                        String saasList = new Gson().toJson(saasOrderList);
-
-                                        viewModel.add_order(store_id,saasList);
+                                        viewModel.CargoRefund(store_id,saasList);
                                     }
                                 }, null,false)
                                 .show();
@@ -145,7 +121,7 @@ public class ReturnGoodsDetailsActivity extends BaseActivity<ActivityReturnGoods
                         break;
 
                     case 3://订货成功
-                        RxToast.showTipToast(ReturnGoodsDetailsActivity.this, "订货成功");
+                        RxToast.showTipToast(ReturnGoodsDetailsActivity.this, "退货成功");
                         break;
 
 

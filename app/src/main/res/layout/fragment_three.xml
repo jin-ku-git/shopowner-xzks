@@ -150,6 +150,7 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/radius_white_10dp"
                 android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
                 >

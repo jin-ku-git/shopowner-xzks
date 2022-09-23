@@ -27,7 +27,25 @@ public class OrderItemBean implements Serializable {
     private String order_price;
 
     private int  quantity;//订货数量
+    private int  order_quantity;//订货数量
     private int  type;
+
+    public int getOrder_quantity() {
+        return order_quantity;
+    }
+
+    public void setOrder_quantity(int order_quantity) {
+        this.order_quantity = order_quantity;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     /**
      * id : 1
      * store_id : 1
@@ -41,6 +59,8 @@ public class OrderItemBean implements Serializable {
      * created_at : 2022-08-10 16:18:58
      * updated_at : 2022-08-11 12:03:43
      */
+
+
 
     private int id;
     private int store_id;

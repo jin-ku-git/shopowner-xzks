@@ -209,6 +209,15 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList) {
         return mHttpDataSource.ADD_ORDER(storeId,arrival_time,saasList);
     }
+    /**
+     * 申请退货
+     * @param storeId  订单编号
+     * @param saasList  订货内容
+     * @return
+     */
+    public Observable<BaseBean<Object>> CARGO_REFUND(String storeId,String remarks,String saasList) {
+        return mHttpDataSource.CARGO_REFUND(storeId,remarks,saasList);
+    }
 
     /**
      *获取在售商品数量
@@ -328,5 +337,23 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user) {
         return mHttpDataSource.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,ukey,sn,user);
+    }
+
+    /**
+     * 打印
+     * @param order_sn
+     * @param store_id
+     * @return
+     */
+    public Observable<BaseBean<Object>> PRINT(String order_sn, String store_id) {
+        return mHttpDataSource.PRINT(order_sn,store_id);
+    }
+    /**
+     * 沽清
+     * @param goods_list
+     * @return
+     */
+    public Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks) {
+        return mHttpDataSource.OUT_STOCK(goods_list,remarks);
     }
 }

@@ -116,4 +116,44 @@ public class SellOffDetailsViewModel extends BaseViewModel<DemoRepository> {
                     }
                 });
     }
+
+    /**
+     * 沽清
+     * @param goods_list
+     */
+    public void sorting_inventory(String goods_list) {
+        model.OUT_STOCK(goods_list,remarks.get())
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            RxToast.normal("沽清成功！");
+                            IntegerEvent.setValue(5);
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
 }
