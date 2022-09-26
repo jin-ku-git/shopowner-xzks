@@ -76,6 +76,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private Notification notification;
 
     PendingIntent pendingIntent;
+
+    int type=1;
+
+
     @Override
     public MainViewModel initViewModel() {
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
@@ -96,6 +100,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public void initParam() {
         super.initParam();
 
+        type=getIntent().getIntExtra("type",1);
     }
 
 
@@ -108,7 +113,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         // 可以调用该方法，设置不允许滑动退出
         setSwipeBackEnable(false);
 
-            setSwPage(1);
+
+        setSwPage(type);
 
 
 
@@ -144,31 +150,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             public void onChanged(Integer integer) {
                 switch (integer){
                     case 1:
-                        binding.oneHome.setonSelected(true);
-                        binding.twoHome.setonSelected(false);
-                        binding.threeHome.setonSelected(false);
-                        binding.fourHome.setonSelected(false);
+
                         setSwPage(1);
+                        EventBus.getDefault().post("1");
                         break;
                     case 2:
-                        binding.twoHome.setonSelected(true);
-                        binding.oneHome.setonSelected(false);
-                        binding.threeHome.setonSelected(false);
-                        binding.fourHome.setonSelected(false);
+
                         setSwPage(2);
                         break;
                     case 3:
-                        binding.threeHome.setonSelected(true);
-                        binding.oneHome.setonSelected(false);
-                        binding.twoHome.setonSelected(false);
-                        binding.fourHome.setonSelected(false);
+
                         setSwPage(3);
                         break;
                     case 4:
-                        binding.fourHome.setonSelected(true);
-                        binding.oneHome.setonSelected(false);
-                        binding.twoHome.setonSelected(false);
-                        binding.threeHome.setonSelected(false);
+
                         setSwPage(4);
                         break;
 
@@ -264,14 +259,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @SuppressLint("ResourceAsColor")
     public void setSwPage(int i) {
 
+
+
         //获取FragmentManager对象
         manager = getSupportFragmentManager();
         //获取FragmentTransaction对象
         transaction = manager.beginTransaction();
         //先隐藏所有的Fragment
         hideFragments(transaction);
+
+
+
+
+
         switch (i) {
             case 1:
+                binding.oneHome.setonSelected(true);
                 if (mOneFragment == null) {
                     mOneFragment = new OneFragment();
                     transaction.add(R.id.frame, mOneFragment);
@@ -281,6 +284,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 }
                 break;
             case 2:
+                binding.twoHome.setonSelected(true);
                 if (mTowFragment == null) {
                     mTowFragment = new TwoFragment();
                     transaction.add(R.id.frame, mTowFragment);
@@ -290,6 +294,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 }
                 break;
             case 3:
+                binding.threeHome.setonSelected(true);
                 if (mThreeFragment == null) {
                     mThreeFragment = new ThreeFragment();
                     transaction.add(R.id.frame, mThreeFragment);
@@ -299,6 +304,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 }
                 break;
             case 4:
+                binding.fourHome.setonSelected(true);
                 if (mFourFragment == null) {
                     mFourFragment = new FourFragment();
                     transaction.add(R.id.frame, mFourFragment);
@@ -313,6 +319,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     //将全部Fragment隐藏
     private void hideFragments(FragmentTransaction transaction) {
+        binding.oneHome.setonSelected(false);
+        binding.twoHome.setonSelected(false);
+        binding.threeHome.setonSelected(false);
+        binding.fourHome.setonSelected(false);
         if (mOneFragment != null) {
             transaction.hide(mOneFragment);
         }
@@ -349,6 +359,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 mExitTime = System.currentTimeMillis();
             } else {
                 //小于2000ms则认为是用户确实希望退出程序-调用System.exit()方法进行退出
+                finishAllActivity();
                 System.exit(0);
             }
             return true;

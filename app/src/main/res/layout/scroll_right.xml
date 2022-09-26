@@ -10,6 +10,9 @@
         android:layout_height="@dimen/size_80dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/size_15dp"
+        android:background="@drawable/radius_white_10dp"
+        android:layout_margin="@dimen/dp5"
+        android:padding="@dimen/dp5"
         >
         <ImageView
             android:id="@+id/goods_image"

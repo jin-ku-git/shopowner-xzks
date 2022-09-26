@@ -31,6 +31,7 @@ import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.FragmentTwoBinding;
+import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
@@ -113,12 +114,17 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
                         showJournalDialog();
                         break;
                     case 2://提交
-                        Bundle bundle=new Bundle();
-                        bundle.putString("TotalPrice",viewModel.TotalPrice.get());
-                        bundle.putString("TotalType",viewModel.TotalType.get());
-                        bundle.putString("TotalQuantity",viewModel.TotalQuantity.get());
-                        bundle.putSerializable("ShoppingEntityList",ShoppingEntityList);
-                        startActivity(ConfirmOrderActivity.class,bundle);
+                        if (ShoppingEntityList.size()!=0){
+                            Bundle bundle=new Bundle();
+                            bundle.putString("TotalPrice",viewModel.TotalPrice.get());
+                            bundle.putString("TotalType",viewModel.TotalType.get());
+                            bundle.putString("TotalQuantity",viewModel.TotalQuantity.get());
+                            bundle.putSerializable("ShoppingEntityList",ShoppingEntityList);
+                            startActivity(ConfirmOrderActivity.class,bundle);
+                        }else {
+                            RxToast.normal("请选择订货商品");
+                        }
+
                         break;
 
 
@@ -245,6 +251,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
                         for (int i=0;i<lsit.size();i++) {
                             if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
                                 ShoppingEntityList.get(i).setQuantity(lists.t.getQuantity());
+                                ShoppingEntityList.get(i).setOrder_quantity(lists.t.getOrder_quantity());
                             }else {
                                 ShoppingEntityList.add(scrollBean.t);
                             }
@@ -388,7 +395,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths * 0.94);
-        layoutParams.height = (int) (height*0.4);
+        layoutParams.height = (int) (height*0.7);
         //将界面填充到AlertDiaLog容器
         dialogView.setLayoutParams(layoutParams);
         dialog_shopping.getWindow().setGravity(Gravity.BOTTOM);
@@ -448,6 +455,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
                 ShoppingEntityList.get(position).setQuantity(data.getQuantity());
+                ShoppingEntityList.get(position).setOrder_quantity(data.getOrder_quantity());
 
                 cll(2);
 
@@ -460,6 +468,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
                 ShoppingEntityList.get(position).setQuantity(0);
+                ShoppingEntityList.get(position).setOrder_quantity(0);
                 ShoppingEntityList.remove(position);
 
                 cll(2);

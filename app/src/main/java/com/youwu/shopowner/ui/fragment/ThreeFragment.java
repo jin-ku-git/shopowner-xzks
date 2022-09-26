@@ -259,6 +259,19 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
                     startActivity(RefundOrderDetailsActivity.class,bundle);}
             }
         });
+        mOrderAdapter.setOnChangeListener(new OrderAdapter.OnChangeListener() {
+            @Override
+            public void onChange(SaleBillBean data, int position) {
+                if (data.getRefund_type()==1){
+                    Bundle bundle=new Bundle();
+                    bundle.putString("order_sn",data.getOrder_sn());
+                    startActivity(OrderDetailsActivity.class,bundle);
+                }else {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("order_sn",data.getOrder_sn());
+                    startActivity(RefundOrderDetailsActivity.class,bundle);}
+            }
+        });
 
 
     }
@@ -289,7 +302,7 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths);
-        layoutParams.height = (int) (height*0.4);
+        layoutParams.height = (int) (height*0.5);
 
 
 //        layoutParams.width = getResources().getDisplayMetrics().widthPixels;

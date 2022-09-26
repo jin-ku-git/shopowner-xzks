@@ -112,6 +112,17 @@ public interface DemoApiService {
     Observable<BaseBean<Object>> GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String id);
 
     /**
+     * 获取盘点商品列表
+     *
+     * @param store_id 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods/stock_goods_list")
+    Observable<BaseBean<Object>> GET_STOCK_GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String category_id,@Field("page") String page
+            ,@Field("limit") String limit,@Field("type") String type);
+
+    /**
      * 获取退货商品列表
      *
      * @param store_id 订单编号
@@ -160,7 +171,7 @@ public interface DemoApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("cargo/add_order")
+    @POST("return_cargo/cargo_refund")
     Observable<BaseBean<Object>> CARGO_REFUND(@Field("store_id") String store_id,@Field("mark") String mark,@Field("goods_list") String goods_list);
 
     /**
@@ -180,7 +191,17 @@ public interface DemoApiService {
      */
     @FormUrlEncoded
     @POST("cargo/order_list")
-    Observable<BaseBean<Object>> ORDER_LIST(@Field("store_id") String store_id);
+    Observable<BaseBean<Object>> ORDER_LIST(@Field("store_id") String store_id,@Field("start") String start);
+
+    /**
+     * 获取退货列表
+     * @param store_id 店铺id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("return_cargo/cargo_refund_list")
+    Observable<BaseBean<Object>> REFUND_LIST(@Field("store_id") String store_id,@Field("page") String page,@Field("limit") String limit
+            ,@Field("start") String start);
 
     /**
      * 订单列表
@@ -207,6 +228,26 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("sales_situation")
     Observable<BaseBean<Object>> SALES_SITUATION(@Field("type") String type,@Field("store_id") String store_id);
+
+    /**
+     * 获取商品销量排行
+     *
+     * @param type 1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods_sale")
+    Observable<BaseBean<Object>> GOODS_SALE(@Field("type") String type,@Field("store_id") String store_id);
+
+    /**
+     * 获取套餐销量排行
+     *
+     * @param type 1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("package_sale")
+    Observable<BaseBean<Object>> PACKAGE_SALE(@Field("type") String type,@Field("store_id") String store_id);
 
     /**
      * 核销
@@ -237,6 +278,16 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("order/refund_details")
     Observable<BaseBean<Object>> REFUND_DETAILS(@Field("order_sn") String order_sn);
+
+    /**
+     * 退货详情
+     *
+     * @param order_sn 订单编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("return_cargo/cargo_refund_details")
+    Observable<BaseBean<Object>> CARGO_REFUND_DETAILS(@Field("order_sn") String order_sn);
 
     /**
      * 报损原因
@@ -300,7 +351,7 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("update_store_terminal")
     Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(@Field("is_order") String is_order,@Field("start") String start,@Field("end") String end
-            ,@Field("delivery_method") String delivery_method,@Field("is_link") String is_link,@Field("ukey") String ukey,@Field("sn") String sn,@Field("user") String user);
+            ,@Field("delivery_method") String delivery_method,@Field("is_link") String is_link,@Field("key") String key,@Field("sn") String sn);
 
     /**
      * 打印
@@ -321,4 +372,39 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("stock/out_stock")
     Observable<BaseBean<Object>> OUT_STOCK(@Field("goods_list") String goods_list,@Field("mark") String mark);
+
+    /**
+     * 沽清
+     *
+     * @param order_list 商品列表
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("cargo/receive")
+    Observable<BaseBean<Object>> RECEIVING(@Field("order_list") String order_list);
+    /**
+     * 打印测试
+     *
+     * @return
+     */
+
+    @POST("print_test")
+    Observable<BaseBean<Object>> PRINT_TEST();
+    /**
+     * 门店列表设置
+     *
+     * @return
+     */
+
+    @POST("setting_list")
+    Observable<BaseBean<Object>> SETTING_LIST();
+
+    /**
+     * 修改密码
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("update_password")
+    Observable<BaseBean<Object>> UPDATE_PASSWORD(@Field("old_password") String old_password,@Field("new_password") String new_password,@Field("confirm_password") String confirm_password);
 }

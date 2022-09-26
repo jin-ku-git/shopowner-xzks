@@ -1,6 +1,7 @@
 package com.youwu.shopowner.ui.order_record;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -11,6 +12,7 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.bean.UpDateBean;
 import com.youwu.shopowner.data.DemoRepository;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.main.MainActivity;
 import com.youwu.shopowner.ui.order_record.bean.OrderGoodsBean;
 import com.youwu.shopowner.ui.order_record.bean.RecordBean;
 
@@ -60,6 +62,9 @@ public class RecordViewModel extends BaseViewModel<DemoRepository> {
         @Override
         public void call() {
            finish();
+            Bundle bundle=new Bundle();
+            bundle.putInt("type",4);
+           startActivity(MainActivity.class,bundle);
         }
     });
 

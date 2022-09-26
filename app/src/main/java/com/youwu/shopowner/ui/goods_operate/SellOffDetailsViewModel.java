@@ -59,13 +59,6 @@ public class SellOffDetailsViewModel extends BaseViewModel<DemoRepository> {
             IntegerEvent.setValue(1);
         }
     });
-    //选择时间的点击事件
-    public BindingCommand choiceTimeOnClick = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            IntegerEvent.setValue(2);
-        }
-    });
     //选备注的点击事件
     public BindingCommand remarksOnClick = new BindingCommand(new BindingAction() {
         @Override
@@ -75,47 +68,6 @@ public class SellOffDetailsViewModel extends BaseViewModel<DemoRepository> {
     });
 
 
-    /**
-     * 申请订货
-     * @param storeId
-     * @param saasList
-     */
-    public void add_order(String storeId, String saasList) {
-        model.ADD_ORDER(storeId,estimate_time.get(),saasList)
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer())
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog();
-                    }
-                })
-                .subscribe(new DisposableObserver<BaseBean<Object>>() {
-                    @Override
-                    public void onNext(BaseBean<Object> response) {
-
-                        if (response.isOk()){
-                            IntegerEvent.setValue(3);
-
-                        }else {
-                            RxToast.normal(response.getMessage());
-                        }
-                    }
-                    @Override
-                    public void onError(Throwable throwable) {
-                        //关闭对话框
-                        dismissDialog();
-                        if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
-                        }
-                    }
-                    @Override
-                    public void onComplete() {
-                        //关闭对话框
-                        dismissDialog();
-                    }
-                });
-    }
 
     /**
      * 沽清
@@ -135,8 +87,8 @@ public class SellOffDetailsViewModel extends BaseViewModel<DemoRepository> {
                     @Override
                     public void onNext(BaseBean<Object> response) {
                         if (response.isOk()){
-                            RxToast.normal("沽清成功！");
-                            IntegerEvent.setValue(5);
+
+                            IntegerEvent.setValue(3);
                         }else {
                             RxToast.normal(response.getMessage());
                         }

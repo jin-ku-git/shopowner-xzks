@@ -36,6 +36,7 @@ import com.youwu.shopowner.ui.fragment.adapter.InventoryRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.SellOffRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
+import com.youwu.shopowner.ui.order_record.RecordActivity;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
@@ -104,10 +105,7 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
             public void onChanged(Integer integer) {
                 switch (integer){
                     case 1://确认下单
-                        if (viewModel.estimate_time.get()==null||"".equals(viewModel.estimate_time.get())){
-                            RxToast.normal("请选择预计收货时间");
-                            return;
-                        }
+
                         new  XPopup.Builder(SellOffDetailsActivity.this)
                                 .maxWidth((int) (widths * 0.8))
                                 .maxHeight((int) (height*0.5))
@@ -127,7 +125,10 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
                         pvCustomTime.show(); //弹出自定义时间选择器
                         break;
                     case 3://订货成功
-                        RxToast.showTipToast(SellOffDetailsActivity.this, "订货成功");
+                        RxToast.showTipToast(SellOffDetailsActivity.this, "沽清成功");
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",3);
+                        startActivity(RecordActivity.class,bundle);
                         break;
                     case 4://备注弹窗
                         showRemarksDialog(viewModel.remarks.get());
@@ -174,49 +175,6 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
         if (binding.goodsRecyclerview.getItemDecorationCount() == 0) {
             binding.goodsRecyclerview.addItemDecoration(new DividerItemDecorations(this, DividerItemDecorations.VERTICAL));
         }
-        /**
-         * 加减
-         */
-        mSellOffRecycleAdapter.setOnChangeListener(new SellOffRecycleAdapter.OnChangeListener() {
-            @Override
-            public void onChange(ScrollBean.SAASOrderBean data, int position) {
-
-                ShoppingEntityList.get(position).setQuantity(data.getQuantity());
-
-                cll();
-
-            }
-        });
-        /**
-         * 删除
-         */
-        mSellOffRecycleAdapter.setOnDeleteListener(new SellOffRecycleAdapter.OnDeleteListener() {
-            @Override
-            public void onDelete(ScrollBean.SAASOrderBean data, int position) {
-                ShoppingEntityList.get(position).setQuantity(0);
-                ShoppingEntityList.remove(position);
-
-                cll();
-            }
-        });
-    }
-
-    /**
-     * 计算价格
-     */
-    private void cll() {
-
-        double prick=0.0;
-        int quantity=0;
-        for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-            quantity+=ShoppingEntityList.get(i).getQuantity();
-        }
-
-        viewModel.TotalPrice.set(prick+"");
-        viewModel.TotalType.set(ShoppingEntityList.size()+"");
-        viewModel.TotalQuantity.set(quantity+"");
-
 
     }
 

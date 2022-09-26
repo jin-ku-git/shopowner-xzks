@@ -31,7 +31,13 @@ public class LossRightAdapter extends BaseSectionQuickAdapter<ScrollBean, BaseVi
         helper.setText(R.id.goods_name, t.getGoods_name());
         helper.setText(R.id.goods_price, t.getOrder_price());
         helper.setText(R.id.tv_number, t.getQuantity()+"");
-        helper.setText(R.id.initial_order, "份起订");
+        helper.setText(R.id.goods_stock, "库存："+t.getStock());
+        if ("".equals(t.getReason_name())||t.getReason_name()==null){
+            helper.setGone(R.id.reason,false);
+        }else {
+            helper.setGone(R.id.reason,true);
+        }
+        helper.setText(R.id.reason, "原因："+t.getReason_name());
 
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {
@@ -55,20 +61,27 @@ public class LossRightAdapter extends BaseSectionQuickAdapter<ScrollBean, BaseVi
         helper.setOnClickListener(R.id.iv_edit_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.t.getQuantity()==0){
-
-                    if (mReasonListener!=null){
-                        mReasonListener.onReason(item);
-                    }
+                if (item.t.getStock()==0){
+                    RxToast.normal("当前商品没有库存了");
                 }else {
-                    item.t.setQuantity(item.t.getQuantity()+1);
-                    /**
-                     * 加操作
-                     */
-                    if (mChangeListener != null) {
-                        mChangeListener.onChange(item);
+                    if (item.t.getQuantity()==0){
+
+                        if (mReasonListener!=null){
+                            mReasonListener.onReason(item);
+                        }
+                    }else if (item.t.getQuantity()==item.t.getStock()){
+                        RxToast.normal("报损数量不能大于库存");
+                    }else {
+                        item.t.setQuantity(item.t.getQuantity()+1);
+                        /**
+                         * 加操作
+                         */
+                        if (mChangeListener != null) {
+                            mChangeListener.onChange(item);
+                        }
                     }
                 }
+
 
 
             }

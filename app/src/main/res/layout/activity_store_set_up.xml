@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:text="是"
-                        android:clickable="true"
+                        android:checked="@{viewModel.singleLiveField.is_order==1?true:false}"
                         android:layout_weight="1"
                         android:textSize="12sp" />
 
@@ -100,6 +100,7 @@
                         android:layout_height="40dp"
                         android:background="@null"
                         android:text="否"
+                        android:checked="@{viewModel.singleLiveField.is_order==1?false:true}"
                         android:layout_weight="1"
                         android:textSize="12sp" />
 
@@ -205,6 +206,7 @@
                         android:id="@+id/mode_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="@{viewModel.oneBool}"
                         android:text="外卖"
                         />
                     <CheckBox
@@ -212,18 +214,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="门店自提"
+                        android:checked="@{viewModel.twoBool}"
                         />
                     <CheckBox
                         android:id="@+id/mode_three"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="取餐点自提"
+                        android:checked="@{viewModel.threeBool}"
                         />
                     <CheckBox
                         android:id="@+id/mode_four"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="堂食"
+                        android:checked="@{viewModel.fourBool}"
                         />
                 </LinearLayout>
 
@@ -261,7 +266,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:text="连接"
-                        android:clickable="true"
+                        android:checked="@{viewModel.singleLiveField.is_link==1?true:false}"
+
                         android:layout_weight="1"
                         android:textSize="12sp" />
 
@@ -271,6 +277,8 @@
                         android:layout_height="40dp"
                         android:background="@null"
                         android:text="不连接"
+                        android:checked="@{viewModel.singleLiveField.is_link==1?false:true}"
+
                         android:layout_weight="1"
                         android:textSize="12sp" />
 
@@ -278,41 +286,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
-                >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="飞鹅账号："
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/size_14dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/xian_hui_4dp"
-                    android:paddingLeft="@dimen/dp10"
-                    >
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="请输入飞蛾账号"
-                        android:text="@={viewModel.Email}"
-                        android:textColor="@color/textColor"
-                        android:gravity="left|center"
-                        android:textColorHint="@color/textColorHint"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -324,7 +297,7 @@
                 <TextView
                     android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
-                    android:text="Key："
+                    android:text="KEY："
                     android:textColor="@color/main_black_85"
                     android:layout_gravity="center"
                     android:textSize="@dimen/size_14dp"
@@ -341,7 +314,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:hint="请输入Key值"
+                        android:hint="请输入KEY值"
                         android:text="@={viewModel.KeyName}"
                         android:textColor="@color/textColor"
                         android:gravity="left|center"
@@ -361,7 +334,7 @@
                 <TextView
                     android:layout_width="@dimen/dp80"
                     android:layout_height="wrap_content"
-                    android:text="Value："
+                    android:text="SN："
                     android:textColor="@color/main_black_85"
                     android:layout_gravity="center"
                     android:textSize="@dimen/size_14dp"
@@ -378,7 +351,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:hint="请输入Value值"
+                        android:hint="请输入SN值"
                         android:text="@={viewModel.ValueName}"
                         android:gravity="left|center"
                         android:textColor="@color/textColor"
@@ -391,7 +364,18 @@
             
         </LinearLayout>
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:text="打印测试"
+                android:textSize="@dimen/size_14dp"
+                android:textColor="@color/main_white"
+                android:background="@drawable/radius_blue_8dp"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/size_5dp"
+                android:layout_marginEnd="@dimen/size_5dp"
+                binding:onClickCommand="@{viewModel.PrintTestOnClick}"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

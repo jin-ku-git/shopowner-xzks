@@ -87,19 +87,18 @@ public class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.my
         holder.goods_num.setText("共"+ subZeroAndDot(data.getTotal_quantity()+"")+"件");//数量
 
 
-            holder.bindData(position, currentIndex);
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setCurrentIndex(position);
-
-                if(mClickListener!=null){
-                    mClickListener.onClick(rechargeBeans.get(position),position);
-                }
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//                if(mClickListener!=null){
+//                    mClickListener.onClick(rechargeBeans.get(position),position);
+//                }
+//            }
+//        });
     }
 
     public void setCurrentIndex(int currentIndex) {

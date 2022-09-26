@@ -161,6 +161,14 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     public Observable<BaseBean<Object>> GOODS_CATEGORY() {
         return mHttpDataSource.GOODS_CATEGORY();
     }
+    /**
+     *获取盘点商品
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_STOCK_GOODS_LIST(String storeId,String category_id,String page,String limit,String type) {
+        return mHttpDataSource.GET_STOCK_GOODS_LIST(storeId,category_id,page,limit,type);
+    }
 
     /**
      * 获取订货商品列表
@@ -203,11 +211,11 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     /**
      * 申请订货
      * @param storeId  订单编号
-     * @param saasList  订货内容
+     * @param goods_list  订货内容
      * @return
      */
-    public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList) {
-        return mHttpDataSource.ADD_ORDER(storeId,arrival_time,saasList);
+    public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String goods_list) {
+        return mHttpDataSource.ADD_ORDER(storeId,arrival_time,goods_list);
     }
     /**
      * 申请退货
@@ -233,8 +241,16 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      * @param store_id  订单编号
      * @return
      */
-    public Observable<BaseBean<Object>> ORDER_LIST(String store_id) {
-        return mHttpDataSource.ORDER_LIST(store_id);
+    public Observable<BaseBean<Object>> ORDER_LIST(String store_id,String start) {
+        return mHttpDataSource.ORDER_LIST(store_id,start);
+    }
+    /**
+     * 获取退货列表
+     * @param store_id  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> REFUND_LIST(String store_id,int page,String limit,String start) {
+        return mHttpDataSource.REFUND_LIST(store_id,page,limit,start);
     }
 
     /**
@@ -254,6 +270,23 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> SALES_SITUATION(String type,String store_id) {
         return mHttpDataSource.SALES_SITUATION(type,store_id);
+    }
+    /**
+     * 获取商品销量排行
+     * @param type   1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    public Observable<BaseBean<Object>> GOODS_SALE(String type,String store_id) {
+        return mHttpDataSource.GOODS_SALE(type,store_id);
+    }
+
+    /**
+     * 获取套餐销量排行
+     * @param type   1.今日 2.本周 3.本月 4.本季度
+     * @return
+     */
+    public Observable<BaseBean<Object>> PACKAGE_SALE(String type,String store_id) {
+        return mHttpDataSource.PACKAGE_SALE(type,store_id);
     }
 
     /**
@@ -281,6 +314,15 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> REFUND_DETAILS(String order_sn) {
         return mHttpDataSource.REFUND_DETAILS(order_sn);
+    }
+
+    /**
+     * 退货详情
+     * @param order_sn  订单编号
+     * @return
+     */
+    public Observable<BaseBean<Object>> CARGO_REFUND_DETAILS(String order_sn) {
+        return mHttpDataSource.CARGO_REFUND_DETAILS(order_sn);
     }
 
     /**
@@ -335,8 +377,8 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      *
      * @return
      */
-    public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user) {
-        return mHttpDataSource.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,ukey,sn,user);
+    public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String key, String sn) {
+        return mHttpDataSource.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,key,sn);
     }
 
     /**
@@ -355,5 +397,36 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks) {
         return mHttpDataSource.OUT_STOCK(goods_list,remarks);
+    }
+
+    /**
+     * 收货
+     * @param order_list
+     * @return
+     */
+    public Observable<BaseBean<Object>> RECEIVING(String order_list) {
+        return mHttpDataSource.RECEIVING(order_list);
+    }
+    /**
+     * 收货
+     * @return
+     */
+    public Observable<BaseBean<Object>> PRINT_TEST() {
+        return mHttpDataSource.PRINT_TEST();
+    }
+
+    /**
+     * 门店设置列表
+     * @return
+     */
+    public Observable<BaseBean<Object>> SETTING_LIST() {
+        return mHttpDataSource.SETTING_LIST();
+    }
+    /**
+     * 修改密码
+     * @return
+     */
+    public Observable<BaseBean<Object>> UPDATE_PASSWORD(String old_password,String new_password,String confirm_password) {
+        return mHttpDataSource.UPDATE_PASSWORD(old_password,new_password,confirm_password);
     }
 }

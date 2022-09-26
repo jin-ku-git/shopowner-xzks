@@ -69,10 +69,10 @@ public class ConfirmOrderViewModel extends BaseViewModel<DemoRepository> {
     /**
      * 申请订货
      * @param storeId
-     * @param saasList
+     * @param goods_list
      */
-    public void add_order(String storeId, String saasList) {
-        model.ADD_ORDER(storeId,estimate_time.get(),saasList)
+    public void add_order(String storeId, String goods_list) {
+        model.ADD_ORDER(storeId,estimate_time.get(),goods_list)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {

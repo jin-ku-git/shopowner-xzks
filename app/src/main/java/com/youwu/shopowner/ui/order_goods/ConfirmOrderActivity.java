@@ -27,6 +27,7 @@ import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
+import com.youwu.shopowner.ui.order_record.OrderGoodsListActivity;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
@@ -108,28 +109,26 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                                         List<OrderItemBean> saasOrderList=new ArrayList<>();
 
                                         for (int i=0;i<ShoppingEntityList.size();i++){
-
+                                            if (ShoppingEntityList.get(i).getQuantity()!=0){
                                             OrderItemBean orderItemBean=new OrderItemBean();
                                             orderItemBean.setGoods_id(ShoppingEntityList.get(i).getGoods_id()+"");
                                             orderItemBean.setGoods_sku(ShoppingEntityList.get(i).getGoods_sku());
-                                            if (ShoppingEntityList.get(i).getQuantity()==0){
-                                                orderItemBean.setOrder_quantity(0);
 
-                                            }else {
-                                                orderItemBean.setOrder_quantity(ShoppingEntityList.get(i).getQuantity());
-                                            }
+                                            orderItemBean.setOrder_quantity(ShoppingEntityList.get(i).getQuantity());
+
 
                                             orderItemBean.setOrder_price(ShoppingEntityList.get(i).getOrder_price()+"");
                                             orderItemBean.setGoods_name(ShoppingEntityList.get(i).getGoods_name());
 
-                                            if (orderItemBean.getQuantity()!=0){
-                                                saasOrderList.add(orderItemBean);
+                                            saasOrderList.add(orderItemBean);
                                             }
 
                                         }
-                                        String saasList = new Gson().toJson(saasOrderList);
+                                        String goods_list = new Gson().toJson(saasOrderList);
 
-                                        viewModel.add_order(store_id,saasList);
+
+                                        KLog.d("goods_list："+goods_list);
+                                        viewModel.add_order(store_id,goods_list);
                                     }
                                 }, null,false)
                                 .show();
@@ -140,6 +139,11 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
                         break;
                     case 3://订货成功
                         RxToast.showTipToast(ConfirmOrderActivity.this, "订货成功");
+
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",1);
+                        startActivity(OrderGoodsListActivity.class,bundle);
+                        removeActivity(ConfirmOrderActivity.this);
                         break;
 
                 }
@@ -154,6 +158,10 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
+
+        Date date=new Date();
+
+        viewModel.estimate_time.set(getTime(date));
 
         store_id= AppApplication.spUtils.getString("StoreId");
         viewModel.TotalPrice.set(TotalPrice);
@@ -192,6 +200,7 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
                 ShoppingEntityList.get(position).setQuantity(data.getQuantity());
+                ShoppingEntityList.get(position).setOrder_quantity(data.getQuantity());
 
                 cll();
 
@@ -204,6 +213,7 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
                 ShoppingEntityList.get(position).setQuantity(0);
+                ShoppingEntityList.get(position).setOrder_quantity(0);
                 ShoppingEntityList.remove(position);
 
                 cll();
@@ -317,5 +327,11 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
         ArrayList newlist = new ArrayList();
         newlist.addAll(set);
         return newlist;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeActivity(this);
     }
 }

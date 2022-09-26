@@ -41,11 +41,26 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
         private int change_stock;
         private int quantity;
         private int order_quantity;
+        private int return_order_quantity;
         private int type;
         private String reason_name;
+        private int stock;
 
+        public int getStock() {
+            return stock;
+        }
 
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
 
+        public int getReturn_order_quantity() {
+            return return_order_quantity;
+        }
+
+        public void setReturn_order_quantity(int return_order_quantity) {
+            this.return_order_quantity = return_order_quantity;
+        }
 
         public int getOrder_quantity() {
             return order_quantity;

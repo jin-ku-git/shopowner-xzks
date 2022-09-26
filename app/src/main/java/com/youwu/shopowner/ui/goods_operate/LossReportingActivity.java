@@ -31,10 +31,12 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivityLoginBinding;
 import com.youwu.shopowner.databinding.ActivityLossReportingBinding;
+import com.youwu.shopowner.db.InventoryDao;
 import com.youwu.shopowner.ui.fragment.adapter.LossRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
+import com.youwu.shopowner.ui.fragment.bean.CommunityBean;
 import com.youwu.shopowner.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner.ui.fragment.bean.ReasonBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
@@ -91,7 +93,9 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
     //柜子接口走了几次
     private int Cabinet_type = 0;
 
-
+    private int page=1;
+    private int limit=100;
+    public InventoryDao inventoryDao;
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_loss_reporting;
@@ -142,10 +146,8 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
                 }
                 left.addAll(groupBeans);
 
-                for (int i=0;i<groupBeans.size();i++){
-                    //获取商品信息
-                    viewModel.initLossGoodsList(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
-                }
+                viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
+
 
 
             }
@@ -181,6 +183,68 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
 
             }
         });
+
+        viewModel.goodList.observe(this, new Observer<ArrayList<CommunityBean>>() {
+            @Override
+            public void onChanged(ArrayList<CommunityBean> communityBeans) {
+
+                inventoryDao.initTable(communityBeans);
+
+                if (communityBeans.size() == limit) {
+                    page++;
+                    viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
+                    return;
+                }
+                for (int i=0;i<left.size();i++){
+                    //获取商品信息
+                    List<CommunityBean> communityBeans1= inventoryDao.getGoodListByCategoryId(subZeroAndDot(left.get(i).getId()));
+                    if (communityBeans1.size()!=0){
+                        ArrayList<ScrollBean> list=new ArrayList<>();
+
+                        String name=left.get(i).getName();
+
+                        for (int j=0;j<communityBeans1.size();j++){
+                            ScrollBean.SAASOrderBean dataBean=new ScrollBean.SAASOrderBean();
+                            dataBean.setStock(communityBeans1.get(j).getStock());
+                            dataBean.setGoods_name(communityBeans1.get(j).getGoods_name());
+
+                            if (j==0){
+                                list.add(new ScrollBean(true, name,store_id));
+                            }
+                            list.add(new ScrollBean(dataBean));
+                        }
+                        right.addAll(list);
+                    }
+
+                }
+                KLog.a("right1:"+right.size());
+                KLog.a("Cabinet_type:"+Cabinet_type);
+                KLog.a("left:"+left.size());
+
+                left.clear();
+                KLog.a("right:"+right.size());
+                for (int w=0;w<right.size();w++){
+                    if (right.get(w).isHeader){
+                        GroupBean bean= new GroupBean();
+                        bean.setName(right.get(w).header);
+                        bean.setId(right.get(w).id);
+                        left.add(bean);
+                    }
+                }
+                KLog.d("走了几次left.size():"+left.size());
+                tPosition.clear();
+                first=0;
+                leftAdapter=null;
+                rightAdapter=null;
+                rightManager=null;
+                initDatas();
+                initLeft();
+                initRight();
+
+
+
+            }
+        });
         /**
          * 报损原因回调
          */
@@ -204,6 +268,12 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
+
+        inventoryDao = new InventoryDao(this);
+        boolean dataExists = inventoryDao.isDataExist();
+        if (dataExists) {
+            inventoryDao.deleteAllData();
+        }
 
         viewModel.shopping_visibility.set(0);
 
@@ -237,7 +307,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         rightManager = new GridLayoutManager(mContext, 1);
 
         if (rightAdapter == null) {
-            rightAdapter = new LossRightAdapter(R.layout.scroll_right, R.layout.layout_right_title, null);
+            rightAdapter = new LossRightAdapter(R.layout.loss_right, R.layout.layout_right_title, null);
             binding.recRight.setLayoutManager(rightManager);
             binding.recRight.addItemDecoration(new RecyclerView.ItemDecoration() {
                 @Override
@@ -545,7 +615,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths * 0.94);
-        layoutParams.height = (int) (height*0.4);
+        layoutParams.height = (int) (height*0.7);
         //将界面填充到AlertDiaLog容器
         dialogView.setLayoutParams(layoutParams);
         dialog_shopping.getWindow().setGravity(Gravity.BOTTOM);

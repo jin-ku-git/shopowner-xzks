@@ -66,6 +66,8 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
             @Override
             public void onClick(View v) {
                 data.setQuantity(data.getQuantity()+1);
+                data.setOrder_quantity(data.getOrder_quantity()+1);
+
                 /**
                  * 加操作
                  */
@@ -87,6 +89,8 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
                     }
                 }else {
                     data.setQuantity(data.getQuantity()-1);
+                    data.setOrder_quantity(data.getOrder_quantity()-1);
+
                     /**
                      * 减操作
                      */

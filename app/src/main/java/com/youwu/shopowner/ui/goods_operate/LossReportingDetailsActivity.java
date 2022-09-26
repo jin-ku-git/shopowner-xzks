@@ -39,8 +39,10 @@ import com.youwu.shopowner.ui.fragment.adapter.LossGoodsRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.login.LoginActivity;
+import com.youwu.shopowner.ui.main.MainActivity;
 import com.youwu.shopowner.ui.order_goods.ConfirmOrderViewModel;
 import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
+import com.youwu.shopowner.ui.order_record.RecordActivity;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
@@ -112,7 +114,7 @@ public class LossReportingDetailsActivity extends BaseActivity<ActivityLossRepor
                         new  XPopup.Builder(LossReportingDetailsActivity.this)
                                 .maxWidth((int) (widths * 0.8))
                                 .maxHeight((int) (height*0.6))
-                                .asConfirm("提示", "确认报损信息无误后，是否选择订货？", "取消", "确认", new OnConfirmListener() {
+                                .asConfirm("提示", "确认报损信息无误后，是否报损？", "取消", "确认", new OnConfirmListener() {
                                     @Override
                                     public void onConfirm() {
 
@@ -125,8 +127,14 @@ public class LossReportingDetailsActivity extends BaseActivity<ActivityLossRepor
 
                         break;
 
-                    case 3://订货成功
-                        RxToast.showTipToast(LossReportingDetailsActivity.this, "订货成功");
+                    case 3://报损成功
+                        RxToast.showTipToast(LossReportingDetailsActivity.this, "报损成功");
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",1);
+                        startActivity(RecordActivity.class,bundle);
+                        removeActivity(LossReportingDetailsActivity.this);
+
+
                         break;
                     case 4://备注弹窗
                         showRemarksDialog(viewModel.remarks.get());

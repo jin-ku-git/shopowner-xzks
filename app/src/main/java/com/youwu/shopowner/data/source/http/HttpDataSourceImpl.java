@@ -153,6 +153,14 @@ public class HttpDataSourceImpl implements HttpDataSource {
     public Observable<BaseBean<Object>> GOODS_CATEGORY() {
         return apiService.GOODS_CATEGORY();
     }
+    /**
+     * 获取盘点商品
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_STOCK_GOODS_LIST(String storeId,String category_id,String page,String limit,String type) {
+        return apiService.GET_STOCK_GOODS_LIST(storeId,category_id,page,limit,type);
+    }
 
     /**
      * 获取订货商品列表
@@ -195,8 +203,8 @@ public class HttpDataSourceImpl implements HttpDataSource {
      * @return
      */
     @Override
-    public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList) {
-        return apiService.ADD_ORDER(storeId,arrival_time,saasList);
+    public Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String goods_list) {
+        return apiService.ADD_ORDER(storeId,arrival_time,goods_list);
     }
 
     /**
@@ -222,8 +230,17 @@ public class HttpDataSourceImpl implements HttpDataSource {
      * @return
      */
     @Override
-    public Observable<BaseBean<Object>> ORDER_LIST(String store_id) {
-        return apiService.ORDER_LIST(store_id);
+    public Observable<BaseBean<Object>> ORDER_LIST(String store_id,String start) {
+        return apiService.ORDER_LIST(store_id,start);
+    }
+
+    /**
+     * 获取退货列表
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> REFUND_LIST(String store_id,int page,String limit,String start) {
+        return apiService.REFUND_LIST(store_id,page+"",limit,start);
     }
 
     /**
@@ -247,6 +264,23 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseBean<Object>> SALES_SITUATION(String type,String store_id) {
         return apiService.SALES_SITUATION(type,store_id);
+    }
+    /**
+     * 获取商品销量排行
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GOODS_SALE(String type,String store_id) {
+        return apiService.GOODS_SALE(type,store_id);
+    }
+
+    /**
+     * 获取套餐销量排行
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> PACKAGE_SALE(String type,String store_id) {
+        return apiService.PACKAGE_SALE(type,store_id);
     }
 
     /**
@@ -276,6 +310,15 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseBean<Object>> REFUND_DETAILS(String order_sn) {
         return apiService.REFUND_DETAILS(order_sn);
+    }
+    /**
+     * 退货详情
+     * @param order_sn  订单编号
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> CARGO_REFUND_DETAILS(String order_sn) {
+        return apiService.CARGO_REFUND_DETAILS(order_sn);
     }
 
     /**
@@ -337,8 +380,8 @@ public class HttpDataSourceImpl implements HttpDataSource {
      * @return
      */
     @Override
-    public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user) {
-        return apiService.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,ukey,sn,user);
+    public Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String key, String sn) {
+        return apiService.UPDATE_STORE_TERMINAL(is_order,start,end,delivery_method,is_link,key,sn);
     }
 
     /**
@@ -357,5 +400,38 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks) {
         return apiService.OUT_STOCK(goods_list,remarks);
+    }
+
+    /**
+     * 收货
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> RECEIVING(String order_list) {
+        return apiService.RECEIVING(order_list);
+    }
+    /**
+     * 打印测试
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> PRINT_TEST() {
+        return apiService.PRINT_TEST();
+    }
+    /**
+     * 门店列表设置
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> SETTING_LIST() {
+        return apiService.SETTING_LIST();
+    }
+    /**
+     * 修改密码
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> UPDATE_PASSWORD(String old_password,String new_password,String confirm_password) {
+        return apiService.UPDATE_PASSWORD(old_password,new_password,confirm_password);
     }
 }

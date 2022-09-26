@@ -2,6 +2,10 @@ package com.youwu.shopowner.ui.fragment.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +17,8 @@ import com.youwu.shopowner.R;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 
 import java.util.List;
+
+import me.goldze.mvvmhabit.utils.KLog;
 
 
 public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecycleAdapter.myViewHodler> {
@@ -56,14 +62,59 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
 //        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getQuantity()),2)+"";
 
-        holder.goods_price.setText("原库存0份");//获取实体类中的name字段并设置
-        holder.tv_number.setText(data.getQuantity()+"");
+        holder.goods_price.setText("原库存"+data.getStock()+"份");//获取实体类中的name字段并设置
+        holder.tv_number.setText(data.getChange_stock()+"");
+
+        TextWatcher watcher=new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                Log.e(TAG, "beforeTextChanged: "+"输入前"+s.toString() );
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Log.e(TAG, "beforeTextChanged: "+"输入中"+s.toString() );
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                KLog.d("beforeTextChanged: "+"输入后"+s.toString());
+
+                String value = s.toString();
+
+                if ("".equals(value)){
+                    data.setChange_stock(0);
+                    holder.tv_number.setText("0");
+                }else {
+                    data.setChange_stock(Integer.parseInt(value));
+                }
+
+                /**
+                 * 减操作
+                 */
+                if (mEditListener != null) {
+                    mEditListener.onEdit(data,position);
+                }
+
+
+            }
+        };
+        holder.tv_number.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction()==MotionEvent.ACTION_DOWN){
+                    holder.tv_number.addTextChangedListener(watcher);
+                }
+                return false;
+            }
+        });
 
 
         holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.setQuantity(data.getQuantity()+1);
+                holder.tv_number.removeTextChangedListener(watcher);
+                data.setChange_stock(data.getChange_stock()+1);
                 /**
                  * 加操作
                  */
@@ -76,7 +127,8 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
         holder.iv_edit_subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.getQuantity()==1){
+                holder.tv_number.removeTextChangedListener(watcher);
+                if (data.getChange_stock()==1){
                     /**
                      * 删除操作
                      */
@@ -84,7 +136,7 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
                         mDeleteListener.onDelete(data,position);
                     }
                 }else {
-                    data.setQuantity(data.getQuantity()-1);
+                    data.setChange_stock(data.getChange_stock()-1);
                     /**
                      * 减操作
                      */
@@ -179,6 +231,17 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
 
     private OnDeleteListener mDeleteListener;
 
+
+    //加减的监听的回调
+    public interface OnEditListener {
+        void onEdit(ScrollBean.SAASOrderBean lists,int position);
+    }
+
+    public void setOnEditListener(OnEditListener listener) {
+        mEditListener = listener;
+    }
+
+    private OnEditListener mEditListener;
 
 
     /**

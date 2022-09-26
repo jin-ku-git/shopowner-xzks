@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,9 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppApplication;
@@ -51,6 +55,7 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
 
 
     int type;
+    int page=1;
 
     @Override
     public void initParam() {
@@ -131,6 +136,28 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
             binding.textTop.setText("退货记录");
         }
 
+        //刷新
+        binding.scSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                list.clear();
+                page=1;
+                //获取订单列表
+                initOrder_list();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+        //加载
+        binding.scSmartrefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                //获取订单列表
+                initOrder_list();
+                refreshLayout.finishLoadMore(true);//加载完成
+            }
+        });
+
         initCustomTimePicker();
 
 
@@ -143,7 +170,12 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
      */
     private void initOrder_list() {
 
-        viewModel.order_list(store_id);
+        if(type==1){
+            viewModel.order_list(store_id);
+        }else {
+            viewModel.refund_list(store_id,page);
+        }
+
     }
 
     /**
@@ -165,7 +197,16 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
         mOrderGoodsAdapter.setOnItemClickListener(new OrderGoodsAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, OrderGoodsBean data, int position) {
-                RxToast.normal(data.getActual_arrival_time());
+                if (type==1){
+                    Bundle bundle=new Bundle();
+                    bundle.putSerializable("OrderGoodsBean",data);
+                    startActivity(BookDetailsActivity.class,bundle);
+                }else {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("order_sn",data.getOrder_sn());
+                    startActivity(RefundDetailsActivity.class,bundle);
+                }
+
             }
         });
     }
@@ -173,7 +214,7 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
 

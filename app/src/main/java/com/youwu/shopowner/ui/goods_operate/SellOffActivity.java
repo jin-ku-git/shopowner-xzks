@@ -393,7 +393,7 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths * 0.94);
-        layoutParams.height = (int) (height*0.4);
+        layoutParams.height = (int) (height*0.7);
         //将界面填充到AlertDiaLog容器
         dialogView.setLayoutParams(layoutParams);
         dialog_shopping.getWindow().setGravity(Gravity.BOTTOM);

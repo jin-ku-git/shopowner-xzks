@@ -203,25 +203,17 @@ public class ReturnGoodsDetailsActivity extends BaseActivity<ActivityReturnGoods
         for (int i=0;i<ShoppingEntityList.size();i++){
             prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
             quantity+=ShoppingEntityList.get(i).getQuantity();
+            ShoppingEntityList.get(i).setReturn_order_quantity(ShoppingEntityList.get(i).getQuantity());
         }
+
 
         viewModel.TotalPrice.set(prick+"");
         viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.TotalQuantity.set(quantity+"");
+        mShoppingRecycleAdapter.notifyDataSetChanged();
 
+        mShoppingRecycleAdapter.notifyDataSetChanged();
 
     }
 
-
-
-    public ArrayList duplicateRemovalBySet(ArrayList<ScrollBean.SAASOrderBean> list){
-        Set set = new HashSet();
-        list.addAll(set);
-        for(int i = 0;i < list.size();i++){
-            set.add(list.get(i));
-        }
-        ArrayList newlist = new ArrayList();
-        newlist.addAll(set);
-        return newlist;
-    }
 }

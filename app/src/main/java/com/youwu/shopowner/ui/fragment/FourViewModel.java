@@ -189,7 +189,7 @@ public class FourViewModel extends BaseViewModel<DemoRepository> {
             startActivity(StoreSetUpActivity.class);
         }
     });
-    //报表设置
+    //报表
     public BindingCommand reportFormOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {

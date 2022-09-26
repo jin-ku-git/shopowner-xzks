@@ -22,7 +22,7 @@ public class CommunityBean  implements Serializable {
     private String goods_cost_price;//成本价格
     private String goods_img;//商品图片
     private int stock;//库存
-    private String change_stock;//修改后库存
+    private int change_stock;//修改后库存
     private int group_id;//所属群组id
     private String group_name;//所属群组名称
     private int group_sort;//
@@ -139,11 +139,11 @@ public class CommunityBean  implements Serializable {
         this.stock = stock;
     }
 
-    public String getChange_stock() {
+    public int getChange_stock() {
         return change_stock;
     }
 
-    public void setChange_stock(String change_stock) {
+    public void setChange_stock(int change_stock) {
         this.change_stock = change_stock;
     }
 

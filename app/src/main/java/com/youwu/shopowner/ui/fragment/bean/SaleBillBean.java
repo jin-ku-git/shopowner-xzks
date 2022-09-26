@@ -30,7 +30,7 @@ public class SaleBillBean implements Serializable {
     private String refund_sn;
     private String created_at;
     private int total_amount;
-    private int pay_amount;
+    private String pay_amount;
     private int order_status;
     private String order_status_name;
     private int refund_order_status;
@@ -110,11 +110,11 @@ public class SaleBillBean implements Serializable {
         this.total_amount = total_amount;
     }
 
-    public int getPay_amount() {
+    public String getPay_amount() {
         return pay_amount;
     }
 
-    public void setPay_amount(int pay_amount) {
+    public void setPay_amount(String pay_amount) {
         this.pay_amount = pay_amount;
     }
 

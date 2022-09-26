@@ -36,6 +36,7 @@ import com.youwu.shopowner.ui.fragment.adapter.InventoryRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
+import com.youwu.shopowner.ui.order_record.RecordActivity;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
@@ -121,7 +122,9 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
                         showRemarksDialog(viewModel.remarks.get());
                         break;
                     case 5://盘点成功
-
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",2);
+                        startActivity(RecordActivity.class,bundle);
                         break;
 
                 }
@@ -166,6 +169,7 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
         if (binding.goodsRecyclerview.getItemDecorationCount() == 0) {
             binding.goodsRecyclerview.addItemDecoration(new DividerItemDecorations(this, DividerItemDecorations.VERTICAL));
         }
+
         /**
          * 加减
          */
@@ -173,7 +177,7 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
             @Override
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
-                ShoppingEntityList.get(position).setQuantity(data.getQuantity());
+                ShoppingEntityList.get(position).setChange_stock(data.getChange_stock());
 
                 cll();
 
@@ -185,8 +189,16 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
         mInventoryRecycleAdapter.setOnDeleteListener(new InventoryRecycleAdapter.OnDeleteListener() {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
-                ShoppingEntityList.get(position).setQuantity(0);
+                ShoppingEntityList.get(position).setChange_stock(0);
                 ShoppingEntityList.remove(position);
+
+                cll();
+            }
+        });
+        mInventoryRecycleAdapter.setOnEditListener(new InventoryRecycleAdapter.OnEditListener() {
+            @Override
+            public void onEdit(ScrollBean.SAASOrderBean lists, int position) {
+                ShoppingEntityList.get(position).setChange_stock(lists.getChange_stock());
 
                 cll();
             }
@@ -201,8 +213,8 @@ public class InventoryDetailsActivity extends BaseActivity<ActivityInventoryDeta
         double prick=0.0;
         int quantity=0;
         for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-            quantity+=ShoppingEntityList.get(i).getQuantity();
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
+            quantity+=ShoppingEntityList.get(i).getChange_stock();
         }
 
         viewModel.TotalPrice.set(prick+"");

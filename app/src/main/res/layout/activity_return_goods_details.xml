@@ -145,6 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="请填写退款原因"
+                        android:text="@={viewModel.remarks}"
                         android:background="@null"
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/textColorHint"

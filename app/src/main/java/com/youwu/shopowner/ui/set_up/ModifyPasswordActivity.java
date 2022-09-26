@@ -1,5 +1,7 @@
 package com.youwu.shopowner.ui.set_up;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.lifecycle.Observer;
@@ -8,8 +10,10 @@ import androidx.lifecycle.ViewModelProviders;
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppViewModelFactory;
+import com.youwu.shopowner.app.UserUtils;
 import com.youwu.shopowner.databinding.ActivitySettingsBinding;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.login.LoginActivity;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
@@ -43,10 +47,23 @@ public class ModifyPasswordActivity extends BaseActivity<ActivitySettingsBinding
             public void onChanged(Integer integer) {
                 switch (integer){
                     case 1:
-                        RxToast.normal("确认");
                         break;
                     case 2:
                         RxToast.normal("取消");
+                        break;
+                    case 3:
+                        SharedPreferences sharedPreferences = getSharedPreferences("TestXML", 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        editor.clear().commit();
+
+
+                        UserUtils.logout();
+
+
+                        Intent intent=new Intent();
+                        intent.setClass(ModifyPasswordActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         break;
 
                 }

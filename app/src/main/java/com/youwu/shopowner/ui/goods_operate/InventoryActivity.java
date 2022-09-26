@@ -29,11 +29,13 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivityInventoryBinding;
 import com.youwu.shopowner.databinding.ActivityLossReportingBinding;
+import com.youwu.shopowner.db.InventoryDao;
 import com.youwu.shopowner.ui.fragment.adapter.InventoryRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.InventoryRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
+import com.youwu.shopowner.ui.fragment.bean.CommunityBean;
 import com.youwu.shopowner.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
@@ -75,12 +77,15 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
     //定义以goodsentity实体类为对象的数据集合
     private ArrayList<ScrollBean.SAASOrderBean> ShoppingEntityList = new ArrayList<ScrollBean.SAASOrderBean>();
 
+    public InventoryDao inventoryDao;
 
     String store_id;
 
     //柜子接口走了几次
     private int Cabinet_type = 0;
 
+    private int page=1;
+    private int limit=100;
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -141,10 +146,73 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
                 }
                 left.addAll(groupBeans);
 
-                for (int i=0;i<groupBeans.size();i++){
-                    //获取商品信息
-                    viewModel.initOrder_info(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
+                viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","1");
+
+//                for (int i=0;i<groupBeans.size();i++){
+//                    //获取商品信息
+//                    viewModel.initOrder_info(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
+//                }
+
+
+            }
+        });
+        viewModel.goodList.observe(this, new Observer<ArrayList<CommunityBean>>() {
+            @Override
+            public void onChanged(ArrayList<CommunityBean> communityBeans) {
+
+                inventoryDao.initTable(communityBeans);
+
+                if (communityBeans.size() == limit) {
+                    page++;
+                    viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","1");
+                    return;
                 }
+                for (int i=0;i<left.size();i++){
+                    //获取商品信息
+                    List<CommunityBean> communityBeans1= inventoryDao.getGoodListByCategoryId(subZeroAndDot(left.get(i).getId()));
+                    if (communityBeans1.size()!=0){
+                        ArrayList<ScrollBean> list=new ArrayList<>();
+
+                        String name=left.get(i).getName();
+
+                        for (int j=0;j<communityBeans1.size();j++){
+                            ScrollBean.SAASOrderBean dataBean=new ScrollBean.SAASOrderBean();
+                            dataBean.setStock(communityBeans1.get(j).getStock());
+                            dataBean.setGoods_name(communityBeans1.get(j).getGoods_name());
+
+                            if (j==0){
+                                list.add(new ScrollBean(true, name,store_id));
+                            }
+                            list.add(new ScrollBean(dataBean));
+                        }
+                        right.addAll(list);
+                    }
+
+                }
+                KLog.a("right1:"+right.size());
+                KLog.a("Cabinet_type:"+Cabinet_type);
+                KLog.a("left:"+left.size());
+
+                    left.clear();
+                    KLog.a("right:"+right.size());
+                    for (int w=0;w<right.size();w++){
+                        if (right.get(w).isHeader){
+                            GroupBean bean= new GroupBean();
+                            bean.setName(right.get(w).header);
+                            bean.setId(right.get(w).id);
+                            left.add(bean);
+                        }
+                    }
+                    KLog.d("走了几次left.size():"+left.size());
+                    tPosition.clear();
+                    first=0;
+                    leftAdapter=null;
+                    rightAdapter=null;
+                    rightManager=null;
+                    initDatas();
+                    initLeft();
+                    initRight();
+
 
 
             }
@@ -190,6 +258,12 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
+
+        inventoryDao = new InventoryDao(this);
+        boolean dataExists = inventoryDao.isDataExist();
+        if (dataExists) {
+            inventoryDao.deleteAllData();
+        }
 
         viewModel.shopping_visibility.set(0);
 
@@ -237,6 +311,35 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             });
             binding.recRight.setAdapter(rightAdapter);
 
+            rightAdapter.setOnEditListener(new InventoryRightAdapter.OnEditListener() {
+                @Override
+                public void onEdit(ScrollBean lists) {
+                    ScrollBean scrollBean=lists;
+
+                    //获取下标
+                    int  position=right.indexOf(scrollBean);
+
+                    right.set(position,lists);
+
+                    if (ShoppingEntityList.size()>0){
+                        List<ScrollBean.SAASOrderBean> lsit=new ArrayList<>();
+
+                        lsit.addAll(ShoppingEntityList);
+
+                        for (int i=0;i<lsit.size();i++) {
+                            if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                ShoppingEntityList.get(i).setChange_stock(lists.t.getChange_stock());
+                            }else {
+                                ShoppingEntityList.add(scrollBean.t);
+                            }
+                        }
+                    }else  {
+                        ShoppingEntityList.add(scrollBean.t);
+                    }
+                    cll(3);
+                }
+            });
+
             rightAdapter.setOnChangeListener(new InventoryRightAdapter.OnChangeListener() {
                 @Override
                 public void onChange(ScrollBean lists) {
@@ -254,7 +357,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
 
                         for (int i=0;i<lsit.size();i++) {
                             if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setQuantity(lists.t.getQuantity());
+                                ShoppingEntityList.get(i).setChange_stock(lists.t.getChange_stock());
                             }else {
                                 ShoppingEntityList.add(scrollBean.t);
                             }
@@ -399,7 +502,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths * 0.94);
-        layoutParams.height = (int) (height*0.4);
+        layoutParams.height = (int) (height*0.7);
         //将界面填充到AlertDiaLog容器
         dialogView.setLayoutParams(layoutParams);
         dialog_shopping.getWindow().setGravity(Gravity.BOTTOM);
@@ -458,7 +561,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             @Override
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
-                ShoppingEntityList.get(position).setQuantity(data.getQuantity());
+                ShoppingEntityList.get(position).setChange_stock(data.getChange_stock());
 
                 cll(2);
 
@@ -470,10 +573,19 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
         mInventoryRecycleAdapter.setOnDeleteListener(new InventoryRecycleAdapter.OnDeleteListener() {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
-                ShoppingEntityList.get(position).setQuantity(0);
+                ShoppingEntityList.get(position).setChange_stock(0);
                 ShoppingEntityList.remove(position);
 
                 cll(2);
+            }
+        });
+
+        mInventoryRecycleAdapter.setOnEditListener(new InventoryRecycleAdapter.OnEditListener() {
+            @Override
+            public void onEdit(ScrollBean.SAASOrderBean lists, int position) {
+                ShoppingEntityList.get(position).setChange_stock(lists.getChange_stock());
+
+                cll(3);
             }
         });
     }
@@ -490,11 +602,11 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
         double prick=0.0;
         int quantity=0;
         for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-            quantity+=ShoppingEntityList.get(i).getQuantity();
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
+            quantity+=ShoppingEntityList.get(i).getChange_stock();
         }
         for (int i=0;i<ShoppingEntityList.size();i++){
-            if (ShoppingEntityList.get(i).getQuantity()==0){
+            if (ShoppingEntityList.get(i).getChange_stock()==0){
                 ShoppingEntityList.remove(i);
             }
         }
@@ -503,8 +615,11 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             TotalType.setText(ShoppingEntityList.size()+"");
             TotalQuantity.setText(quantity+"");
         }
+        if (type!=3){
+            rightAdapter.notifyDataSetChanged();
 
-        rightAdapter.notifyDataSetChanged();
+
+        }
 
 
         viewModel.TotalPrice.set(prick+"");

@@ -2,6 +2,7 @@ package com.youwu.shopowner.ui.fragment.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,12 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.youwu.shopowner.R;
+import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.fragment.bean.ReasonBean;
 import com.youwu.shopowner.ui.fragment.bean.SaleBillBean;
+import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.fragment.bean.XXCOrderBean;
+import com.youwu.shopowner.ui.goods_operate.adapter.ReasonRecycleAdapter;
+import com.youwu.shopowner.ui.order_goods.OrderDetailsActivity;
+import com.youwu.shopowner.ui.order_goods.RefundOrderDetailsActivity;
 import com.youwu.shopowner.utils_view.GridSpacingItemDecoration;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 /**
  * 门店订单适配器
@@ -77,10 +88,28 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
                 }
                 holder.RefundImageRecycle.setAdapter(holder.refundImageAdapter);
 
+
             } else {
                 holder.refundImageAdapter.setPosition(position);
                 holder.refundImageAdapter.notifyDataSetChanged();
             }
+
+        holder.refundImageAdapter.setOnReasonListener(new ImageAdapter.OnReasonListener() {
+            @Override
+            public void onReason() {
+               if (mChangeListener!=null){
+                   mChangeListener.onChange(data,position);
+               }
+            }
+        });
+        holder.RefundImageRecycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mChangeListener!=null){
+                    mChangeListener.onChange(data,position);
+                }
+            }
+        });
 
 
 
@@ -142,6 +171,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
 
     }
 
+    //加减的监听的回调
+    public interface OnChangeListener {
+        void onChange(SaleBillBean data, int position);
+    }
+
+    public void setOnChangeListener(OnChangeListener listener) {
+        mChangeListener = listener;
+    }
+
+    private OnChangeListener mChangeListener;
 
 
 

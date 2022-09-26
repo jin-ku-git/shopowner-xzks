@@ -11,14 +11,27 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivitySalesOverviewBinding;
+import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.report_form.bean.SalesOverviewBean;
+import com.youwu.shopowner.utils_view.HorizontalBarView;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -28,9 +41,10 @@ import me.goldze.mvvmhabit.base.BaseActivity;
  * 报表页面
  * 2022/06/01
  */
-public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBinding, SalesOverviewViewModel> {
+public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBinding, SalesOverviewViewModel> implements OnChartValueSelectedListener {
 
 
+    String store_id;//店铺id
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -51,6 +65,20 @@ public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBin
 
     @Override
     public void initViewObservable() {
+        viewModel.HoBarEntity.observe(this, new Observer<ArrayList<HorizontalBarView.HoBarEntity>>() {
+            @Override
+            public void onChanged(ArrayList<HorizontalBarView.HoBarEntity> hoBarEntities) {
+
+                binding.horizontal.setHoBarData(hoBarEntities);
+            }
+        });
+        viewModel.HoBarEntityTwo.observe(this, new Observer<ArrayList<HorizontalBarView.HoBarEntity>>() {
+            @Override
+            public void onChanged(ArrayList<HorizontalBarView.HoBarEntity> hoBarEntities) {
+
+                binding.horizontalTwo.setHoBarData(hoBarEntities);
+            }
+        });
 
     }
 
@@ -66,8 +94,30 @@ public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBin
 
         viewModel.sales_situation(viewModel.state.get()+"");
 
+        store_id= AppApplication.spUtils.getString("StoreId");
+
+        viewModel.goods_sale(viewModel.state.get()+"");
+        viewModel.package_sale(viewModel.state.get()+"");
+
+        initChart();
 
     }
+
+    private void initChart() {
+        binding.horizontal.setOnItemClickListener(new HorizontalBarView.OnItemClickListener() {
+            @Override
+            public void onClick(String name, int num) {
+                RxToast.normal("商品："+name+"\n销量："+num);
+            }
+        });
+        binding.horizontalTwo.setOnItemClickListener(new HorizontalBarView.OnItemClickListener() {
+            @Override
+            public void onClick(String name, int num) {
+                RxToast.normal("商品："+name+"\n销量："+num);
+            }
+        });
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -76,4 +126,13 @@ public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBin
     }
 
 
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
 }

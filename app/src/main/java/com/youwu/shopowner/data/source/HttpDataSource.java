@@ -46,6 +46,8 @@ public interface HttpDataSource {
 
     //获取订货分类
     Observable<BaseBean<Object>> GOODS_CATEGORY();
+    //获取盘点商品
+    Observable<BaseBean<Object>> GET_STOCK_GOODS_LIST(String storeId,String category_id,String page,String limit,String type);
 
     //获取订货商品列表
     Observable<BaseBean<Object>> GOODS_LIST(String store_id,String id);
@@ -60,7 +62,7 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> UPDATE_STORE(String is_order, String start, String end);
 
     //申请订货
-    Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String saasList);
+    Observable<BaseBean<Object>> ADD_ORDER(String storeId,String arrival_time,String goods_list);
 
     //申请退货
     Observable<BaseBean<Object>> CARGO_REFUND(String storeId,String remarks,String saasList);
@@ -69,13 +71,20 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> GOODS_COUNT(String store_id);
 
     //获取订货列表
-    Observable<BaseBean<Object>> ORDER_LIST(String store_id);
+    Observable<BaseBean<Object>> ORDER_LIST(String store_id,String start);
+    //获取退货列表
+    Observable<BaseBean<Object>> REFUND_LIST(String store_id,int page,String limit,String start);
 
     //订单列表
     Observable<BaseBean<Object>> ORDER_List(String start, String end, int page, String delivery_method, String tel,String store_id,String order_taking_status,String order_sn);
 
     //获取销售概况
     Observable<BaseBean<Object>> SALES_SITUATION(String type,String store_id);
+    //获取商品销量排行
+    Observable<BaseBean<Object>> GOODS_SALE(String type,String store_id);
+
+    //获取套餐销量排行
+    Observable<BaseBean<Object>> PACKAGE_SALE(String type,String store_id);
 
     //核销
     Observable<BaseBean<Object>> CLOSE_ORDER(String order_sn);
@@ -85,6 +94,8 @@ public interface HttpDataSource {
 
     //退款订单详情
     Observable<BaseBean<Object>> REFUND_DETAILS(String order_sn);
+    //退货详情
+    Observable<BaseBean<Object>> CARGO_REFUND_DETAILS(String order_sn);
 
     //报损原因
     Observable<BaseBean<Object>> REASON();
@@ -99,10 +110,18 @@ public interface HttpDataSource {
     //沽清列表
     Observable<BaseBean<Object>> SELL_OFF_REPORT_LIST(String page,String limit,String store_id);
     //门店设置
-    Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String ukey, String sn, String user);
+    Observable<BaseBean<Object>> UPDATE_STORE_TERMINAL(String is_order, String start, String end, String delivery_method, String is_link, String key, String sn);
 
     //打印
     Observable<BaseBean<Object>> PRINT(String order_sn, String store_id);
     //沽清
     Observable<BaseBean<Object>> OUT_STOCK(String goods_list,String remarks);
+    //收货
+    Observable<BaseBean<Object>> RECEIVING(String order_list);
+    //打印测试
+    Observable<BaseBean<Object>> PRINT_TEST();
+    //门店设置列表
+    Observable<BaseBean<Object>> SETTING_LIST();
+    //修改密码
+    Observable<BaseBean<Object>> UPDATE_PASSWORD(String old_password,String new_password,String confirm_password);
 }

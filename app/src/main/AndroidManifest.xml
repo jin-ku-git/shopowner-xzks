@@ -61,6 +61,7 @@
         <activity android:name=".ui.order_goods.OrderDetailsActivity"/>
         <activity android:name=".ui.order_goods.RefundOrderDetailsActivity"/>
         <activity android:name=".ui.order_record.OrderGoodsListActivity"/>
+        <activity android:name=".ui.order_record.BookDetailsActivity"/>
         <activity android:name=".ui.report_form.SalesOverviewActivity"/>
         <activity android:name=".ui.set_up.ModifyPasswordActivity"/>
         <activity android:name=".ui.goods_operate.LossReportingActivity"/>
@@ -72,6 +73,7 @@
         <activity android:name=".ui.goods_operate.ReturnGoodsActivity"/>
         <activity android:name=".ui.goods_operate.ReturnGoodsDetailsActivity"/>
         <activity android:name=".ui.order_record.RecordActivity"/>
+        <activity android:name=".ui.order_record.RefundDetailsActivity"/>
 
 
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--//自带服务-->

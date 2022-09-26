@@ -58,7 +58,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginBottom="@dimen/size_60dp"
-                android:background="@drawable/radius_white"
                 android:padding="10dp"
                 >
 

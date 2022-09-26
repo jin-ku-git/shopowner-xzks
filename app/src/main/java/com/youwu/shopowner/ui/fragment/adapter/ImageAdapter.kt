@@ -13,6 +13,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener
 import com.lxj.xpopup.interfaces.XPopupImageLoader
 import com.youwu.shopowner.R
+import com.youwu.shopowner.ui.fragment.bean.ReasonBean
 import com.youwu.shopowner.ui.fragment.bean.SaleBillBean
 import com.youwu.shopowner.utils_view.CustomRoundAngleImageView
 
@@ -44,23 +45,31 @@ class ImageAdapter(private val mContext: Context, private val mList: List<SaleBi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        list.add(mList!![position])
+        list.add(mList!![position].goods_thumb)
 
         holder.goods_name.setText(mList!![position].goods_name)
 
         Glide.with(mContext).load(mList!![position].goods_thumb).placeholder(R.mipmap.loading).into(holder.sp_image)
 
+
         holder.sp_image.setOnClickListener {
-            XPopup.Builder(holder.itemView.context).asImageViewer(holder.sp_image, position, list,
-                    OnSrcViewUpdateListener { popupView, position ->
+//            XPopup.Builder(holder.itemView.context).asImageViewer(holder.sp_image, position, list,
+////                    OnSrcViewUpdateListener { popupView, position ->
+////
+////                        popupView.updateSrcView(holder.sp_image)
+////
+////                    },ImageLoaders())
+////                    .show()
 
-                        popupView.updateSrcView(holder.sp_image)
+            if(mreasonListener!=null){
+                mreasonListener!!.onReason()
+            }
 
-                    },ImageLoader())
-                    .show()
         }
 
     }
+
+
 
 
     override fun getItemCount(): Int {
@@ -87,6 +96,16 @@ class ImageAdapter(private val mContext: Context, private val mList: List<SaleBi
         }
     }
 
+    //回调
+    interface OnReasonListener {
+        fun onReason()
+    }
+
+    fun setOnReasonListener(listener: OnReasonListener?) {
+        mreasonListener = listener
+    }
+
+    private var mreasonListener: OnReasonListener? = null
 
     /**
      * 设置item的监听事件的接口
@@ -110,4 +129,22 @@ class ImageAdapter(private val mContext: Context, private val mList: List<SaleBi
     }
 
 
+}
+
+class ImageLoaders : XPopupImageLoader {
+    override fun loadImage(position: Int, url: Any, imageView: ImageView) {
+        //必须指定Target.SIZE_ORIGINAL，否则无法拿到原图，就无法享用天衣无缝的动画
+//        Glide.with(imageView).load(url).apply(RequestOptions().placeholder(R.mipmap.loading).override(Target.SIZE_ORIGINAL)).into(imageView)
+
+        Glide.with(imageView).load(url).into(imageView)
+    }
+
+    override fun getImageFile(context: Context, uri: Any): File? {
+        try {
+            return Glide.with(context).downloadOnly().load(uri).submit().get()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
 }

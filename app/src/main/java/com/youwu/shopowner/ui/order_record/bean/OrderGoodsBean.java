@@ -40,12 +40,21 @@ public class OrderGoodsBean implements Serializable {
     private int status;
     private double total_price;
     private double total_quantity;
+    private double actual_total_quantity;
     private int audit;
     private String audit_name;
     private String created_at;
     private String updated_at;
     private String status_name;
     private List<DetailsBean> details;
+
+    public double getActual_total_quantity() {
+        return actual_total_quantity;
+    }
+
+    public void setActual_total_quantity(double actual_total_quantity) {
+        this.actual_total_quantity = actual_total_quantity;
+    }
 
     public String getActual_total_price() {
         return actual_total_price;
@@ -207,7 +216,7 @@ public class OrderGoodsBean implements Serializable {
         this.details = details;
     }
 
-    public static class DetailsBean {
+    public static class DetailsBean implements Serializable{
         /**
          * id : 1
          * store_id : 1
@@ -239,6 +248,23 @@ public class OrderGoodsBean implements Serializable {
         private String updated_at;
         private String Actual;
         private String mark;
+        private String image;
+
+        public int getOrder_quantity() {
+            return order_quantity;
+        }
+
+        public void setOrder_quantity(int order_quantity) {
+            this.order_quantity = order_quantity;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
 
         public String getMark() {
             return mark;

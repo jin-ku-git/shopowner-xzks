@@ -12,7 +12,12 @@ import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.FragmentOneBinding;
+import com.youwu.shopowner.ui.main.EventBusBean;
 import com.youwu.shopowner.ui.order_goods.OrderReceivingActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 
@@ -59,9 +64,20 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         viewModel.getMe();
        StoreId= AppApplication.spUtils.getString("StoreId");
         viewModel.goods_count(StoreId);
-
+        //检查是否已经注册
+        if(!EventBus.getDefault().isRegistered(this)){//是否注册eventbus的判断
+            EventBus.getDefault().register(this);
+        }
 
     }
+    //MainActivity传递的数据
+    @Subscribe
+    public void onMQttBean(String  type) {
+
+        if ("1".equals(type)){
+            viewModel.getxcx_order_count();
+        }
+    };
     Bundle bundle;
     @Override
     public void initViewObservable() {
@@ -91,6 +107,11 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         });
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //反注册
+        EventBus.getDefault().unregister(this);
+    }
 
 }

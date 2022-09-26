@@ -89,8 +89,6 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
                     case 5:
                         type=  AppApplication.spUtils.getInt("ReceivingOrdersType");
 
-                        viewModel.start_time.set(AppApplication.spUtils.getString("start_time"));
-                        viewModel.end_time.set(AppApplication.spUtils.getString("end_time"));
                         setHide_radius();
                         break;
 
@@ -130,6 +128,8 @@ public class StoreSetUpActivity extends BaseActivity<ActivityStoreSetUpBinding, 
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
+
+        viewModel.setting_list();
 
         viewModel.state.setValue(false);
 

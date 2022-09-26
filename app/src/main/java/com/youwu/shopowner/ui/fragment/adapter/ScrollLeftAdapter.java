@@ -59,7 +59,7 @@ public class ScrollLeftAdapter extends BaseQuickAdapter<GroupBean, BaseViewHolde
                 tv.get(i).setMarqueeRepeatLimit(-1);
             } else {
                 tv.get(i).setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                layout_all.get(i).setBackgroundResource(R.color.main_touming);
+                layout_all.get(i).setBackgroundResource(R.color.white);
                 //失去焦点则停止滚动
                 tv.get(i).setEllipsize(TextUtils.TruncateAt.END);
                 tv.get(i).setFocusable(false);

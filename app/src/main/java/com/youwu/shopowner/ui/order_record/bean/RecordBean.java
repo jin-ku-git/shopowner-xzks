@@ -1,5 +1,6 @@
 package com.youwu.shopowner.ui.order_record.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * @author: Administrator
  * @date: 2022/9/22
  */
-public class RecordBean {
+public class RecordBean implements Serializable {
 
     /**
      * rows : [{"id":3,"store_id":19,"cashier_id":11,"cashier_name":"上级门店收银员","total_quantity":1,"total_kind_quantity":1,"total_amount":1,"mark":"备注","created_at":"2022-09-21 14:18:14","updated_at":"2022-09-21 14:18:14"},{"id":2,"store_id":19,"cashier_id":11,"cashier_name":"上级门店收银员","total_quantity":1,"total_kind_quantity":1,"total_amount":1,"mark":"备注","created_at":"2022-09-21 14:05:45","updated_at":"2022-09-21 14:05:45"},{"id":1,"store_id":19,"cashier_id":1,"cashier_name":"G","total_quantity":1,"total_kind_quantity":1,"total_amount":1,"mark":"报损备注","created_at":"2022-09-21 11:57:16","updated_at":"2022-09-21 11:57:16"}]

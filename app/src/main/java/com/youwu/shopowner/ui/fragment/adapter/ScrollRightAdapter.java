@@ -36,7 +36,7 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         helper.setText(R.id.goods_name, t.getGoods_name());
         helper.setText(R.id.goods_price, t.getOrder_price());
         helper.setText(R.id.tv_number, t.getQuantity()+"");
-        helper.setText(R.id.initial_order, "份起订");
+        helper.setText(R.id.initial_order, "1份起订");
 
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {

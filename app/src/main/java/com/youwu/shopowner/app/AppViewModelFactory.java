@@ -19,12 +19,14 @@ import com.youwu.shopowner.ui.goods_operate.SellOffViewModel;
 import com.youwu.shopowner.ui.login.LoginViewModel;
 import com.youwu.shopowner.ui.main.MainViewModel;
 import com.youwu.shopowner.ui.network.NetWorkViewModel;
+import com.youwu.shopowner.ui.order_record.BookDetailsViewModel;
 import com.youwu.shopowner.ui.order_record.OrderGoodsListViewModel;
 import com.youwu.shopowner.ui.order_goods.ConfirmOrderViewModel;
 import com.youwu.shopowner.ui.order_goods.OrderDetailsViewModel;
 import com.youwu.shopowner.ui.order_goods.OrderReceivingViewModel;
 import com.youwu.shopowner.ui.order_goods.RefundOrderDetailsViewModel;
 import com.youwu.shopowner.ui.order_record.RecordViewModel;
+import com.youwu.shopowner.ui.order_record.RefundDetailsViewModel;
 import com.youwu.shopowner.ui.report_form.SalesOverviewViewModel;
 import com.youwu.shopowner.ui.set_up.ModifyPasswordViewModel;
 import com.youwu.shopowner.ui.set_up.SettingsViewModel;
@@ -118,6 +120,10 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new ReturnGoodsDetailsViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(RecordViewModel.class)) {
             return (T) new RecordViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(BookDetailsViewModel.class)) {
+            return (T) new BookDetailsViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(RefundDetailsViewModel.class)) {
+            return (T) new RefundDetailsViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
