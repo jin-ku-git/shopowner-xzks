@@ -180,11 +180,26 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
         initOrderList();
     }
 
+    //MainActivity传递的数据
+    @Subscribe
+    public void onMQttBean(String  type) {
+
+        if ("3".equals(type)){
+            initOrderList();
+        }
+    };
+
     /**
      * 获取订单列表
      */
     private void initOrderList() {
-        viewModel.order_list(start_time!=null?TimeUtil.getStart(start_time):"", end_time!=null?TimeUtil.getEnd(end_time):"",delivery_method,tel,StoreId,order_status,page,order_sn);
+        if (start_time==null){
+            start_time="";
+        }
+        if (end_time==null){
+            end_time="";
+        }
+        viewModel.order_list("".equals(start_time)?"":TimeUtil.getStart(start_time), "".equals(end_time)?"":TimeUtil.getEnd(end_time),delivery_method,tel,StoreId,order_status,page,order_sn);
     }
 
     //MainActivity传递的数据
@@ -253,7 +268,7 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
                     Bundle bundle=new Bundle();
                     bundle.putString("order_sn",data.getOrder_sn());
                     startActivity(OrderDetailsActivity.class,bundle);
-                }else {
+                }else {//退款订单详情
                     Bundle bundle=new Bundle();
                     bundle.putString("order_sn",data.getOrder_sn());
                     startActivity(RefundOrderDetailsActivity.class,bundle);}

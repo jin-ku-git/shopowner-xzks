@@ -54,7 +54,7 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
     private ArrayList<OrderGoodsBean> mSaleBillBeans = new ArrayList<>();
 
 
-    int type;
+    int type;//1 订货 2退货
     int page=1;
 
     @Override
@@ -134,6 +134,7 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
             binding.textTop.setText("订货记录");
         }else if (type==2){
             binding.textTop.setText("退货记录");
+            binding.startTime.setHint("选择退货时间");
         }
 
         //刷新
@@ -183,7 +184,7 @@ public class OrderGoodsListActivity extends BaseActivity<ActivityOrderGoodsListB
      */
     private void initRecyclerView() {
         //创建adapter
-        mOrderGoodsAdapter = new OrderGoodsAdapter(this, mSaleBillBeans);
+        mOrderGoodsAdapter = new OrderGoodsAdapter(this, mSaleBillBeans,type);
         //给RecyclerView设置adapter
         binding.recyclerView.setAdapter(mOrderGoodsAdapter);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局

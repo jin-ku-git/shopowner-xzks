@@ -491,7 +491,6 @@ public class GoodsDao {
 
                 contentValues.put("goods_id_sku", goodsBean.getGoods_id_sku());
                 contentValues.put("goods_id", goodsBean.getGoods_id());
-                contentValues.put("goods_id", goodsBean.getGoods_id());
                 contentValues.put("goods_sku", goodsBean.getGoods_sku());
                 contentValues.put("goods_name", goodsBean.getGoods_name());
                 contentValues.put("goods_price", goodsBean.getGoods_price());
@@ -680,7 +679,7 @@ public class GoodsDao {
     private CommunityBean parseGoodS(Cursor cursor) {
         CommunityBean goods = new CommunityBean();
         goods.setGoods_id_sku(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[0])));
-        goods.setGoods_id(cursor.getInt(cursor.getColumnIndex(GOODS_COLUMNS[1])));
+        goods.setGoods_id(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[1])));
         goods.setGoods_sku(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[2])));
         goods.setGoods_name(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[3])));
         goods.setGoods_price(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[4])));

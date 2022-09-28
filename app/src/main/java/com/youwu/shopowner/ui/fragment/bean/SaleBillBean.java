@@ -33,10 +33,19 @@ public class SaleBillBean implements Serializable {
     private String pay_amount;
     private int order_status;
     private String order_status_name;
+    private String order_taking_status_name;
     private int refund_order_status;
     private String refund_order_status_name;
     private int order_count;
     private List<OrderDetailsBean> order_details;
+
+    public String getOrder_taking_status_name() {
+        return order_taking_status_name;
+    }
+
+    public void setOrder_taking_status_name(String order_taking_status_name) {
+        this.order_taking_status_name = order_taking_status_name;
+    }
 
     public String getRefund_sn() {
         return refund_sn;

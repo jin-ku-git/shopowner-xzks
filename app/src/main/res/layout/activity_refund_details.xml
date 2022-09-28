@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40"
                 android:orientation="horizontal"
-                android:visibility="@{viewModel.status==3?View.VISIBLE:View.GONE}"
+
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/rmb+viewModel.ReceiptTime}"
+                    android:text="@{viewModel.ReceiptTime}"
                     android:textColor="@color/main_black_85"
                     android:textSize="@dimen/size_14dp"
                     android:layout_gravity="center"
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40"
                 android:orientation="horizontal"
-
+                android:visibility="@{viewModel.status==2?View.VISIBLE:View.GONE}"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -244,22 +244,7 @@
 
 
         </LinearLayout>
-        <TextView
-            android:id="@+id/btLoginOut"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
-            android:layout_marginTop="31dp"
-            android:background="@drawable/radius_blue_8dp"
-            android:gravity="center"
-            android:text="收货"
-            android:textColor="@color/main_white"
-            android:textSize="17sp"
-            android:visibility="@{viewModel.status!=3?View.VISIBLE:View.GONE}"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/size_15dp"
-            binding:onClickCommand="@{viewModel.ConfirmOrder}"/>
+
     </RelativeLayout>
 
 

@@ -132,6 +132,8 @@ public interface DemoApiService {
     @POST("return_cargo/cargo_refund_goods_list")
     Observable<BaseBean<Object>> CARGO_REFUND_GOODS_LIST(@Field("store_id") String store_id,@Field("category_id") String id);
 
+
+
     /**
      * 获取报损商品列表
      *

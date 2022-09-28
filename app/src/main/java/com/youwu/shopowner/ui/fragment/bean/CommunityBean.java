@@ -15,7 +15,7 @@ public class CommunityBean  implements Serializable {
 
 
     private String goods_id_sku;
-    private int goods_id;
+    private String goods_id;
     private String goods_sku;
     private String goods_name;//商品名称
     private String goods_price;//商品价格
@@ -83,11 +83,11 @@ public class CommunityBean  implements Serializable {
         this.goods_id_sku = goods_id_sku;
     }
 
-    public int getGoods_id() {
+    public String getGoods_id() {
         return goods_id;
     }
 
-    public void setGoods_id(int goods_id) {
+    public void setGoods_id(String goods_id) {
         this.goods_id = goods_id;
     }
 

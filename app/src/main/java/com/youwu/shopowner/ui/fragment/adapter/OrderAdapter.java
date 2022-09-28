@@ -74,7 +74,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
 
         holder.time.setText(data.getCreated_at());
         holder.order_state_name.setText(data.getShipping_type_name());
-        holder.state_name.setText(data.getOrder_status_name());
+        if (data.getOrder_status()==1&& data.getOrder_taking_status_name()!=null){
+            holder.state_name.setText(data.getOrder_taking_status_name());
+        }else if (data.getOrder_status()==1&&data.getOrder_taking_status_name()==null){//退款状态
+            holder.state_name.setText(data.getOrder_status_name());
+        }
+        if (data.getOrder_status()!=1&&data.getOrder_taking_status_name()!=null){
+            holder.state_name.setText(data.getOrder_taking_status_name());
+        }else if (data.getOrder_status()!=1&&data.getOrder_taking_status_name()==null){
+            holder.state_name.setText(data.getOrder_status_name());
+        }
+
+
         holder.goods_num.setText("共"+data.getOrder_count()+"件");
         holder.pay_amount.setText("￥"+data.getPay_amount());
 

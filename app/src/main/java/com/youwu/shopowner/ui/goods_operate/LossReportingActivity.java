@@ -146,7 +146,11 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
                 }
                 left.addAll(groupBeans);
 
-                viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
+                for (int i=0;i<groupBeans.size();i++){
+                    //获取商品信息
+                    viewModel.initLossGoodsList(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
+                }
+//                viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
 
 
 
@@ -207,7 +211,8 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
                             ScrollBean.SAASOrderBean dataBean=new ScrollBean.SAASOrderBean();
                             dataBean.setStock(communityBeans1.get(j).getStock());
                             dataBean.setGoods_name(communityBeans1.get(j).getGoods_name());
-
+                            dataBean.setOrder_price(communityBeans1.get(j).getGoods_price());
+                            dataBean.setGoods_sku(communityBeans1.get(j).getGoods_sku());
                             if (j==0){
                                 list.add(new ScrollBean(true, name,store_id));
                             }
@@ -254,7 +259,11 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
                 if (reasonList.size()!=0){
                     reasonList.clear();
                 }
+
                 reasonList.addAll(reasonBeans);
+                if (reasonList.size()>0){
+                    reasonBean=reasonBeans.get(0);
+                }
                 initRecyclerView();
             }
         });
@@ -365,10 +374,14 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
 
         rightAdapter.setNewData(right);
 
-        //设置右侧初始title
-        if (right.get(first).isHeader) {
-            binding.rightTitle.setText(right.get(first).header);
+
+        if (right.size()>0){
+            //设置右侧初始title
+            if (right.get(first).isHeader) {
+                binding.rightTitle.setText(right.get(first).header);
+            }
         }
+
 
         binding.recRight.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -701,7 +714,6 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         if (type==1){
             ShoppingEntityList=   duplicateRemovalBySet(ShoppingEntityList);
         }
-
 
         double prick=0.0;
         int quantity=0;

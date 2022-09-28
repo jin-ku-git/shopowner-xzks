@@ -55,7 +55,7 @@
                     android:layout_gravity="center"
                     app:tabMinWidth="40dip"
                     app:tabContentStart="20dp"
-                    app:tabMaxWidth="00dp"
+                    app:tabMaxWidth="0dp"
                     app:tabPaddingStart="10dp"
                     app:tabPaddingEnd="10dp"
                     app:tabRippleColor="@null"

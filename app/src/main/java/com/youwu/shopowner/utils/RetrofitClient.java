@@ -47,8 +47,8 @@ public class RetrofitClient {
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
 
-    public static String baseUrl = "https://xzkstest.youwuu.com/app/";//测试 20022-08-09
-//    public static String baseUrl = "https://xzks-api.youwuu.com/app/";//正式develop
+//    public static String baseUrl = "https://xzkstest.youwuu.com/app/";//测试 20022-08-09
+    public static String baseUrl = "https://xzks-api.youwuu.com/app/";//正式develop
 
 
     private static Context mContext = Utils.getContext();

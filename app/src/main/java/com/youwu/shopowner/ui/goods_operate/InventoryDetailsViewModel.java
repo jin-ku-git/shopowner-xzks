@@ -5,8 +5,14 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
+import com.google.gson.Gson;
 import com.youwu.shopowner.data.DemoRepository;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.fragment.bean.MarkBean;
+import com.youwu.shopowner.ui.fragment.bean.ReasonBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -17,6 +23,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.BaseBean;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
+import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -80,7 +87,14 @@ public class InventoryDetailsViewModel extends BaseViewModel<DemoRepository> {
      * @param goods_list
      */
     public void sorting_inventory(String goods_list,String type) {
-        model.SORTING_INVENTORY(goods_list,type,remarks.get())
+
+        List<MarkBean> list=new ArrayList<>();
+        MarkBean markBean=new MarkBean();
+        markBean.setName(remarks.get());
+        list.add(markBean);
+        String submitJson = new Gson().toJson(list);
+        KLog.d("goods_list:"+goods_list+"\nmark:"+submitJson);
+        model.SORTING_INVENTORY(goods_list,type,submitJson)
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -115,3 +129,4 @@ public class InventoryDetailsViewModel extends BaseViewModel<DemoRepository> {
                 });
     }
 }
+

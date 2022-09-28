@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.youwu.shopowner.R;
+import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 
@@ -65,16 +66,21 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
         holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.setQuantity(data.getQuantity()+1);
-                data.setOrder_quantity(data.getOrder_quantity()+1);
+                if (data.getQuantity()==data.getStock()){
+                    RxToast.normal("报损数量不能大于库存");
+                }else{
+                    data.setQuantity(data.getQuantity()+1);
+                    data.setOrder_quantity(data.getOrder_quantity()+1);
 
-                /**
-                 * 加操作
-                 */
-                if (mChangeListener != null) {
-                    mChangeListener.onChange(data,position);
+                    /**
+                     * 加操作
+                     */
+                    if (mChangeListener != null) {
+                        mChangeListener.onChange(data,position);
+                    }
+                    notifyDataSetChanged();
                 }
-                notifyDataSetChanged();
+
             }
         });
         holder.iv_edit_subtract.setOnClickListener(new View.OnClickListener() {

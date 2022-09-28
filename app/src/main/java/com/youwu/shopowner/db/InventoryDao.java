@@ -26,7 +26,7 @@ public class InventoryDao {
 
 
     private final String[] INVENTORY_COLUMNS = new String[]{"goods_id","goods_sku", "goods_name",
-            "goods_price","goods_img", "stock", "category_id", "category_name","goods_price"};
+            "goods_price","goods_img", "stock", "category_id", "category_name"};
 
 
     private Context context;
@@ -102,7 +102,6 @@ public class InventoryDao {
                     contentValues.put("stock", goodsBean.getStock());
                     contentValues.put("category_id", goodsBean.getCategory_id());
                     contentValues.put("category_name", goodsBean.getCategory_name());
-                    contentValues.put("goods_price", goodsBean.getGoods_price());
 
 
 
@@ -563,7 +562,7 @@ public class InventoryDao {
      */
     private CommunityBean parseGoodS(Cursor cursor) {
         CommunityBean goods = new CommunityBean();
-        goods.setGoods_id(cursor.getInt(cursor.getColumnIndex(INVENTORY_COLUMNS[0])));
+        goods.setGoods_id(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[0])));
         goods.setGoods_sku(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[1])));
         goods.setGoods_name(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[2])));
         goods.setGoods_price(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[3])));
@@ -571,7 +570,7 @@ public class InventoryDao {
         goods.setStock(cursor.getInt(cursor.getColumnIndex(INVENTORY_COLUMNS[5])));
         goods.setCategory_id(cursor.getInt(cursor.getColumnIndex(INVENTORY_COLUMNS[6])));
         goods.setCategory_name(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[7])));
-        goods.setGoods_price(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[8])));
+
 
 
 //        goods.setSpecs(MyApplication.gson.fromJson(cursor.getString(cursor.getColumnIndex(INVENTORY_COLUMNS[5])), new TypeToken<List<CommunityBean.SpecsBean>>() {

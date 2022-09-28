@@ -66,13 +66,7 @@ public class RefundDetailsViewModel extends BaseViewModel<DemoRepository> {
             finish();
         }
     });
-    //确认订货的点击事件
-    public BindingCommand ConfirmOrder = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            IntegerEvent.setValue(1);
-        }
-    });
+
 
     /**
      * 退货详情

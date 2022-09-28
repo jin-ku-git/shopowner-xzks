@@ -30,6 +30,7 @@ import com.youwu.shopowner.ui.fragment.adapter.LossGoodsRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.OrderDetailsBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.ui.goods_operate.LossReportingDetailsViewModel;
+import com.youwu.shopowner.ui.main.MainActivity;
 import com.youwu.shopowner.ui.order_goods.adapter.OrderGoodsRecycleAdapter;
 import com.youwu.shopowner.ui.order_record.adapder.ReceivingAdapter;
 import com.youwu.shopowner.ui.order_record.bean.OrderGoodsBean;
@@ -101,11 +102,20 @@ public class BookDetailsActivity extends BaseActivity<ActivityBookDetailsBinding
                 switch (integer){
                     case 1://收货
 
-                        orderGoodsBean.setDetails(mReceivingBeanList);
-                        String submitJson = new Gson().toJson(orderGoodsBean);
-                        KLog.d("收货订单解析数据："+submitJson);
+                        if (orderGoodsBean.getStatus()!=3){
+                            orderGoodsBean.setDetails(mReceivingBeanList);
+                            String submitJson = new Gson().toJson(orderGoodsBean);
+                            KLog.d("收货订单解析数据："+submitJson);
 
-                        viewModel.Receiving(submitJson);
+                            viewModel.Receiving(submitJson);
+                        }else {
+                            finish();
+                            Bundle bundle=new Bundle();
+                            bundle.putInt("type",2);
+                            bundle.putSerializable("OrderGoodsBean",orderGoodsBean);
+                            startActivity(MainActivity.class,bundle);
+                        }
+
 
                         break;
 
@@ -128,6 +138,8 @@ public class BookDetailsActivity extends BaseActivity<ActivityBookDetailsBinding
 
         store_id= AppApplication.spUtils.getString("StoreId");
         viewModel.TotalPrice.set(orderGoodsBean.getTotal_price()+"");
+        viewModel.ReceiptTime.set(orderGoodsBean.getArrival_time()+"");
+        viewModel.created_at.set(orderGoodsBean.getCreated_at()+"");
         if (orderGoodsBean.getDetails()!=null){
             viewModel.TotalType.set(orderGoodsBean.getDetails().size()+"");
         }

@@ -35,7 +35,9 @@ import com.youwu.shopowner.databinding.ActivityReturnGoodsDetailsBinding;
 import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
+import com.youwu.shopowner.ui.order_goods.ConfirmOrderActivity;
 import com.youwu.shopowner.ui.order_goods.bean.OrderItemBean;
+import com.youwu.shopowner.ui.order_record.OrderGoodsListActivity;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
@@ -120,8 +122,13 @@ public class ReturnGoodsDetailsActivity extends BaseActivity<ActivityReturnGoods
 
                         break;
 
-                    case 3://订货成功
+                    case 3://退货成功
                         RxToast.showTipToast(ReturnGoodsDetailsActivity.this, "退货成功");
+
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",2);
+                        startActivity(OrderGoodsListActivity.class,bundle);
+                        removeActivity(ReturnGoodsDetailsActivity.this);
                         break;
 
 

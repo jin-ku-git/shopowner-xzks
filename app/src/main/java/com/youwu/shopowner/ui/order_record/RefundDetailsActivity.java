@@ -34,7 +34,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
 /**
- * 退货货详情页面
+ * 退货详情页面
  * @author: Administrator
  * @date: 2022/9/16
  */

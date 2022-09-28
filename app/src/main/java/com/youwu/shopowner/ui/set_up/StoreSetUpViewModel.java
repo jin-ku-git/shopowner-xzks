@@ -223,6 +223,7 @@ public class StoreSetUpViewModel extends BaseViewModel<DemoRepository> {
                                         KeyName.set(singleLiveField.get().getFeie_print().getUkey());
                                         ValueName.set(singleLiveField.get().getFeie_print().getSn());
                                     }
+                                    //通过逗号分割
                             String[] sourceStrArray = singleLiveField.get().getDelivery_method().split(",");
                             for (int i = 0; i < sourceStrArray.length; i++) {
                                 System.out.println(sourceStrArray[i]);

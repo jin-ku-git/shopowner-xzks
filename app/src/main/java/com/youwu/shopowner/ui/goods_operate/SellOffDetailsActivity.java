@@ -176,6 +176,7 @@ public class SellOffDetailsActivity extends BaseActivity<ActivitySellOffDetailsB
             binding.goodsRecyclerview.addItemDecoration(new DividerItemDecorations(this, DividerItemDecorations.VERTICAL));
         }
 
+
     }
 
 

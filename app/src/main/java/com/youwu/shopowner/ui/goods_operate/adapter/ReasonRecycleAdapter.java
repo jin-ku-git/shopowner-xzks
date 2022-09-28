@@ -2,6 +2,7 @@ package com.youwu.shopowner.ui.goods_operate.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -61,6 +62,8 @@ public class ReasonRecycleAdapter extends RecyclerView.Adapter<ReasonRecycleAdap
 //        holder.mItemGoodsImg;
         holder.reason_name.setText(data.getName());//获取实体类中的name字段并设置
 
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,8 +110,8 @@ public class ReasonRecycleAdapter extends RecyclerView.Adapter<ReasonRecycleAdap
     class myViewHodler extends RecyclerView.ViewHolder {
 
         private TextView reason_name;//
+        private ImageView imageView;
 
-        SmoothCheckBox check;
 
 
 
@@ -117,7 +120,7 @@ public class ReasonRecycleAdapter extends RecyclerView.Adapter<ReasonRecycleAdap
             super(itemView);
 
             reason_name = (TextView) itemView.findViewById(R.id.reason_name);
-            check = itemView.findViewById(R.id.check);
+            imageView = itemView.findViewById(R.id.image);
 
 
 
@@ -139,9 +142,11 @@ public class ReasonRecycleAdapter extends RecyclerView.Adapter<ReasonRecycleAdap
         }
         public void bindData(ReasonBean goodsEntity, int position, int currentIndex) {
             if (position == currentIndex) {
-                check.setChecked(true);
+
+                imageView.setImageResource(R.mipmap.checked_iv);
             } else {
-                check.setChecked(false);
+
+                imageView.setImageResource(R.mipmap.unchecked_iv);
             }
         }
 

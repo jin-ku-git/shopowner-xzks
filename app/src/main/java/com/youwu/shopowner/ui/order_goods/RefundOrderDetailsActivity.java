@@ -1,13 +1,23 @@
 package com.youwu.shopowner.ui.order_goods;
 
+import android.app.Dialog;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.xuexiang.xui.widget.button.SmoothCheckBox;
 import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppApplication;
@@ -26,6 +36,7 @@ import com.youwu.shopowner.utils_view.StatusBarUtil;
 import java.util.ArrayList;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
+import me.goldze.mvvmhabit.utils.KLog;
 
 /**
  * @author: Administrator
@@ -75,6 +86,17 @@ public class RefundOrderDetailsActivity extends BaseActivity<ActivityRefundOrder
                     case 1:
                         initPrint();
                         break;
+                    case 2://拒绝
+                        SelectionDialog(order_sn,2);
+                        break;
+                    case 3://同意
+                        SelectionDialog(order_sn,1);
+                        break;
+                    case 4:
+
+                        initOrderDetails();
+                        break;
+
 
                 }
             }
@@ -83,6 +105,12 @@ public class RefundOrderDetailsActivity extends BaseActivity<ActivityRefundOrder
         viewModel.OrderDetailsLiveEvent.observe(this, new Observer<RefundDetailsBean>() {
             @Override
             public void onChanged(RefundDetailsBean orderDetailsBean) {
+                if (mList.size()!=0){
+                    mList.clear();
+                }
+                if (mImageList.size()!=0){
+                    mImageList.clear();
+                }
 
                 for (int i=0;i<orderDetailsBean.getDetails().size();i++){
                     OrderDetailsBean.GoodsListBean goodsListBean=new OrderDetailsBean.GoodsListBean();
@@ -166,5 +194,112 @@ public class RefundOrderDetailsActivity extends BaseActivity<ActivityRefundOrder
         if (binding.imageRecyclerview.getItemDecorationCount() == 0) {
             binding.imageRecyclerview.addItemDecoration(new DividerItemDecorations(this, DividerItemDecorations.HORIZONTAL));
         }
+    }
+
+    SmoothCheckBox yes_check;
+    SmoothCheckBox no_check;
+    /**
+     * 退款拒绝还是同意弹窗
+     */
+    private void SelectionDialog(final String order_sn, final int status) {
+
+        final Dialog dialog = new Dialog(this, R.style.BottomDialog);
+
+        //获取屏幕宽高
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int widths = size.x;
+        int height = size.y;
+
+        //获取界面
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_selection, null);
+        //将界面填充到AlertDiaLog容器
+        dialog.setContentView(dialogView);
+        ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
+        //设置弹窗宽高
+        layoutParams.width = (int) (widths * 0.8);
+        layoutParams.height = (int) (height * 0.4);
+        //将界面填充到AlertDiaLog容器
+        dialogView.setLayoutParams(layoutParams);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+        dialog.setCancelable(true);//点击外部消失弹窗
+        dialog.show();
+
+        //初始化控件
+        TextView close_text = (TextView) dialogView.findViewById(R.id.close_text);//返回
+        TextView selection_name = (TextView) dialogView.findViewById(R.id.selection_name);//
+        TextView content = (TextView) dialogView.findViewById(R.id.content);//
+        LinearLayout refund_layout = (LinearLayout) dialogView.findViewById(R.id.refund_layout);//
+        LinearLayout agree_layout = (LinearLayout) dialogView.findViewById(R.id.agree_layout);//
+        final EditText reason = (EditText) dialogView.findViewById(R.id.reason);//
+        final TextView cancel = (TextView) dialogView.findViewById(R.id.cancel);//取消
+
+        yes_check = dialog.findViewById(R.id.yes_check);
+        no_check = dialog.findViewById(R.id.no_check);
+        yes_check.setChecked(true);
+        no_check.setChecked(false);
+
+        final TextView confirm = (TextView) dialogView.findViewById(R.id.confirm);//确定
+        if (status == 1) {
+            selection_name.setText("同意");
+            agree_layout.setVisibility(View.VISIBLE);
+            refund_layout.setVisibility(View.GONE);
+
+        } else {
+            selection_name.setText("拒绝");
+            agree_layout.setVisibility(View.GONE);
+            refund_layout.setVisibility(View.VISIBLE);
+        }
+        //返回
+        close_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        yes_check.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
+
+                if (isChecked){
+                    no_check.setChecked(false);
+                }
+                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
+            }
+        });
+        no_check.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
+                if (isChecked){
+                    yes_check.setChecked(false);
+                }
+                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        //确定
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String refund_reason;
+                refund_reason=reason.getText().toString();
+                if (refund_reason==null){
+                    refund_reason="";
+                }
+                viewModel.audit_order_refund(status,order_sn,refund_reason,yes_check.isChecked()?"1":"2",dialog);
+
+                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
+
+            }
+        });
+
     }
 }

@@ -41,6 +41,8 @@ public class BookDetailsViewModel extends BaseViewModel<DemoRepository> {
 
     //收货日期
     public ObservableField<String> ReceiptTime =new ObservableField<>();
+    //订货日期
+    public ObservableField<String> created_at =new ObservableField<>();
 
     //订单状态
     public ObservableField<Integer> status =new ObservableField<>();

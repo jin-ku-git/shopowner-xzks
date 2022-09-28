@@ -32,7 +32,7 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
          */
 
         private int id;
-        private int goods_id;
+        private String goods_id;
         private String goods_sku;
         private String goods_image;
         private String goods_name;
@@ -118,11 +118,11 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
             this.id = id;
         }
 
-        public int getGoods_id() {
+        public String getGoods_id() {
             return goods_id;
         }
 
-        public void setGoods_id(int goods_id) {
+        public void setGoods_id(String goods_id) {
             this.goods_id = goods_id;
         }
 

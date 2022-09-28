@@ -353,7 +353,7 @@ public class OrderReceivingActivity extends BaseActivity<ActivityOrderReceivingB
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
         //设置弹窗宽高
         layoutParams.width = (int) (widths * 0.8);
-        layoutParams.height = (int) (height * 0.8);
+        layoutParams.height = (int) (height * 0.4);
         //将界面填充到AlertDiaLog容器
         dialogView.setLayoutParams(layoutParams);
         dialog.getWindow().setGravity(Gravity.CENTER);

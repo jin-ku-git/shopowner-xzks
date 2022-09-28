@@ -11,7 +11,7 @@
             type="RecordViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,94 +46,126 @@
         </RelativeLayout>
 
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_10"
+            android:overScrollMode="never"
+            android:layout_marginTop="@dimen/dp45"
+            android:layout_marginBottom="@dimen/dp30"
             >
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-
-                android:layout_marginTop="@dimen/dp_10"
-                android:padding="@dimen/size_10dp"
+                android:padding="@dimen/dp_10"
                 >
-                <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                    android:id="@+id/sc_smartrefreshlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/size_15dp"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
-                    >
-
-                    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_50dp"
-                        style="@style/RefreshStyle"/>
-
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-
-                        >
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            >
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recyclerView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:overScrollMode="never"
-
-                                />
-                        </RelativeLayout>
-
-                    </androidx.core.widget.NestedScrollView>
-                    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_40dp"
-                        style="@style/RefreshStyle"/>
-                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
-                <!-- 空视图 -->
                 <LinearLayout
-                    android:id="@+id/null_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@drawable/radius_white_10dp"
-                    android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                    android:padding="@dimen/size_10dp"
+                    android:layout_weight="1"
                     >
-                    <ImageView
-                        android:layout_width="@dimen/size_175dp"
-                        android:layout_height="@dimen/size_175dp"
-                        android:src="@mipmap/null_view"
-                        android:scaleType="center"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="暂无订单"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_15sp"
-                        android:textColor="@color/main_color"
-                        />
+                    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                        android:id="@+id/sc_smartrefreshlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                        >
+
+                        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_50dp"
+                            style="@style/RefreshStyle"/>
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:overScrollMode="never"
+
+                            >
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                >
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:overScrollMode="never"
+
+                                    />
+                            </RelativeLayout>
+
+                        </androidx.core.widget.NestedScrollView>
+                        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_40dp"
+                            style="@style/RefreshStyle"/>
+                    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+                    <!-- 空视图 -->
+                    <LinearLayout
+                        android:id="@+id/null_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/radius_white_10dp"
+                        android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/size_175dp"
+                            android:layout_height="@dimen/size_175dp"
+                            android:src="@mipmap/null_view"
+                            android:scaleType="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="暂无订单"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_15sp"
+                            android:textColor="@color/main_color"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
+
+
+
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
+<!--        <com.youwu.shopowner.ui.order_record.DragImageView-->
+<!--            android:id="@+id/iv_drag_adver"-->
+<!--            android:layout_width="@dimen/dp45"-->
+<!--            android:layout_height="@dimen/dp45"-->
+<!--            android:src="@drawable/radius_blue_45dp"-->
+<!--            android:layout_marginBottom="@dimen/dp100"-->
+<!--            />-->
+        <com.youwu.shopowner.xuanfu.MyButton
+            android:id="@+id/button"
+            android:layout_width="@dimen/dp55"
+            android:layout_height="@dimen/dp55"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/dp100"
 
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottom_text"
+            android:textSize="@dimen/dp12"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp10"
+            />
+    </RelativeLayout>
 </layout>

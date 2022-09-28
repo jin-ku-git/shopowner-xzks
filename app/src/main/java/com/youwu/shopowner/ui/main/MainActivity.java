@@ -39,6 +39,7 @@ import com.youwu.shopowner.ui.fragment.OneFragment;
 import com.youwu.shopowner.ui.fragment.ThreeFragment;
 import com.youwu.shopowner.ui.fragment.TwoFragment;
 import com.youwu.shopowner.ui.fragment.bean.MqttBean;
+import com.youwu.shopowner.ui.order_record.bean.OrderGoodsBean;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     int type=1;
 
-
+    OrderGoodsBean orderGoodsBean;
     @Override
     public MainViewModel initViewModel() {
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
@@ -101,6 +102,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.initParam();
 
         type=getIntent().getIntExtra("type",1);
+        orderGoodsBean= (OrderGoodsBean) getIntent().getSerializableExtra("OrderGoodsBean");
     }
 
 
@@ -115,6 +117,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
 
         setSwPage(type);
+
+
 
 
 
@@ -157,14 +161,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     case 2:
 
                         setSwPage(2);
+                        EventBus.getDefault().post("2");
                         break;
                     case 3:
 
                         setSwPage(3);
+                        EventBus.getDefault().post("3");
                         break;
                     case 4:
 
                         setSwPage(4);
+                        EventBus.getDefault().post("4");
                         break;
 
                 }
@@ -259,18 +266,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @SuppressLint("ResourceAsColor")
     public void setSwPage(int i) {
 
-
-
         //获取FragmentManager对象
         manager = getSupportFragmentManager();
         //获取FragmentTransaction对象
         transaction = manager.beginTransaction();
         //先隐藏所有的Fragment
         hideFragments(transaction);
-
-
-
-
 
         switch (i) {
             case 1:
@@ -285,13 +286,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 break;
             case 2:
                 binding.twoHome.setonSelected(true);
+
                 if (mTowFragment == null) {
-                    mTowFragment = new TwoFragment();
+                    mTowFragment = new TwoFragment(orderGoodsBean);
                     transaction.add(R.id.frame, mTowFragment);
                 } else {
                     //对应的Fragment已经实例化，则直接显示出来
                     transaction.show(mTowFragment);
                 }
+
                 break;
             case 3:
                 binding.threeHome.setonSelected(true);

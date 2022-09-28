@@ -40,9 +40,14 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
     public ObservableField<String> TotalType =new ObservableField<>();
 
     public ObservableField<OrderDetailsBean> OrderDetails =new ObservableField<>();
+    public ObservableField<String> order_status_name =new ObservableField<>();
+
+    public ObservableField<Boolean> TimeShowHide =new ObservableField<>();
 
     //订单详情
     public SingleLiveEvent<OrderDetailsBean> OrderDetailsLiveEvent = new SingleLiveEvent<>();
+
+
 
     public OrderDetailsViewModel(@NonNull Application application, DemoRepository repository) {
         super(application, repository);
@@ -90,6 +95,12 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
                             OrderDetailsLiveEvent.setValue(saleBillBean);
                             OrderDetails.set(saleBillBean);
                             TotalType.set(saleBillBean.getGoods_list().size()+"");
+
+                            if ("".equals(OrderDetails.get().getPickup_time())){
+                                TimeShowHide.set(true);
+                            }else {
+                                TimeShowHide.set(false);
+                            }
 
                         }else {
                             RxToast.normal(response.getMessage());

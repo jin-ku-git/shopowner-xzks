@@ -37,9 +37,14 @@ import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
+import com.youwu.shopowner.ui.main.EventBusBean;
 import com.youwu.shopowner.ui.order_goods.ConfirmOrderActivity;
+import com.youwu.shopowner.ui.order_record.bean.OrderGoodsBean;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
 import com.youwu.shopowner.utils_view.DividerItemDecorations;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -82,6 +87,13 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
     //柜子接口走了几次
     private int Cabinet_type = 0;
+
+    OrderGoodsBean orderGoodsBean;
+
+    public TwoFragment(OrderGoodsBean orderGoodsBean) {
+        super();
+        this.orderGoodsBean=orderGoodsBean;
+    }
 
 
     @Override
@@ -153,9 +165,23 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         viewModel.OrderListBean.observe(this, new Observer<ArrayList<ScrollBean>>() {
             @Override
             public void onChanged(ArrayList<ScrollBean> saasOrderBeans) {
+                Cabinet_type++;
+                if (Cabinet_type==left.size()&&orderGoodsBean!=null){
+                    KLog.d("走了orderGoodsBean");
+                    for (int i=0;i<right.size();i++){
+                        for (int j=0;j<orderGoodsBean.getDetails().size();j++){
+                            if (!right.get(i).isHeader&&right.get(i).t.getGoods_sku().equals(orderGoodsBean.getDetails().get(j).getGoods_sku())){
+                                right.get(i).t.setQuantity(orderGoodsBean.getDetails().get(j).getQuantity());
+                                ShoppingEntityList.add(right.get(i).t);
+                            }
+
+                        }
+                    }
+                    cll(2);
+                }
 
                 right.addAll(saasOrderBeans);
-                Cabinet_type++;
+
                 if (Cabinet_type==left.size()){
                     Cabinet_type=0;
                     left.clear();
@@ -167,6 +193,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
                             left.add(bean);
                         }
                     }
+
                     KLog.d("走了几次left.size():"+left.size());
                     tPosition.clear();
                     first=0;
@@ -183,6 +210,15 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        left.clear();
+        right.clear();
+        ShoppingEntityList.clear();
+        initGoodsCategory();
+    }
+
+    @Override
     public void initData() {
         super.initData();
         mContext = getContext();
@@ -191,9 +227,25 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
         store_id= AppApplication.spUtils.getString("StoreId");
 
-        initGoodsCategory();
 
+
+        //检查是否已经注册
+        if(!EventBus.getDefault().isRegistered(this)){//是否注册eventbus的判断
+            EventBus.getDefault().register(this);
+        }
     }
+    //MainActivity传递的数据
+    @Subscribe
+    public void onMQttBean(String  type) {
+
+        if ("2".equals(type)){
+            if (ShoppingEntityList.size()==0){
+                left.clear();
+                right.clear();
+                initGoodsCategory();
+            }
+        }
+    };
 
     /**
      * 获取分类
@@ -375,7 +427,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
     TextView TotalType;
     TextView TotalQuantity;
     /**
-     * 日结弹窗
+     * 购物车弹窗
      */
     private void showJournalDialog() {
 
@@ -501,7 +553,10 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
             TotalQuantity.setText(quantity+"");
         }
 
-        rightAdapter.notifyDataSetChanged();
+        if (rightAdapter!=null){
+            rightAdapter.notifyDataSetChanged();
+        }
+
 
 
         viewModel.TotalPrice.set(prick+"");
@@ -549,7 +604,10 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         return newlist;
     }
 
-
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //反注册
+        EventBus.getDefault().unregister(this);
+    }
 }

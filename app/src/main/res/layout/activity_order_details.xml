@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.youwu.shopowner.ui.order_goods.OrderDetailsViewModel" />
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
@@ -82,7 +83,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.OrderDetails.order_status}"
+                        android:text="@{viewModel.order_status_name}"
                         android:textColor="@color/main_black_85"
                         android:textSize="@dimen/size_14dp"
                         />
@@ -138,6 +139,7 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp5"
                         android:layout_marginBottom="@dimen/dp5"
+                        android:visibility="@{viewModel.TimeShowHide?View.GONE:View.VISIBLE}"
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -167,6 +169,8 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp5"
                         android:layout_marginBottom="@dimen/dp5"
+                        android:visibility="@{viewModel.TimeShowHide?View.VISIBLE:View.GONE}"
+
                         >
                         <TextView
                             android:layout_width="wrap_content"
@@ -546,6 +550,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.OrderDetails.tableware_number+@string/main_null}"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="份"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
                             android:layout_gravity="center"

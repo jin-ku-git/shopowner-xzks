@@ -104,9 +104,11 @@
                 android:layout_height="@dimen/size_0_5dp"
                 android:background="@color/color_hui_d4"
                 />
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp30"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp5"
+
                 >
                 <TextView
                     android:id="@+id/remarks_name"
@@ -115,19 +117,20 @@
                     android:text="报损备注"
                     android:textSize="@dimen/dp15"
                     android:textColor="@color/main_black_85"
-                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp15"
                     />
+
                 <TextView
                     android:id="@+id/remarks"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="11111"
                     android:textSize="@dimen/dp15"
+                    android:gravity="right"
                     android:textColor="@color/main_black_85"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+
                     />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
 

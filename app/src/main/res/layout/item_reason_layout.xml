@@ -12,15 +12,23 @@
         android:layout_height="@dimen/dp40"
         android:orientation="horizontal"
         >
-        <com.xuexiang.xui.widget.button.SmoothCheckBox
-            android:id="@+id/check"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:scb_color_checked="@color/main_color"
-            app:scb_stroke_width="@dimen/size_1dp"
+<!--        <com.xuexiang.xui.widget.button.SmoothCheckBox-->
+<!--            android:id="@+id/check"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            app:scb_color_checked="@color/main_color"-->
+<!--            app:scb_stroke_width="@dimen/size_1dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            />-->
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:src="@mipmap/checked_iv"
             android:layout_gravity="center"
-            android:clickable="false"
             />
+
         <TextView
             android:id="@+id/reason_name"
             android:layout_width="wrap_content"

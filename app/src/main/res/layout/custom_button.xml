@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp55"
+        android:layout_height="@dimen/dp55"
+
+        >
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dp12"
+            android:textColor="@color/main_white"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

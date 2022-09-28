@@ -35,8 +35,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(order_sql);
 
 
-        String inventory_sql = "create table if not exists " + INVENTORY_TABLE_NAME + " (goods_id integer primary key,goods_sku text,goods_name text,goods_price text,goods_img text" +
-                ",stock integer,category_id integer,category_name text,goods_price text)";
+        String inventory_sql = "create table if not exists " + INVENTORY_TABLE_NAME + " (goods_id text primary key,goods_sku text,goods_name text,goods_price text,goods_img text" +
+                ",stock integer,category_id integer,category_name text)";
         sqLiteDatabase.execSQL(inventory_sql);
     }
 

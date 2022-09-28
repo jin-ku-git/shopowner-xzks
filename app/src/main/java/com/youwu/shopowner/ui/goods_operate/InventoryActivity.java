@@ -179,6 +179,9 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
                             ScrollBean.SAASOrderBean dataBean=new ScrollBean.SAASOrderBean();
                             dataBean.setStock(communityBeans1.get(j).getStock());
                             dataBean.setGoods_name(communityBeans1.get(j).getGoods_name());
+                            dataBean.setGoods_sku(communityBeans1.get(j).getGoods_sku());
+                            dataBean.setOrder_price(communityBeans1.get(j).getGoods_price());
+                            dataBean.setGoods_id(communityBeans1.get(j).getGoods_id()+"");
 
                             if (j==0){
                                 list.add(new ScrollBean(true, name,store_id));
@@ -482,7 +485,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
     TextView TotalType;
     TextView TotalQuantity;
     /**
-     * 日结弹窗
+     * 盘点弹窗
      */
     private void showJournalDialog() {
 
@@ -622,7 +625,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
         }
 
 
-        viewModel.TotalPrice.set(prick+"");
+//        viewModel.TotalPrice.set(prick+"");
         viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.shopping_visibility.set(ShoppingEntityList.size());
         viewModel.TotalQuantity.set(quantity+"");

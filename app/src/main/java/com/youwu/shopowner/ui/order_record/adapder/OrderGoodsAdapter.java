@@ -24,13 +24,14 @@ public class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.my
     private Context context;
     private List<OrderGoodsBean> rechargeBeans;
     private int currentIndex = 0;
-
+    private int type;
 
     //创建构造函数
-    public OrderGoodsAdapter(Context context, List<OrderGoodsBean> goodsEntityList) {
+    public OrderGoodsAdapter(Context context, List<OrderGoodsBean> goodsEntityList,int type) {
         //将传递过来的数据，赋值给本地变量
         this.context = context;//上下文
         this.rechargeBeans = goodsEntityList;//实体类数据ArrayList
+        this.type=type;
 
     }
 
@@ -71,10 +72,14 @@ public class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.my
                 holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.blue_color));
                 break;
             case 2://已配货
-                holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.main_yellow));
+                if (type==2){
+                    holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.main_green));
+                }else {
+                    holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.main_yellow));
+                }
                 break;
             case 3://已签收
-                if (data.getAudit()==1){//已退货
+                if (type==2){//已拒绝
                     holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.color_red));
                 }else {//已签收
                     holder.order_state.setTextColor(ContextCompat.getColor(context, R.color.main_green));
@@ -82,8 +87,12 @@ public class OrderGoodsAdapter extends RecyclerView.Adapter<OrderGoodsAdapter.my
 
                 break;
         }
+        if (type==2){
+            holder.order_time.setText("退货日期："+data.getCreated_at());//时间
+        }else {
+            holder.order_time.setText("订货日期："+data.getCreated_at());//时间
+        }
 
-        holder.order_time.setText("订单日："+data.getCreated_at());//时间
         holder.goods_num.setText("共"+ subZeroAndDot(data.getTotal_quantity()+"")+"件");//数量
 
 

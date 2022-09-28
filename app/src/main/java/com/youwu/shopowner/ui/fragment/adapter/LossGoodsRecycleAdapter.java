@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.youwu.shopowner.R;
+import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class LossGoodsRecycleAdapter extends RecyclerView.Adapter<LossGoodsRecyc
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
 //        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getQuantity()),2)+"";
 
-        holder.goods_price.setText(data.getOrder_price());//获取实体类中的name字段并设置
+        holder.goods_price.setText(data.getOrder_price()+"");//获取实体类中的name字段并设置
         holder.tv_number.setText(data.getQuantity()+"");
 
         holder.reason.setText(data.getReason_name());
@@ -65,14 +66,20 @@ public class LossGoodsRecycleAdapter extends RecyclerView.Adapter<LossGoodsRecyc
         holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.setQuantity(data.getQuantity()+1);
-                /**
-                 * 加操作
-                 */
-                if (mChangeListener != null) {
-                    mChangeListener.onChange(data,position);
-                }
-                notifyDataSetChanged();
+
+                    if (data.getQuantity()==data.getStock()){
+                        RxToast.normal("报损数量不能大于库存");
+                    }else {
+                        data.setQuantity(data.getQuantity()+1);
+                        /**
+                         * 加操作
+                         */
+                        if (mChangeListener != null) {
+                            mChangeListener.onChange(data,position);
+                        }
+                        notifyDataSetChanged();
+                    }
+
             }
         });
         holder.iv_edit_subtract.setOnClickListener(new View.OnClickListener() {

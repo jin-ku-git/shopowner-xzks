@@ -29,11 +29,13 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.ActivityInventoryBinding;
 import com.youwu.shopowner.databinding.ActivitySellOffBinding;
+import com.youwu.shopowner.db.InventoryDao;
 import com.youwu.shopowner.ui.fragment.adapter.InventoryRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.InventoryRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.SellOffRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.SellOffRightAdapter;
+import com.youwu.shopowner.ui.fragment.bean.CommunityBean;
 import com.youwu.shopowner.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 import com.youwu.shopowner.utils_view.BigDecimalUtils;
@@ -80,7 +82,9 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
 
     //柜子接口走了几次
     private int Cabinet_type = 0;
-
+    private int page=1;
+    private int limit=100;
+    public InventoryDao inventoryDao;
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -132,10 +136,12 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
                 }
                 left.addAll(groupBeans);
 
-                for (int i=0;i<groupBeans.size();i++){
-                    //获取商品信息
-                    viewModel.initOrder_info(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
-                }
+//                for (int i=0;i<groupBeans.size();i++){
+//                    //获取商品信息
+//                    viewModel.initOrder_info(store_id,groupBeans.get(i).getName(),subZeroAndDot(groupBeans.get(i).getId()));
+//                }
+
+                viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
 
 
             }
@@ -171,6 +177,70 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
 
             }
         });
+
+        viewModel.goodList.observe(this, new Observer<ArrayList<CommunityBean>>() {
+            @Override
+            public void onChanged(ArrayList<CommunityBean> communityBeans) {
+
+                inventoryDao.initTable(communityBeans);
+
+                if (communityBeans.size() == limit) {
+                    page++;
+                    viewModel.getStockGoodsList(store_id,"0",page+"",limit+"","2");
+                    return;
+                }
+                for (int i=0;i<left.size();i++){
+                    //获取商品信息
+                    List<CommunityBean> communityBeans1= inventoryDao.getGoodListByCategoryId(subZeroAndDot(left.get(i).getId()));
+                    if (communityBeans1.size()!=0){
+                        ArrayList<ScrollBean> list=new ArrayList<>();
+
+                        String name=left.get(i).getName();
+
+                        for (int j=0;j<communityBeans1.size();j++){
+                            ScrollBean.SAASOrderBean dataBean=new ScrollBean.SAASOrderBean();
+                            dataBean.setStock(communityBeans1.get(j).getStock());
+                            dataBean.setGoods_name(communityBeans1.get(j).getGoods_name());
+                            dataBean.setOrder_price(communityBeans1.get(j).getGoods_price());
+                            dataBean.setGoods_sku(communityBeans1.get(j).getGoods_sku());
+                            dataBean.setGoods_id(communityBeans1.get(j).getGoods_id());
+                            if (j==0){
+                                list.add(new ScrollBean(true, name,store_id));
+                            }
+                            list.add(new ScrollBean(dataBean));
+                        }
+                        right.addAll(list);
+                    }
+
+                }
+                KLog.a("right1:"+right.size());
+                KLog.a("Cabinet_type:"+Cabinet_type);
+                KLog.a("left:"+left.size());
+
+                left.clear();
+                KLog.a("right:"+right.size());
+                for (int w=0;w<right.size();w++){
+                    if (right.get(w).isHeader){
+                        GroupBean bean= new GroupBean();
+                        bean.setName(right.get(w).header);
+                        bean.setId(right.get(w).id);
+                        left.add(bean);
+                    }
+                }
+                KLog.d("走了几次left.size():"+left.size());
+                tPosition.clear();
+                first=0;
+                leftAdapter=null;
+                rightAdapter=null;
+                rightManager=null;
+                initDatas();
+                initLeft();
+                initRight();
+
+
+
+            }
+        });
     }
 
     @Override
@@ -181,6 +251,12 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
         //修改状态栏是状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
+
+        inventoryDao = new InventoryDao(this);
+        boolean dataExists = inventoryDao.isDataExist();
+        if (dataExists) {
+            inventoryDao.deleteAllData();
+        }
 
         viewModel.shopping_visibility.set(0);
 

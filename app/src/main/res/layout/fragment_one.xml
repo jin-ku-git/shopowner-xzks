@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_weight="1"
             >
             <RelativeLayout
                 android:layout_width="@dimen/size_125dp"
@@ -160,6 +161,17 @@
 
         </LinearLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottom_text"
+            android:textSize="@dimen/dp12"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp10"
+            />
 
     </LinearLayout>
 </layout>

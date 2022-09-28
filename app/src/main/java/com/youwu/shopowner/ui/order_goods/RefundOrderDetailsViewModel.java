@@ -1,6 +1,7 @@
 package com.youwu.shopowner.ui.order_goods;
 
 import android.app.Application;
+import android.app.Dialog;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -67,6 +68,23 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
+    //拒绝的点击事件
+    public BindingCommand RefuseOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            IntegerEvent.setValue(2);
+
+        }
+    });
+    //同意的点击事件
+    public BindingCommand AgreeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            IntegerEvent.setValue(3);
+
+        }
+    });
+
     /**
      * 订单详情
      * @param order_sn
@@ -129,6 +147,55 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
                     public void onNext(BaseBean<Object> response) {
                         if (response.isOk()){
                             RxToast.normal("打印成功");
+
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+    /**
+     * 小程序订单审核
+     * @param status
+     * @param order_sn
+     * @param refund_reason
+     * @param modify_stock
+     * @param dialog
+     */
+    public void audit_order_refund(final int status, String order_sn, String refund_reason, String modify_stock, final Dialog dialog) {
+        model.AUDIT_ORDER_REFUND(status,order_sn,refund_reason,modify_stock)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            dialog.dismiss();
+                            if (status==1){
+                                IntegerEvent.setValue(4);
+                            }else {
+                                IntegerEvent.setValue(4);
+                            }
+
 
                         }else {
                             RxToast.normal(response.getMessage());

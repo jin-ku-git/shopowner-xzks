@@ -58,7 +58,29 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
 
         holder.store_unchecked_img.setImageResource(data.getQuantity()==1?R.mipmap.checked_iv:R.mipmap.unchecked_iv);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.getQuantity()==0){
+                    data.setQuantity(data.getQuantity()+1);
+                    /**
+                     * 减操作
+                     */
+                    if (mChangeListener != null) {
+                        mChangeListener.onChange(data,position);
+                    }
+                }else {
+                    data.setQuantity(data.getQuantity()-1);
+                    /**
+                     * 减操作
+                     */
+                    if (mChangeListener != null) {
+                        mChangeListener.onChange(data,position);
+                    }
 
+                }
+            }
+        });
 
     }
 

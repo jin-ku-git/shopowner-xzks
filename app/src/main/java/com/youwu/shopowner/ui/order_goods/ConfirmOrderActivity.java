@@ -43,6 +43,8 @@ import java.util.Set;
 import me.goldze.mvvmhabit.base.BaseActivity;
 import me.goldze.mvvmhabit.utils.KLog;
 
+import static com.youwu.shopowner.utils_view.TimeUtil.getBeginDayOfTomorrow;
+
 /**
  * 确认订货页面
  * @author: Administrator
@@ -159,9 +161,8 @@ public class ConfirmOrderActivity extends BaseActivity<ActivityConfirmOrderBindi
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为黑色
 
-        Date date=new Date();
 
-        viewModel.estimate_time.set(getTime(date));
+        viewModel.estimate_time.set(getTime(getBeginDayOfTomorrow()));
 
         store_id= AppApplication.spUtils.getString("StoreId");
         viewModel.TotalPrice.set(TotalPrice);

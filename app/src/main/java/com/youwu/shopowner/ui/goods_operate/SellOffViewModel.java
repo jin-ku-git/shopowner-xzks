@@ -5,12 +5,15 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.data.DemoRepository;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.fragment.bean.CommunityBean;
 import com.youwu.shopowner.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
+import com.youwu.shopowner.ui.goods_operate.bean.RowsBean;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,8 @@ import me.goldze.mvvmhabit.http.BaseBean;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
+
+import static com.youwu.shopowner.app.AppApplication.toPrettyFormat;
 
 
 /**
@@ -52,7 +57,8 @@ public class SellOffViewModel extends BaseViewModel<DemoRepository> {
     //购物车是否显示
     public ObservableField<Integer> shopping_visibility =new ObservableField<>();
 
-
+    //商品列表
+    public SingleLiveEvent<ArrayList<CommunityBean>> goodList = new SingleLiveEvent<>();
 
 
     public SellOffViewModel(@NonNull Application application, DemoRepository repository) {
@@ -105,6 +111,52 @@ public class SellOffViewModel extends BaseViewModel<DemoRepository> {
                             ArrayList<GroupBean> list=  AppApplication.getObjectList(submitJsonData,GroupBean.class);
 
                             groupList.setValue(list);
+
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
+    }
+
+    /**
+     * 获取盘点商品列表
+     * @param storeId
+     * @param group_id
+     */
+    public void getStockGoodsList(String storeId, String group_id,String page,String limit,String type) {
+        model.GET_STOCK_GOODS_LIST(storeId,group_id,page,limit,type)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            String submitJsonData = new Gson().toJson(response.data);
+
+                            RowsBean rowsBean= JSON.parseObject(toPrettyFormat(submitJsonData), RowsBean.class);
+                            ArrayList<CommunityBean> list=  rowsBean.getRows();
+
+                            goodList.setValue(list);
 
                         }else {
                             RxToast.normal(response.getMessage());
