@@ -1,6 +1,7 @@
 package com.youwu.shopowner.ui.fragment.adapter;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
@@ -33,7 +34,7 @@ public class SellOffRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Bas
 
         helper.setImageResource(R.id.store_unchecked_img,t.getQuantity()==1?R.mipmap.checked_iv:R.mipmap.unchecked_iv);
 
-
+        Glide.with(mContext).load(t.getGoods_img()).placeholder(R.mipmap.loading).into((ImageView) helper.getView(R.id.goods_image));
         helper.setOnClickListener(R.id.layout_all, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

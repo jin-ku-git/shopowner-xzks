@@ -182,6 +182,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
                             dataBean.setGoods_sku(communityBeans1.get(j).getGoods_sku());
                             dataBean.setOrder_price(communityBeans1.get(j).getGoods_price());
                             dataBean.setGoods_id(communityBeans1.get(j).getGoods_id()+"");
+                            dataBean.setGoods_img(communityBeans1.get(j).getGoods_img()+"");
 
                             if (j==0){
                                 list.add(new ScrollBean(true, name,store_id));

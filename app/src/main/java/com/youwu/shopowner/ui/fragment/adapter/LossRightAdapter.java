@@ -1,7 +1,9 @@
 package com.youwu.shopowner.ui.fragment.adapter;
 
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.youwu.shopowner.R;
@@ -32,6 +34,9 @@ public class LossRightAdapter extends BaseSectionQuickAdapter<ScrollBean, BaseVi
         helper.setText(R.id.goods_price, t.getOrder_price());
         helper.setText(R.id.tv_number, t.getQuantity()+"");
         helper.setText(R.id.goods_stock, "库存："+t.getStock());
+
+        Glide.with(mContext).load(t.getGoods_img()).placeholder(R.mipmap.loading).into((ImageView) helper.getView(R.id.goods_image));
+
         if ("".equals(t.getReason_name())||t.getReason_name()==null){
             helper.setGone(R.id.reason,false);
         }else {

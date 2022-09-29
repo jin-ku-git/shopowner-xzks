@@ -34,7 +34,7 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
         private int id;
         private String goods_id;
         private String goods_sku;
-        private String goods_image;
+        private String goods_img;
         private String goods_name;
         private String store_name;
         private String order_price;
@@ -94,12 +94,13 @@ public class ScrollBean extends SectionEntity<ScrollBean.SAASOrderBean> {
             this.type = type;
         }
 
-        public String getGoods_image() {
-            return goods_image;
+
+        public String getGoods_img() {
+            return goods_img;
         }
 
-        public void setGoods_image(String goods_image) {
-            this.goods_image = goods_image;
+        public void setGoods_img(String goods_img) {
+            this.goods_img = goods_img;
         }
 
         public String getStore_name() {

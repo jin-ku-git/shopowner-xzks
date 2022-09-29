@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.youwu.shopowner.R;
@@ -41,7 +43,7 @@ public class InventoryRightAdapter extends BaseSectionQuickAdapter<ScrollBean, B
         helper.setText(R.id.goods_price, "原库存"+t.getStock()+"份");
         helper.setText(R.id.tv_number, t.getChange_stock()+"");
 
-
+        Glide.with(mContext).load(t.getGoods_img()).placeholder(R.mipmap.loading).into((ImageView) helper.getView(R.id.goods_image));
         EditText ss=helper.getView(R.id.tv_number);
 
 

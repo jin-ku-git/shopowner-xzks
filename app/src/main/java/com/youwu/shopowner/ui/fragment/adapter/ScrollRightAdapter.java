@@ -38,6 +38,11 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         helper.setText(R.id.tv_number, t.getQuantity()+"");
         helper.setText(R.id.initial_order, "1份起订");
 
+        KLog.d("image:"+t.getGoods_img());
+
+        Glide.with(mContext).load(t.getGoods_img()).placeholder(R.mipmap.loading).into((ImageView) helper.getView(R.id.goods_image));
+
+
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {
             @Override
