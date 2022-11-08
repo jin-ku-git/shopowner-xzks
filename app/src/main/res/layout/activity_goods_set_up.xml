@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.goods_operate.GoodsSetUpViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="GoodsSetUpViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|left"
+        android:orientation="vertical"
+        android:background="@color/viewLineColor"
+        >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="商品管理"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/divider" />
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:layout_marginLeft="@dimen/size_5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        >
+                        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                            android:id="@+id/sc_smartrefreshlayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingBottom="@dimen/size_15dp"
+                            android:layout_marginTop="@dimen/size_10dp"
+                            >
+
+                            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_50dp"
+                                style="@style/RefreshStyle"/>
+
+                            <androidx.core.widget.NestedScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"
+
+                                >
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    >
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/rec_right"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:overScrollMode="never" />
+                                </RelativeLayout>
+
+                            </androidx.core.widget.NestedScrollView>
+                            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_40dp"
+                                style="@style/RefreshStyle"/>
+                        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+                    </LinearLayout>
+
+
+
+
+
+                </FrameLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

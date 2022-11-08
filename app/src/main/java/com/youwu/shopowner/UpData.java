@@ -17,7 +17,7 @@ public class UpData {
                 .setProdVersionName(upDateBean.getVersion())//版本号
                 .setForceUpdateFlag(upDateBean.getUpdate_status())    //是否强制更新 0 不强制更新 1 hasAffectCodes拥有字段强制更新 2 所有版本强制更新
                 .setUpdateLog(upDateBean.getContent());//更新内容
-        AppUpdateUtils.getInstance().getUpdateConfig().setUiThemeType(TypeConfig.UI_THEME_L);//选择UI风格
+        AppUpdateUtils.getInstance().getUpdateConfig().setUiThemeType(TypeConfig.UI_THEME_I);//选择UI风格
         //打开文件MD5校验
         AppUpdateUtils.getInstance().getUpdateConfig().setNeedFileMD5Check(false);
 

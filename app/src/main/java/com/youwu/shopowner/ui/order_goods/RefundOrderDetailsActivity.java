@@ -101,6 +101,13 @@ public class RefundOrderDetailsActivity extends BaseActivity<ActivityRefundOrder
                 }
             }
         });
+        //拨打电话
+        viewModel.PhoneEvent.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                callPhone(s);
+            }
+        });
 
         viewModel.OrderDetailsLiveEvent.observe(this, new Observer<RefundDetailsBean>() {
             @Override

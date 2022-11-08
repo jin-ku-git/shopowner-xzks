@@ -35,7 +35,7 @@ public class GoodsDao {
 
     private final String[] GOODS_COLUMNS = new String[]{"goods_id_sku","goods_id", "goods_sku", "goods_name",
             "goods_price", "goods_cost_price", "goods_img", "stock", "group_id", "group_name"
-            , "group_sort", "group_img", "goods_number", "com_number_state","details","package_id","type"};
+            , "group_sort", "group_img", "goods_number", "com_number_state","details","package_id","type","market_price","status"};
 
 
     private Context context;
@@ -104,7 +104,7 @@ public class GoodsDao {
                     ContentValues contentValues = new ContentValues();
 
                     if (goodsBean.getType()==1){//商品
-                        contentValues.put("goods_id_sku", (goodsBean.getGoods_id()+""+goodsBean.getGoods_sku())+"");
+                        contentValues.put("goods_id_sku", goodsBean.getGoods_sku());
                     }else {//套餐
                         contentValues.put("goods_id_sku", goodsBean.getPackage_id()+"");
                     }
@@ -125,6 +125,8 @@ public class GoodsDao {
                     contentValues.put("details", goodsBean.getDetails());
                     contentValues.put("package_id", goodsBean.getPackage_id());
                     contentValues.put("type", goodsBean.getType());
+                    contentValues.put("market_price", goodsBean.getMarket_price());
+                    contentValues.put("status", goodsBean.getStatus());
 
 
                     db.insert(goodsDBHelper.GOODS_TABLE_NAME, null, contentValues);
@@ -695,6 +697,8 @@ public class GoodsDao {
         goods.setDetails(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[14])));
         goods.setPackage_id(cursor.getInt(cursor.getColumnIndex(GOODS_COLUMNS[15])));
         goods.setType(cursor.getInt(cursor.getColumnIndex(GOODS_COLUMNS[16])));
+        goods.setMarket_price(cursor.getString(cursor.getColumnIndex(GOODS_COLUMNS[17])));
+        goods.setStatus(cursor.getInt(cursor.getColumnIndex(GOODS_COLUMNS[18])));
 
 
 

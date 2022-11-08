@@ -8,6 +8,7 @@ import com.youwu.shopowner.ui.fragment.FourViewModel;
 import com.youwu.shopowner.ui.fragment.OneViewModel;
 import com.youwu.shopowner.ui.fragment.ThreeViewModel;
 import com.youwu.shopowner.ui.fragment.TwoViewModel;
+import com.youwu.shopowner.ui.goods_operate.GoodsSetUpViewModel;
 import com.youwu.shopowner.ui.goods_operate.InventoryDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.InventoryViewModel;
 import com.youwu.shopowner.ui.goods_operate.LossReportingDetailsViewModel;
@@ -16,6 +17,7 @@ import com.youwu.shopowner.ui.goods_operate.ReturnGoodsDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.ReturnGoodsViewModel;
 import com.youwu.shopowner.ui.goods_operate.SellOffDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.SellOffViewModel;
+import com.youwu.shopowner.ui.goods_operate.SetUpGoodsViewModel;
 import com.youwu.shopowner.ui.login.LoginViewModel;
 import com.youwu.shopowner.ui.main.MainViewModel;
 import com.youwu.shopowner.ui.network.NetWorkViewModel;
@@ -124,6 +126,10 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new BookDetailsViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(RefundDetailsViewModel.class)) {
             return (T) new RefundDetailsViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(GoodsSetUpViewModel.class)) {//商品管理
+            return (T) new GoodsSetUpViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(SetUpGoodsViewModel.class)) {//修改商品
+            return (T) new SetUpGoodsViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

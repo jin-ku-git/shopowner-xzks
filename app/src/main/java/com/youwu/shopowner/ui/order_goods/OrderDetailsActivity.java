@@ -78,6 +78,13 @@ public class OrderDetailsActivity extends BaseActivity<ActivityOrderDetailsBindi
                 }
             }
         });
+        //拨打电话
+        viewModel.PhoneEvent.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                callPhone(s);
+            }
+        });
         viewModel.OrderDetailsLiveEvent.observe(this, new Observer<OrderDetailsBean>() {
             @Override
             public void onChanged(OrderDetailsBean orderDetailsBean) {

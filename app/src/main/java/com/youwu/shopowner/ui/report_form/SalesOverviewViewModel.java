@@ -53,7 +53,8 @@ public class SalesOverviewViewModel extends BaseViewModel<DemoRepository> {
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
 
-
+    public SingleLiveEvent<String> TurnoverEvent = new SingleLiveEvent<>();
+    public SingleLiveEvent<String> PenEvent = new SingleLiveEvent<>();
 
     public class UIChangeObservable {
         //密码开关观察者
@@ -82,6 +83,8 @@ public class SalesOverviewViewModel extends BaseViewModel<DemoRepository> {
             state.set(1);
             sales_situation("1");
             goods_sale("1");
+            TurnoverEvent.setValue("昨日(元)");
+            PenEvent.setValue("昨日(笔)");
         }
     });
     //本周的点击事件
@@ -91,6 +94,8 @@ public class SalesOverviewViewModel extends BaseViewModel<DemoRepository> {
             state.set(2);
             sales_situation("2");
             goods_sale("2");
+            TurnoverEvent.setValue("上7天(元)");
+            PenEvent.setValue("上7天(笔)");
         }
     });
     //本月的点击事件
@@ -100,6 +105,8 @@ public class SalesOverviewViewModel extends BaseViewModel<DemoRepository> {
             state.set(3);
             sales_situation("3");
             goods_sale("3");
+            TurnoverEvent.setValue("上30天(元)");
+            PenEvent.setValue("上30天(笔)");
         }
     });
     //本月的点击事件
@@ -109,6 +116,8 @@ public class SalesOverviewViewModel extends BaseViewModel<DemoRepository> {
             state.set(4);
             sales_situation("4");
             goods_sale("4");
+            TurnoverEvent.setValue("上90天(元)");
+            PenEvent.setValue("上90天(笔)");
         }
     });
 

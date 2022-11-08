@@ -13,12 +13,13 @@ public class CommunityBean  implements Serializable {
 
     public String attribute;
 
-
     private String goods_id_sku;
     private String goods_id;
     private String goods_sku;
     private String goods_name;//商品名称
     private String goods_price;//商品价格
+    private String market_price;//商品市场价
+    private int status;//状态 1上架 2下架
     private String goods_cost_price;//成本价格
     private String goods_img;//商品图片
     private int stock;//库存
@@ -34,6 +35,22 @@ public class CommunityBean  implements Serializable {
     private int type;// 1商品 2 套餐
     private int category_id;// 分类id
     private String category_name;// 分类名称
+
+    public String getMarket_price() {
+        return market_price;
+    }
+
+    public void setMarket_price(String market_price) {
+        this.market_price = market_price;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getSou_suo_text() {
         return sou_suo_text;

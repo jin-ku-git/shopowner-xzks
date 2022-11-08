@@ -90,6 +90,9 @@ public class SalesOverviewActivity extends BaseActivity<ActivitySalesOverviewBin
         StatusBarUtil.setTransparentForWindow(this);
         StatusBarUtil.setDarkMode(this);//使状态栏字体变为白色
 
+        viewModel.TurnoverEvent.setValue("昨日(元)");
+        viewModel.PenEvent.setValue("昨日(笔)");
+
         viewModel.state.set(1);
 
         viewModel.sales_situation(viewModel.state.get()+"");

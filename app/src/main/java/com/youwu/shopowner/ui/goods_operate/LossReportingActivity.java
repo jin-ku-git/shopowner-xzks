@@ -717,14 +717,15 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
 
         double prick=0.0;
         int quantity=0;
-        for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-            quantity+=ShoppingEntityList.get(i).getQuantity();
-        }
+
         for (int i=0;i<ShoppingEntityList.size();i++){
             if (ShoppingEntityList.get(i).getQuantity()==0){
                 ShoppingEntityList.remove(i);
             }
+        }
+        for (int i=0;i<ShoppingEntityList.size();i++){
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
+            quantity+=ShoppingEntityList.get(i).getQuantity();
         }
         if(TotalPrice!=null){
             TotalPrice.setText(prick+"");

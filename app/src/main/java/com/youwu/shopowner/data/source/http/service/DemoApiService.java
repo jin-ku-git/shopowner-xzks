@@ -409,4 +409,40 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("update_password")
     Observable<BaseBean<Object>> UPDATE_PASSWORD(@Field("old_password") String old_password,@Field("new_password") String new_password,@Field("confirm_password") String confirm_password);
+    /**
+     * 获取群组
+     *
+     * @param store_id 门店id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods/goods_group")
+    Observable<BaseBean<Object>> GOODS_GROUP(@Field("store_id") String store_id);
+
+    /**
+     * 获取商品
+     *
+     * @param store_id 门店id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods_manage/goods_list")
+    Observable<BaseBean<Object>> GOODS_List(@Field("store_id") String store_id, @Field("page") String page, @Field("limit") String limit);
+
+    /**
+     * 更新商品信息
+     * @param type              商品类型 1商品 2套餐
+     * @param goods_sku         商品名称
+     * @param package_id        商品sku
+     * @param goods_name        套餐id
+     * @param goods_price       商品售价
+     * @param market_price      商品市场价
+     * @param status            商品状态 1上架 2下架
+     * @param stock             商品库存
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("goods_manage/update_store_goods")
+    Observable<BaseBean<Object>> UPDATE_STORE_GOODS(@Field("type") String type, @Field("goods_sku") String goods_sku, @Field("package_id") String package_id,@Field("goods_name") String goods_name,@Field("goods_price") String goods_price
+            ,@Field("market_price") String market_price,@Field("status") String status,@Field("stock") String stock);
 }

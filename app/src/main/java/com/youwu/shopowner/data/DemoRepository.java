@@ -429,4 +429,31 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     public Observable<BaseBean<Object>> UPDATE_PASSWORD(String old_password,String new_password,String confirm_password) {
         return mHttpDataSource.UPDATE_PASSWORD(old_password,new_password,confirm_password);
     }
+
+    /**
+     *获取群组
+     * @return
+     * @param store_id 门店id
+     */
+    @Override
+    public Observable<BaseBean<Object>> GOODS_GROUP(String store_id) {
+        return mHttpDataSource.GOODS_GROUP(store_id);
+    }
+    /**
+     *获取商品
+     * @return
+     * @param store_id 门店id
+     */
+    @Override
+    public Observable<BaseBean<Object>> GOODS_List(String store_id,String page,String limit) {
+        return mHttpDataSource.GOODS_List(store_id,page,limit);
+    }
+
+    /**
+     * 更新商品信息
+     * @return
+     */
+    public Observable<BaseBean<Object>> UPDATE_STORE_GOODS(String type, String goods_sku, String package_id, String GoodsName, String GoodsPrice, String MarketValue, String status, String GoodsStock) {
+        return mHttpDataSource.UPDATE_STORE_GOODS(type,goods_sku,package_id,GoodsName,GoodsPrice,MarketValue,status,GoodsStock);
+    }
 }

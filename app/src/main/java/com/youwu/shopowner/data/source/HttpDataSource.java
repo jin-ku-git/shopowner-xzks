@@ -124,4 +124,11 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> SETTING_LIST();
     //修改密码
     Observable<BaseBean<Object>> UPDATE_PASSWORD(String old_password,String new_password,String confirm_password);
+    //获取商品群组
+    Observable<BaseBean<Object>> GOODS_GROUP(String store_id);
+
+    //获取商品
+    Observable<BaseBean<Object>> GOODS_List(String store_id, String page, String limit);
+    //更新商品信息
+    Observable<BaseBean<Object>> UPDATE_STORE_GOODS(String type, String goods_sku, String package_id, String GoodsName, String GoodsPrice, String MarketValue, String status, String GoodsStock);
 }

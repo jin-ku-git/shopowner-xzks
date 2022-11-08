@@ -245,7 +245,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/daiqucan"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -268,7 +268,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/tuikuan"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -325,7 +325,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daijiedan"
+                            android:src="@mipmap/set_password"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -349,7 +349,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/tuichu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -422,7 +422,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daijiedan"
+                            android:src="@mipmap/dinghuo"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -446,7 +446,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/tuihuo"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -469,7 +469,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/baosun"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -492,7 +492,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/pandian"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -515,7 +515,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/guqing"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -527,6 +527,76 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/dp5"
                             />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="@dimen/dp10"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        binding:onClickCommand="@{viewModel.GoodsSetUpOnClick}"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/dp30"
+                            android:layout_height="@dimen/dp30"
+                            android:src="@mipmap/goods_setup"
+                            android:layout_gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="商品管理"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp5"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+
+                        >
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+
+                        >
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+
+                        >
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+
+                        >
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -571,7 +641,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daijiedan"
+                            android:src="@mipmap/dinghuojilu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -595,7 +665,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/tuihuojilu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -618,7 +688,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/baosunjilu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -641,7 +711,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/pandianjilu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -664,7 +734,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/guqingjilu"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -722,7 +792,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/baobiao"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -745,7 +815,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daichucan"
+                            android:src="@mipmap/hexiao"
                             android:layout_gravity="center"
                             />
                         <TextView
@@ -768,7 +838,7 @@
                         <ImageView
                             android:layout_width="@dimen/dp30"
                             android:layout_height="@dimen/dp30"
-                            android:src="@mipmap/daijiedan"
+                            android:src="@mipmap/shezhi"
                             android:layout_gravity="center"
                             />
                         <TextView

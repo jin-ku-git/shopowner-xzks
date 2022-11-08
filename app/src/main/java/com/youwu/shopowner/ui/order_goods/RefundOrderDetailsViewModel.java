@@ -37,7 +37,7 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
     //使用LiveData
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
 
-
+    public SingleLiveEvent<String> PhoneEvent = new SingleLiveEvent<>();
     //总价
     public ObservableField<String> TotalPrice =new ObservableField<>();
 
@@ -47,6 +47,8 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
     }
 
     public ObservableField<RefundDetailsBean> OrderDetails =new ObservableField<>();
+
+    public ObservableField<Integer> user_info =new ObservableField<>(0);
 
     //订单详情
     public SingleLiveEvent<RefundDetailsBean> OrderDetailsLiveEvent = new SingleLiveEvent<>();
@@ -85,6 +87,18 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
+    //拨打电话的点击事件
+    public BindingCommand PhoneOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (OrderDetails.get().getMember_info().getUser_name()!=null){
+                PhoneEvent.setValue(OrderDetails.get().getMember_info().getUser_name());
+            }
+
+
+        }
+    });
+
     /**
      * 订单详情
      * @param order_sn
@@ -109,6 +123,9 @@ public class RefundOrderDetailsViewModel extends BaseViewModel<DemoRepository> {
                             OrderDetailsLiveEvent.setValue(saleBillBean);
                             OrderDetails.set(saleBillBean);
 
+                            if (saleBillBean.getMember_info().getUser_name()==null||"".equals(saleBillBean.getMember_info().getUser_name())){
+                                user_info.set(1);
+                            }
                         }else {
                             RxToast.normal(response.getMessage());
                         }

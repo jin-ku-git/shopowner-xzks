@@ -54,6 +54,7 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
         final ScrollBean.SAASOrderBean data = goodsEntityList.get(position);
 //        holder.mItemGoodsImg;
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
+        holder.goods_stock.setText("数量:"+data.getStock()+"");//获取实体类中的name字段并设置
 //        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getQuantity()),2)+"";
 
         holder.store_unchecked_img.setImageResource(data.getQuantity()==1?R.mipmap.checked_iv:R.mipmap.unchecked_iv);
@@ -103,6 +104,7 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
     class myViewHodler extends RecyclerView.ViewHolder {
 
         private TextView goods_name;//商品名称，商品价格
+        private TextView goods_stock;
 
         private ImageView store_unchecked_img;
 
@@ -112,6 +114,7 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
             super(itemView);
 
             goods_name = (TextView) itemView.findViewById(R.id.goods_name);
+            goods_stock = (TextView) itemView.findViewById(R.id.goods_stock);
             store_unchecked_img = itemView.findViewById(R.id.store_unchecked_img);
 
 

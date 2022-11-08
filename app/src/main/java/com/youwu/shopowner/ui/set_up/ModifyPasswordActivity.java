@@ -11,6 +11,7 @@ import com.youwu.shopowner.BR;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.app.UserUtils;
+import com.youwu.shopowner.databinding.ActivityModifyPasswordBinding;
 import com.youwu.shopowner.databinding.ActivitySettingsBinding;
 import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.login.LoginActivity;
@@ -22,7 +23,7 @@ import me.goldze.mvvmhabit.base.BaseActivity;
  * @author: Administrator
  * @date: 2022/9/20
  */
-public class ModifyPasswordActivity extends BaseActivity<ActivitySettingsBinding, ModifyPasswordViewModel> {
+public class ModifyPasswordActivity extends BaseActivity<ActivityModifyPasswordBinding, ModifyPasswordViewModel> {
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_modify_password;

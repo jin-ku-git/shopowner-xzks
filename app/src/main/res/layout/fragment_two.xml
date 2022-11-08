@@ -18,7 +18,7 @@
         android:gravity="top|left"
         android:orientation="vertical"
         android:background="@color/viewLineColor"
-        android:padding="10dp">
+        android:padding="5dp">
 
 
         <RelativeLayout

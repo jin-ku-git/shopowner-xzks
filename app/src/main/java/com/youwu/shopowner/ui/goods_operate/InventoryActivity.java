@@ -605,14 +605,15 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
 
         double prick=0.0;
         int quantity=0;
-        for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
-            quantity+=ShoppingEntityList.get(i).getChange_stock();
-        }
+
         for (int i=0;i<ShoppingEntityList.size();i++){
             if (ShoppingEntityList.get(i).getChange_stock()==0){
                 ShoppingEntityList.remove(i);
             }
+        }
+        for (int i=0;i<ShoppingEntityList.size();i++){
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
+            quantity+=ShoppingEntityList.get(i).getChange_stock();
         }
         if(TotalPrice!=null){
             TotalPrice.setText(prick+"");

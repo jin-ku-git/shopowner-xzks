@@ -36,11 +36,14 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
     //使用LiveData
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<String> PhoneEvent = new SingleLiveEvent<>();
+
     //种类
     public ObservableField<String> TotalType =new ObservableField<>();
 
     public ObservableField<OrderDetailsBean> OrderDetails =new ObservableField<>();
     public ObservableField<String> order_status_name =new ObservableField<>();
+    public ObservableField<Integer> user_info =new ObservableField<>(0);
 
     public ObservableField<Boolean> TimeShowHide =new ObservableField<>();
 
@@ -71,6 +74,18 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
+    //拨打电话的点击事件
+    public BindingCommand PhoneOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            if (OrderDetails.get().getMember_tel()!=null){
+                PhoneEvent.setValue(OrderDetails.get().getMember_tel());
+            }
+
+
+        }
+    });
+
     /**
      * 订单详情
      * @param order_sn
@@ -95,6 +110,10 @@ public class OrderDetailsViewModel extends BaseViewModel<DemoRepository> {
                             OrderDetailsLiveEvent.setValue(saleBillBean);
                             OrderDetails.set(saleBillBean);
                             TotalType.set(saleBillBean.getGoods_list().size()+"");
+
+                            if (saleBillBean.getMember_name()==null||"".equals(saleBillBean.getMember_name())){
+                                user_info.set(1);
+                            }
 
                             if ("".equals(OrderDetails.get().getPickup_time())){
                                 TimeShowHide.set(true);

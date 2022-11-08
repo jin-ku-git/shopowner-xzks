@@ -9,6 +9,7 @@ import androidx.databinding.ObservableField;
 
 import com.youwu.shopowner.data.DemoRepository;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.goods_operate.GoodsSetUpActivity;
 import com.youwu.shopowner.ui.order_record.OrderGoodsListActivity;
 import com.youwu.shopowner.ui.order_record.RecordActivity;
 import com.youwu.shopowner.ui.report_form.SalesOverviewActivity;
@@ -201,6 +202,15 @@ public class FourViewModel extends BaseViewModel<DemoRepository> {
         @Override
         public void call() {
             startActivity(ModifyPasswordActivity.class);
+        }
+    });
+
+
+    //商品管理
+    public BindingCommand GoodsSetUpOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startActivity(GoodsSetUpActivity.class);
         }
     });
 

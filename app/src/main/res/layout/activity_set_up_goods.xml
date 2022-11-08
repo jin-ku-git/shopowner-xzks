@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.youwu.shopowner.ui.goods_operate.SetUpGoodsViewModel" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="SetUpGoodsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7F7F7"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="修改商品"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/radius_white_10dp"
+            android:layout_margin="@dimen/dp15"
+            android:padding="@dimen/dp8"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品名称："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品名称"
+                    android:imeOptions="actionDone"
+                    android:text="@={viewModel.GoodsName}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/color_hui"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品售价："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品售价"
+                    android:imeOptions="actionDone"
+                    android:text="@={viewModel.GoodsPrice}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/color_hui"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品市场价"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品市场价"
+                    android:imeOptions="actionDone"
+                    android:text="@={viewModel.MarketValue}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/color_hui"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.type==1?View.VISIBLE:View.GONE}"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品库存"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品库存"
+                    android:imeOptions="actionDone"
+                    android:text="@={viewModel.GoodsStock}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp80"
+                    android:layout_height="wrap_content"
+                    android:text="商品状态："
+                    android:textSize="@dimen/size_14dp"
+                    android:textColor="@color/main_black_85"
+                    android:layout_gravity="center"
+                    />
+                <RadioGroup
+                    android:id="@+id/hide_radius_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/hide_radius_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="上架"
+                        android:checked="@{viewModel.statusField==1?true:false}"
+                        android:layout_weight="1"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/hide_radius_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:text="下架"
+                        android:checked="@{viewModel.statusField==1?false:true}"
+                        android:layout_weight="1"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:text="确认修改"
+            android:textSize="@dimen/size_14dp"
+            android:textColor="@color/main_white"
+            android:background="@drawable/radius_blue_8dp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginEnd="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp15"
+            binding:onClickCommand="@{viewModel.ConfirmOnClick}"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottom_text"
+            android:textSize="@dimen/dp12"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp10"
+            />
+    </LinearLayout>
+</layout>

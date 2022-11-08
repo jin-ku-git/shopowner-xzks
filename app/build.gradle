@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
+    def buildTypeStr = "Release"
+    //    def buildTypeStr = "Debug"
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
@@ -65,18 +67,31 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//    //修改apk 的 文件名
-//    applicationVariants.all { variant ->
-//        variant.outputs.all { output ->
-//            def date = new Date().format("yyyy_MM_dd_hh_mm", TimeZone.getTimeZone("GMT+08"))
-//            if (variant.buildType.name == "debug") {
-//                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_debug_${android.defaultConfig.versionCode}.apk"
-//            } else if (variant.buildType.name == "release") {
-//                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_release_${android.defaultConfig.versionCode}.apk"
-//            }
-//        }
-//    }
 
+    applicationVariants.all {
+        //判断是release还是debug版本
+        def buildType = it.buildType.name
+
+        def fileName
+        File apkFile
+//                def channel = it.productFlavors[0].name.split("-")[0]
+        def createTime = new Date().format("YYYYMMddHHmmss", TimeZone.getTimeZone("GMT+08:00"))
+        //只对Release包起作用，如果不是Release包则不变更输出路径，否则可能导致AS无法自动安装debug包。
+        if (buildType == "release") {
+            apkFile = new File(project.rootDir.getParent() + "/apks")
+            it.getPackageApplicationProvider().get().outputDirectory = apkFile
+        }
+
+        it.outputs.each {
+
+            fileName = "v${defaultConfig.versionName}-${createTime}-${buildTypeStr}-${defaultConfig.versionCode}.apk"
+            //重新对apk命名。(适用于Gradle4.0以下版本)
+//                it.outputFile = new File(it.outputFile.parent, fileName)
+            //重新对apk命名。(适用于Gradle4.0（含）以上版本)如果你Gradle版本是4.0以下版本则将上面的一行代码放开并注释下面的这一行。
+            it.outputFileName = fileName
+
+        }
+    }
 }
 
 dependencies {

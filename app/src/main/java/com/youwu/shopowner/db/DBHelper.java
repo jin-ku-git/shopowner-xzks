@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  **/
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "youwuu_db";
     public static final String GOODS_TABLE_NAME = "goods";
 
@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String goods_sql = "create table if not exists " + GOODS_TABLE_NAME + " (goods_id_sku text primary key,goods_id integer,goods_sku text,goods_name text,goods_price text,goods_cost_price text,goods_img text" +
-                ",stock integer,group_id integer,group_name text,group_sort integer,group_img text,goods_number integer,com_number_state integer,details text,package_id integer,type integer)";
+                ",stock integer,group_id integer,group_name text,group_sort integer,group_img text,goods_number integer,com_number_state integer,details text,package_id integer,type integer,market_price text,status integer)";
         sqLiteDatabase.execSQL(goods_sql);
 
         String order_sql = "create table if not exists " + RESTING0RDER_TABLE_NAME + " (id integer primary key,creat_time text,ordernumber_bean text,vip_bean text,shop_car_goods text,order_number text)";

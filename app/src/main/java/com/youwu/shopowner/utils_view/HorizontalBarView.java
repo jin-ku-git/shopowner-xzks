@@ -34,8 +34,8 @@ public class HorizontalBarView extends View {
     private int mbarPaintColor = Color.parseColor("#5087EC");//bar的颜色
     private int mCountPaintColor = Color.parseColor("#5e5e5e");//最右边文字的颜色
     private int mLinePaintColor = Color.parseColor("#ededed");//线的颜色
-    private int contentTextSize = 16;//最左边文字的大小
-    private int countTextSize = 16;//最右边文字的大小
+    private int contentTextSize = 28;//最左边文字的大小
+    private int countTextSize = 30;//最右边文字的大小
     private int viewIntervar = 10;//view的距离
     private float topAndBottomInterval = dp2px(10);//上下边距的距离（上下线与bar的距离）
     private float rightInterval = dp2px(10);//最右侧文字和右边距离

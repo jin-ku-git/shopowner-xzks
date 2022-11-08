@@ -383,7 +383,13 @@ public class ThreeFragment extends BaseFragment<FragmentThreeBinding,ThreeViewMo
                 order.setText("");
                 start_time_text.setText("");
                 end_time_text.setText("");
-                dialog.cancel();
+
+
+                modeOne.setChecked(false);
+                modeTwo.setChecked(false);
+                modeThree.setChecked(false);
+                modeFour.setChecked(false);
+
             }
         });
         //确定

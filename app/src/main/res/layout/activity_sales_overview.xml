@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="本周"
+                    android:text="近7天"
                     android:textSize="@dimen/text_13dp"
                     android:textColor="@{viewModel.state==2?@color/main_white:@color/main_black}"
                     android:background="@{viewModel.state==2?@drawable/radius_blue_5dp:@drawable/radius_blue_xian_5dp}"                    android:paddingBottom="@dimen/size_5dp"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="本月"
+                    android:text="近30天"
                     android:textSize="@dimen/text_13dp"
                     android:textColor="@{viewModel.state==3?@color/main_white:@color/main_black}"
                     android:background="@{viewModel.state==3?@drawable/radius_blue_5dp:@drawable/radius_blue_xian_5dp}"                    android:paddingBottom="@dimen/size_5dp"
@@ -110,7 +110,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="本季度"
+                    android:text="近90天"
                     android:textSize="@dimen/text_13dp"
                     android:textColor="@{viewModel.state==4?@color/main_white:@color/main_black}"
                     android:background="@{viewModel.state==4?@drawable/radius_blue_5dp:@drawable/radius_blue_xian_5dp}"                    android:paddingBottom="@dimen/size_5dp"
@@ -186,7 +186,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昨日(元)"
+                            android:text="@{viewModel.TurnoverEvent}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
 
@@ -265,7 +265,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昨日(元)"
+                            android:text="@{viewModel.TurnoverEvent}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
 
@@ -351,7 +351,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昨日(笔)"
+                            android:text="@{viewModel.PenEvent}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
 
@@ -426,7 +426,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昨日(笔)"
+                            android:text="@{viewModel.PenEvent}"
                             android:textColor="@color/main_black_85"
                             android:textSize="@dimen/size_14dp"
 

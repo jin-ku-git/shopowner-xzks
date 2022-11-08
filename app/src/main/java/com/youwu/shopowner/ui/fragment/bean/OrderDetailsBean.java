@@ -35,6 +35,7 @@ public class OrderDetailsBean implements Serializable {
 
     private String order_sn;
     private String member_name;
+    private String member_tel;
     private String created_at;//创建时间
     private String payment_time;//支付时间
     private String shipping_type;
@@ -55,6 +56,14 @@ public class OrderDetailsBean implements Serializable {
     private String pickup_address;
     private int tableware_number;
     private List<GoodsListBean> goods_list;
+
+    public String getMember_tel() {
+        return member_tel;
+    }
+
+    public void setMember_tel(String member_tel) {
+        this.member_tel = member_tel;
+    }
 
     public String getPayment_time() {
         return payment_time;

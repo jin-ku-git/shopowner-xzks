@@ -369,7 +369,7 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
     TextView TotalType;
     TextView TotalQuantity;
     /**
-     * 日结弹窗
+     * 购物车弹窗
      */
     private void showJournalDialog() {
 
@@ -481,15 +481,16 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
 
         double prick=0.0;
         int quantity=0;
-        for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-            quantity+=ShoppingEntityList.get(i).getQuantity();
-            ShoppingEntityList.get(i).setReturn_order_quantity(ShoppingEntityList.get(i).getQuantity());
-        }
+
         for (int i=0;i<ShoppingEntityList.size();i++){
             if (ShoppingEntityList.get(i).getQuantity()==0){
                 ShoppingEntityList.remove(i);
             }
+        }
+        for (int i=0;i<ShoppingEntityList.size();i++){
+            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
+            quantity+=ShoppingEntityList.get(i).getQuantity();
+            ShoppingEntityList.get(i).setReturn_order_quantity(ShoppingEntityList.get(i).getQuantity());
         }
         if(TotalPrice!=null){
             TotalPrice.setText(prick+"");

@@ -446,11 +446,11 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
     Dialog dialog_shopping;//购物车弹窗
 
     RecyclerView shopping_recyclerview;
-    TextView TotalPrice;
+
     TextView TotalType;
     TextView TotalQuantity;
     /**
-     * 日结弹窗
+     * 购物车弹窗
      */
     private void showJournalDialog() {
 
@@ -464,7 +464,7 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
         int height = size.y;
 
         //获取界面
-        View dialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_shopping, null);
+        View dialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_shoppings, null);
         //将界面填充到AlertDiaLog容器
         dialog_shopping.setContentView(dialogView);
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
@@ -484,11 +484,10 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
 
         LinearLayout linear_view=dialogView.findViewById(R.id.linear_view);
         TextView Submit=dialogView.findViewById(R.id.Submit);
-        TotalPrice=dialogView.findViewById(R.id.TotalPrice);
+
         TotalType=dialogView.findViewById(R.id.TotalType);
         TotalQuantity=dialogView.findViewById(R.id.TotalQuantity);
 
-        TotalPrice.setText(viewModel.TotalPrice.get()+"");
         TotalType.setText(ShoppingEntityList.size()+"");
         TotalQuantity.setText(viewModel.TotalQuantity.get()+"");
 
@@ -559,29 +558,34 @@ public class SellOffActivity extends BaseActivity<ActivitySellOffBinding, SellOf
 
 
         double prick=0.0;
-        int quantity=0;
-        for (int i=0;i<ShoppingEntityList.size();i++){
-                prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
-                quantity+=ShoppingEntityList.get(i).getQuantity();
-        }
+
+        int stock=0;
         for (int i=0;i<ShoppingEntityList.size();i++){
             if (ShoppingEntityList.get(i).getQuantity()==0){
                 ShoppingEntityList.remove(i);
             }
         }
-        if(TotalPrice!=null){
-            TotalPrice.setText(prick+"");
-            TotalType.setText(ShoppingEntityList.size()+"");
-            TotalQuantity.setText(quantity+"");
+        for (int i=0;i<ShoppingEntityList.size();i++){
+                prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getQuantity()),2);
+
+            stock+=ShoppingEntityList.get(i).getStock();
         }
 
+
+
         rightAdapter.notifyDataSetChanged();
+        if (mSellOffRecycleAdapter!=null){
+            mSellOffRecycleAdapter.notifyDataSetChanged();
+            TotalQuantity.setText(stock+"");
+            TotalType.setText(ShoppingEntityList.size()+"");
+        }
+
 
 
         viewModel.TotalPrice.set(prick+"");
-        viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.shopping_visibility.set(ShoppingEntityList.size());
-        viewModel.TotalQuantity.set(quantity+"");
+        viewModel.TotalType.set(ShoppingEntityList.size()+"");
+        viewModel.TotalQuantity.set(stock+"");
 
 
     }
