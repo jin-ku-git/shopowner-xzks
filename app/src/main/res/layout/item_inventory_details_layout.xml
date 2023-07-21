@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/size_15dp"
+        >
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_gravity="center"
+            android:src="@mipmap/loading"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingLeft="@dimen/size_15dp"
+            android:gravity="center|left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="柴火大院"
+                android:textColor="#333333"
+                android:textSize="@dimen/size_14dp" />
+
+            <TextView
+                android:id="@+id/used_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_price_key"
+                android:text="499"
+                android:textColor="@color/main_black_85"
+                android:textSize="@dimen/dp14"  />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/new_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_price_key"
+                android:text="盘点原库存"
+                android:textColor="@color/main_black_85"
+                android:textSize="@dimen/dp14"  />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

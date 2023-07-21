@@ -46,27 +46,22 @@
         </RelativeLayout>
 
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:layout_marginTop="@dimen/dp45"
-            android:layout_marginBottom="@dimen/dp30"
-            >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp45"
+                android:layout_marginBottom="@dimen/dp30"
                 >
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="@dimen/size_10dp"
-                    android:layout_weight="1"
+
+
                     >
                     <com.scwang.smartrefresh.layout.SmartRefreshLayout
                         android:id="@+id/sc_smartrefreshlayout"
@@ -75,6 +70,7 @@
                         android:paddingBottom="@dimen/size_15dp"
                         android:layout_marginTop="@dimen/size_10dp"
                         android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+
                         >
 
                         <com.scwang.smartrefresh.layout.header.ClassicsHeader
@@ -139,7 +135,7 @@
 
 
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+
 
 <!--        <com.youwu.shopowner.ui.order_record.DragImageView-->
 <!--            android:id="@+id/iv_drag_adver"-->

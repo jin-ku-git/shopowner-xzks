@@ -149,11 +149,8 @@ public class GoodsSetUpActivity extends BaseActivity<ActivityGoodsSetUpBinding, 
         viewModel.goodList.observe(this, new Observer<ArrayList<CommunityBean>>() {
             @Override
             public void onChanged(ArrayList<CommunityBean> goodBeans) {
-                if (CabinetEntityList.size() > 0) {
-                    CabinetEntityList.clear();
-                }
 
-                CabinetEntityList.addAll(goodBeans);
+
                 initRecyclerViewTow();
                 goodsDao.deleteAllData();
                 goodsDao.initTable(goodBeans);
@@ -253,10 +250,11 @@ public class GoodsSetUpActivity extends BaseActivity<ActivityGoodsSetUpBinding, 
     //    刷新商品列表
     private void initGoodsList(String goods_id) {
 
-        CabinetEntityList.clear();
+        if (page==1){
+            CabinetEntityList.clear();
+        }
 
         CabinetEntityList.addAll(goodsDao.getGoodListByGroupId(goods_id));
-
 
         initRecyclerViewTow();
     }

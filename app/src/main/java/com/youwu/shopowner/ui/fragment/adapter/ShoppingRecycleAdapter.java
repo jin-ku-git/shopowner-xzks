@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
@@ -62,13 +63,13 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
         holder.goods_price.setText(data.getOrder_price());//获取实体类中的name字段并设置
         holder.tv_number.setText(data.getQuantity()+"");
 
+        Glide.with(context).load(data.getGoods_img()).placeholder(R.mipmap.loading).into(holder.goods_image);
+
 
         holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (data.getQuantity()==data.getStock()){
-                    RxToast.normal("报损数量不能大于库存");
-                }else{
+
                     data.setQuantity(data.getQuantity()+1);
                     data.setOrder_quantity(data.getOrder_quantity()+1);
 
@@ -79,7 +80,7 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
                         mChangeListener.onChange(data,position);
                     }
                     notifyDataSetChanged();
-                }
+
 
             }
         });
@@ -136,6 +137,8 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
 
         private ImageView iv_edit_add,iv_edit_subtract;//加  减
 
+        private ImageView goods_image;
+
 
 
 
@@ -147,6 +150,7 @@ public class ShoppingRecycleAdapter extends RecyclerView.Adapter<ShoppingRecycle
             tv_number = (TextView) itemView.findViewById(R.id.tv_number);
             iv_edit_add = (ImageView) itemView.findViewById(R.id.iv_edit_add);
             iv_edit_subtract = (ImageView) itemView.findViewById(R.id.iv_edit_subtract);
+            goods_image = (ImageView) itemView.findViewById(R.id.goods_image);
 
 
             //点击事件放在adapter中使用，也可以写个接口在activity中调用

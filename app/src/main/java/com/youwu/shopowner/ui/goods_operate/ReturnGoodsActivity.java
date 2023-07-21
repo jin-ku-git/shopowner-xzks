@@ -221,10 +221,52 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
                     outRect.set(0
                             , 0
                             , 0
-                            , dpToPx(mContext, getDimens(mContext, R.dimen.dp3)));
+                            , 0);
                 }
             });
             binding.recRight.setAdapter(rightAdapter);
+
+
+            rightAdapter.setOnEditListener(new ScrollRightAdapter.OnEditListener() {
+                @Override
+                public void onEdit(ScrollBean lists) {
+
+                    //获取下标
+                    int  position=right.indexOf(lists);
+
+                    right.set(position,lists);
+
+                    boolean t = ShoppingEntityList.contains(lists.t);
+
+                    KLog.a("是否："+(t?"是":"否"));
+
+                    KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
+                    if (ShoppingEntityList.size()>0){
+                        ArrayList<ScrollBean.SAASOrderBean> list=new ArrayList<>();
+
+                        list=ShoppingEntityList;
+
+
+                        int pos=999;
+
+                        for (int i=0;i<list.size();i++) {
+                            if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                pos=i;
+                            }
+                        }
+                        if (pos==999){
+                            ShoppingEntityList.add(lists.t);
+                        }else {
+                            ShoppingEntityList.get(pos).setQuantity(lists.t.getQuantity());
+                            ShoppingEntityList.get(pos).setReturn_order_quantity(lists.t.getReturn_order_quantity());
+                        }
+                    }else  {
+                        ShoppingEntityList.add(lists.t);
+                    }
+                    KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
+                    cll(3);
+                }
+            });
 
             rightAdapter.setOnChangeListener(new ScrollRightAdapter.OnChangeListener() {
                 @Override
@@ -237,22 +279,29 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
                     right.set(position,lists);
 
                     if (ShoppingEntityList.size()>0){
-                        List<ScrollBean.SAASOrderBean> lsit=new ArrayList<>();
+                        ArrayList<ScrollBean.SAASOrderBean> list=new ArrayList<>();
 
-                        lsit.addAll(ShoppingEntityList);
+                        list=ShoppingEntityList;
 
-                        for (int i=0;i<lsit.size();i++) {
-                            if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setQuantity(lists.t.getQuantity());
-                                ShoppingEntityList.get(i).setReturn_order_quantity(lists.t.getReturn_order_quantity());
-                            }else {
-                                ShoppingEntityList.add(scrollBean.t);
+
+                        int pos=999;
+
+                        for (int i=0;i<list.size();i++) {
+                            if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                pos=i;
                             }
                         }
+                        if (pos==999){
+                            ShoppingEntityList.add(lists.t);
+                        }else {
+                            ShoppingEntityList.get(pos).setQuantity(lists.t.getQuantity());
+                            ShoppingEntityList.get(pos).setReturn_order_quantity(lists.t.getReturn_order_quantity());
+                        }
+
                     }else  {
                         ShoppingEntityList.add(scrollBean.t);
                     }
-                    cll(1);
+                    cll(2);
 
                 }
             });
@@ -474,9 +523,6 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
      * 计算价格
      */
     private void cll(int type) {
-        if (type==1){
-            ShoppingEntityList=   duplicateRemovalBySet(ShoppingEntityList);
-        }
 
 
         double prick=0.0;
@@ -493,15 +539,21 @@ public class ReturnGoodsActivity extends BaseActivity<ActivityReturnGoodsBinding
             ShoppingEntityList.get(i).setReturn_order_quantity(ShoppingEntityList.get(i).getQuantity());
         }
         if(TotalPrice!=null){
-            TotalPrice.setText(prick+"");
+            TotalPrice.setText(BigDecimalUtils.formatRoundUp(prick,2)+"");
             TotalType.setText(ShoppingEntityList.size()+"");
             TotalQuantity.setText(quantity+"");
         }
 
-        rightAdapter.notifyDataSetChanged();
+        if (mShoppingRecycleAdapter!=null){
+            initRecyclerViewThree();
+        }
+
+        if (type==2&&rightAdapter!=null){
+            rightAdapter.notifyDataSetChanged();
+        }
 
 
-        viewModel.TotalPrice.set(prick+"");
+        viewModel.TotalPrice.set(BigDecimalUtils.formatRoundUp(prick,2)+"");
         viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.shopping_visibility.set(ShoppingEntityList.size());
         viewModel.TotalQuantity.set(quantity+"");

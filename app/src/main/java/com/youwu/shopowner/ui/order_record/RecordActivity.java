@@ -28,6 +28,7 @@ import com.youwu.shopowner.databinding.ActivityRecordBinding;
 import com.youwu.shopowner.toast.RxToast;
 import com.youwu.shopowner.ui.goods_operate.InventoryActivity;
 import com.youwu.shopowner.ui.goods_operate.LossReportingActivity;
+import com.youwu.shopowner.ui.goods_operate.RecordInventoryDetailsActivity;
 import com.youwu.shopowner.ui.goods_operate.SellOffActivity;
 import com.youwu.shopowner.ui.order_record.adapder.OrderGoodsAdapter;
 import com.youwu.shopowner.ui.order_record.adapder.RecordAdapter;
@@ -226,10 +227,13 @@ public class RecordActivity extends BaseActivity<ActivityRecordBinding, RecordVi
         if (binding.recyclerView.getItemDecorationCount()==0) {
             binding.recyclerView.addItemDecoration(new DividerItemDecorations(this, DividerItemDecorations.VERTICAL));
         }
-        mRecordAdapter.setOnItemClickListener(new RecordAdapter.OnItemClickListener() {
+
+        mRecordAdapter.setOnClickListener(new RecordAdapter.OnClickListener() {
             @Override
-            public void OnItemClick(View view, RecordBean.RowsBean data, int position) {
-                RxToast.normal(data.getCashier_name());
+            public void onClick(RecordBean.RowsBean data, int position) {
+//                RxToast.normal(data.getCashier_name());
+//
+//                startActivity(RecordInventoryDetailsActivity.class);
             }
         });
     }

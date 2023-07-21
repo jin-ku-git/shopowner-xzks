@@ -1,6 +1,10 @@
 package com.youwu.shopowner.ui.fragment.adapter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -43,10 +47,70 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         Glide.with(mContext).load(t.getGoods_img()).placeholder(R.mipmap.loading).into((ImageView) helper.getView(R.id.goods_image));
 
 
+        EditText ss=helper.getView(R.id.tv_number);
+
+
+        TextWatcher watcher=new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                Log.e(TAG, "beforeTextChanged: "+"输入前"+s.toString() );
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Log.e(TAG, "beforeTextChanged: "+"输入中"+s.toString() );
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                KLog.a("beforeTextChanged: "+"输入后"+s.toString() );
+                String value = s.toString();
+
+
+                if ("".equals(value)){
+                    item.t.setQuantity(0);
+                    ss.setText("0");
+                }else {
+                    item.t.setQuantity(Integer.parseInt(value));
+                }
+
+                if (mEditListener != null) {
+                    mEditListener.onEdit(item);
+                }
+            }
+        };
+
+//        ss.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction()==MotionEvent.ACTION_DOWN){
+//
+//                    ss.addTextChangedListener(watcher);
+//
+//                }
+//                return false;
+//            }
+//        });
+
+        ss.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                EditText mV = (EditText) v;
+                if (hasFocus) {
+                    mV.addTextChangedListener(watcher);
+                } else {
+                    mV.removeTextChangedListener(watcher);
+                }
+            }
+        });
+
+
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KLog.a("111");
+                ss.removeTextChangedListener(watcher);
                 if (item.t.getQuantity()==0){
                     RxToast.normal("不能再减了");
                 }else {
@@ -65,7 +129,8 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
         helper.setOnClickListener(R.id.iv_edit_add, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                KLog.a("222");
+                ss.removeTextChangedListener(watcher);
                     item.t.setQuantity(item.t.getQuantity()+1);
                     /**
                      * 加操作
@@ -91,14 +156,16 @@ public class ScrollRightAdapter extends BaseSectionQuickAdapter<ScrollBean, Base
 
     private OnChangeListener mChangeListener;
 
-    //报损原因的监听的回调
-    public interface OnReasonListener {
-        void onReason(ScrollBean lists);
+
+    //加减的监听的回调
+    public interface OnEditListener {
+        void onEdit(ScrollBean lists);
     }
 
-    public void setOnReasonListener(OnReasonListener listener) {
-        mReasonListener = listener;
+    public void setOnEditListener(OnEditListener listener) {
+        mEditListener = listener;
     }
 
-    private OnReasonListener mReasonListener;
+    private OnEditListener mEditListener;
+
 }

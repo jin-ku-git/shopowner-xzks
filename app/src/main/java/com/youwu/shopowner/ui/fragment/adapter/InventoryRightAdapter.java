@@ -29,6 +29,7 @@ public class InventoryRightAdapter extends BaseSectionQuickAdapter<ScrollBean, B
 
     public InventoryRightAdapter(int layoutResId, int sectionHeadResId, List<ScrollBean> data) {
         super(layoutResId, sectionHeadResId, data);
+
     }
 
     @Override
@@ -60,39 +61,39 @@ public class InventoryRightAdapter extends BaseSectionQuickAdapter<ScrollBean, B
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e(TAG, "beforeTextChanged: "+"输入后"+s.toString() );
+                KLog.a("beforeTextChanged: "+"输入后"+s.toString() );
                 String value = s.toString();
 
-                if ("".equals(value)){
-                    item.t.setChange_stock(0);
-                    ss.setText("0");
-                }else {
-                    item.t.setChange_stock(Integer.parseInt(value));
-                }
 
-                if (mEditListener != null) {
-                    mEditListener.onEdit(item);
-                }
+                    if ("".equals(value)){
+                        item.t.setChange_stock(0);
+                        ss.setText("0");
+                    }else {
+                        item.t.setChange_stock(Integer.parseInt(value));
+                    }
+
+                    if (mEditListener != null) {
+                        mEditListener.onEdit(item);
+                    }
+
 
 
             }
         };
 
-        ss.setOnTouchListener(new View.OnTouchListener() {
+
+        ss.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction()==MotionEvent.ACTION_DOWN){
-                    ss.addTextChangedListener(watcher);
+            public void onFocusChange(View v, boolean hasFocus) {
+                EditText mV = (EditText) v;
+                if (hasFocus) {
+                    mV.addTextChangedListener(watcher);
+                } else {
+                    mV.removeTextChangedListener(watcher);
                 }
-                return false;
             }
         });
-//        ss.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//             ss.addTextChangedListener(watcher);
-//            }
-//        });
+
 
 
         helper.setOnClickListener(R.id.iv_edit_subtract, new View.OnClickListener() {
@@ -132,6 +133,8 @@ public class InventoryRightAdapter extends BaseSectionQuickAdapter<ScrollBean, B
         });
 
     }
+
+
     //加减的监听的回调
     public interface OnChangeListener {
         void onChange(ScrollBean lists);

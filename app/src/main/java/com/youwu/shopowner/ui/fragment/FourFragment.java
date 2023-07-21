@@ -76,20 +76,20 @@ public class FourFragment extends BaseFragment<FragmentFourBinding,FourViewModel
             @Override
             public void onChanged(Integer integer) {
                 switch (integer){
-                    case 0:
+                    case 0://全部
                         EventBus.getDefault().post(new EventBusBean(3,0));
                         break;
-                    case 1:
+                    case 1://待接单
                         EventBus.getDefault().post(new EventBusBean(3,1));
                         break;
-                    case 2:
+                    case 2://待出餐
                         EventBus.getDefault().post(new EventBusBean(3,2));
                         break;
-                    case 3:
+                    case 3://待取餐
                         EventBus.getDefault().post(new EventBusBean(3,3));
                         break;
-                    case 4:
-                        EventBus.getDefault().post(new EventBusBean(3,4));
+                    case 4://退款
+
                         break;
                     case 5://核销
                         startQrCode();

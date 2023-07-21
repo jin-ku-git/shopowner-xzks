@@ -32,6 +32,7 @@ import com.youwu.shopowner.app.AppApplication;
 import com.youwu.shopowner.app.AppViewModelFactory;
 import com.youwu.shopowner.databinding.FragmentTwoBinding;
 import com.youwu.shopowner.toast.RxToast;
+import com.youwu.shopowner.ui.fragment.adapter.InventoryRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
@@ -47,6 +48,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +56,7 @@ import java.util.Set;
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.KLog;
 
+import static me.goldze.mvvmhabit.base.BaseActivity.isNumber;
 import static me.goldze.mvvmhabit.base.BaseActivity.subZeroAndDot;
 
 /**
@@ -177,7 +180,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
                         }
                     }
-                    cll(2);
+                    cll(1);
                 }
 
                 right.addAll(saasOrderBeans);
@@ -270,7 +273,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
         rightManager = new GridLayoutManager(mContext, 1);
 
-        if (rightAdapter == null) {
+
             rightAdapter = new ScrollRightAdapter(R.layout.scroll_right, R.layout.layout_right_title, null);
             binding.recRight.setLayoutManager(rightManager);
             binding.recRight.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -280,10 +283,53 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
                     outRect.set(0
                             , 0
                             , 0
-                            , dpToPx(mContext, getDimens(mContext, R.dimen.dp3)));
+                            , 0);
                 }
             });
             binding.recRight.setAdapter(rightAdapter);
+
+
+        rightAdapter.setOnEditListener(new ScrollRightAdapter.OnEditListener() {
+            @Override
+            public void onEdit(ScrollBean lists) {
+
+                //获取下标
+                int  position=right.indexOf(lists);
+
+                right.set(position,lists);
+
+                boolean t = ShoppingEntityList.contains(lists.t);
+
+                KLog.a("是否："+(t?"是":"否"));
+
+                KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
+                if (ShoppingEntityList.size()>0){
+                    ArrayList<ScrollBean.SAASOrderBean> list=new ArrayList<>();
+
+                    list=ShoppingEntityList;
+
+
+                    int pos=999;
+
+                    for (int i=0;i<list.size();i++) {
+                        if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                            pos=i;
+                        }
+                    }
+                    if (pos==999){
+                        ShoppingEntityList.add(lists.t);
+                    }else {
+                        ShoppingEntityList.get(pos).setQuantity(lists.t.getQuantity());
+                        ShoppingEntityList.get(pos).setOrder_quantity(lists.t.getOrder_quantity());
+
+                    }
+                }else  {
+                    ShoppingEntityList.add(lists.t);
+                }
+                KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
+                cll(3);
+            }
+        });
 
             rightAdapter.setOnChangeListener(new ScrollRightAdapter.OnChangeListener() {
                 @Override
@@ -295,29 +341,41 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
 
                     right.set(position,lists);
 
+
+
+                    boolean t = ShoppingEntityList.contains(lists.t.getGoods_sku());
+
+                    KLog.a("是否："+(t?"是":"否"));
+
                     if (ShoppingEntityList.size()>0){
-                        List<ScrollBean.SAASOrderBean> lsit=new ArrayList<>();
 
-                        lsit.addAll(ShoppingEntityList);
+                        ArrayList<ScrollBean.SAASOrderBean> list=new ArrayList<>();
 
-                        for (int i=0;i<lsit.size();i++) {
-                            if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setQuantity(lists.t.getQuantity());
-                                ShoppingEntityList.get(i).setOrder_quantity(lists.t.getOrder_quantity());
-                            }else {
-                                ShoppingEntityList.add(scrollBean.t);
+                        list=ShoppingEntityList;
+
+
+                        int pos=999;
+
+                        for (int i=0;i<list.size();i++) {
+                            if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                pos=i;
                             }
+                        }
+                        if (pos==999){
+                            ShoppingEntityList.add(lists.t);
+                        }else {
+                            ShoppingEntityList.get(pos).setQuantity(lists.t.getQuantity());
+                            ShoppingEntityList.get(pos).setOrder_quantity(lists.t.getOrder_quantity());
+
                         }
                     }else  {
                         ShoppingEntityList.add(scrollBean.t);
                     }
-                    cll(1);
+                    cll(2);
 
                 }
             });
-        } else {
-            rightAdapter.notifyDataSetChanged();
-        }
+
 
         rightAdapter.setNewData(right);
 
@@ -487,6 +545,7 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
     private void initRecyclerViewThree() {
 
 
+
         //创建adapter
         mShoppingRecycleAdapter = new ShoppingRecycleAdapter(mContext, ShoppingEntityList);
         //给RecyclerView设置adapter
@@ -532,10 +591,6 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
      * 计算价格
      */
     private void cll(int type) {
-        if (type==1){
-            ShoppingEntityList=   duplicateRemovalBySet(ShoppingEntityList);
-        }
-
 
         double prick=0.0;
         int quantity=0;
@@ -548,18 +603,23 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
             }
         }
         if(TotalPrice!=null){
-            TotalPrice.setText(prick+"");
+            TotalPrice.setText(BigDecimalUtils.formatRoundUp(prick,2)+"");
             TotalType.setText(ShoppingEntityList.size()+"");
             TotalQuantity.setText(quantity+"");
         }
 
-        if (rightAdapter!=null){
+        if (mShoppingRecycleAdapter!=null){
+            initRecyclerViewThree();
+        }
+
+        if (type==2&&rightAdapter!=null){
             rightAdapter.notifyDataSetChanged();
         }
 
 
 
-        viewModel.TotalPrice.set(prick+"");
+
+        viewModel.TotalPrice.set(BigDecimalUtils.formatRoundUp(prick,2)+"");
         viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.shopping_visibility.set(ShoppingEntityList.size());
         viewModel.TotalQuantity.set(quantity+"");
@@ -592,7 +652,11 @@ public class TwoFragment extends BaseFragment<FragmentTwoBinding,TwoViewModel> {
         return (int) ((dp * displayMetrics.density) + 0.5f);
     }
 
-
+    /**
+     * list去重
+     * @param list
+     * @return
+     */
     public ArrayList duplicateRemovalBySet(ArrayList<ScrollBean.SAASOrderBean> list){
         Set set = new HashSet();
         list.addAll(set);

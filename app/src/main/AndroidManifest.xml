@@ -76,6 +76,7 @@
         <activity android:name=".ui.order_record.RefundDetailsActivity"/>
         <activity android:name=".ui.goods_operate.GoodsSetUpActivity"/>
         <activity android:name=".ui.goods_operate.SetUpGoodsActivity"/>
+        <activity android:name=".ui.goods_operate.RecordInventoryDetailsActivity"/>
 
 
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--//自带服务-->

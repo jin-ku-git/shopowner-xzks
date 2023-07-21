@@ -13,6 +13,7 @@ import com.youwu.shopowner.ui.goods_operate.InventoryDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.InventoryViewModel;
 import com.youwu.shopowner.ui.goods_operate.LossReportingDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.LossReportingViewModel;
+import com.youwu.shopowner.ui.goods_operate.RecordInventoryDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.ReturnGoodsDetailsViewModel;
 import com.youwu.shopowner.ui.goods_operate.ReturnGoodsViewModel;
 import com.youwu.shopowner.ui.goods_operate.SellOffDetailsViewModel;
@@ -130,6 +131,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new GoodsSetUpViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(SetUpGoodsViewModel.class)) {//修改商品
             return (T) new SetUpGoodsViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(RecordInventoryDetailsViewModel.class)) {//盘点记录详情1
+            return (T) new RecordInventoryDetailsViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

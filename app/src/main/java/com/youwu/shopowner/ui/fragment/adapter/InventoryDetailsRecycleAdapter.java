@@ -2,13 +2,8 @@ package com.youwu.shopowner.ui.fragment.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,18 +13,18 @@ import com.bumptech.glide.Glide;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-import me.goldze.mvvmhabit.utils.KLog;
 
-
-public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecycleAdapter.myViewHodler> {
+public class InventoryDetailsRecycleAdapter extends RecyclerView.Adapter<InventoryDetailsRecycleAdapter.myViewHodler> {
     private Context context;
     private List<ScrollBean.SAASOrderBean> goodsEntityList;
     private int currentIndex = 0;
 
     //创建构造函数
-    public InventoryRecycleAdapter(Context context, List<ScrollBean.SAASOrderBean> goodsEntityList) {
+    public InventoryDetailsRecycleAdapter(Context context, List<ScrollBean.SAASOrderBean> goodsEntityList) {
         //将传递过来的数据，赋值给本地变量
         this.context = context;//上下文
         this.goodsEntityList = goodsEntityList;//实体类数据ArrayList
@@ -45,7 +40,7 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
     @Override
     public myViewHodler onCreateViewHolder(ViewGroup parent, int viewType) {
         //创建自定义布局
-        View itemView = View.inflate(context, R.layout.item_inventory_layout, null);
+        View itemView = View.inflate(context, R.layout.item_inventory_details_layout, null);
         return new myViewHodler(itemView);
     }
 
@@ -64,52 +59,12 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
 //        String price= BigDecimalUtils.formatRoundUp((Double.parseDouble(data.getOrder_price())*data.getQuantity()),2)+"";
 
-        holder.goods_price.setText("原库存"+data.getStock()+"份");//获取实体类中的name字段并设置
-        holder.tv_number.setText(data.getChange_stock()+"");
+        holder.used_stock.setText("原库存"+data.getStock()+"份");//获取实体类中的name字段并设置
+        holder.new_stock.setText("库存盘点"+data.getChange_stock()+"份");//获取实体类中的name字段并设置
+
 
         Glide.with(context).load(data.getGoods_img()).placeholder(R.mipmap.loading).into(holder.goods_image);
 
-
-
-
-        holder.iv_edit_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                data.setChange_stock(data.getChange_stock()+1);
-                /**
-                 * 加操作
-                 */
-                if (mChangeListener != null) {
-                    mChangeListener.onChange(data,position);
-                }
-
-            }
-        });
-        holder.iv_edit_subtract.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (data.getChange_stock()==1){
-                    /**
-                     * 删除操作
-                     */
-                    if (mDeleteListener != null) {
-                        mDeleteListener.onDelete(data,position);
-                    }
-                }else {
-                    data.setChange_stock(data.getChange_stock()-1);
-                    /**
-                     * 减操作
-                     */
-                    if (mChangeListener != null) {
-                        mChangeListener.onChange(data,position);
-                    }
-                }
-
-
-            }
-        });
 
 
 
@@ -133,10 +88,9 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
     //自定义viewhodler
     class myViewHodler extends RecyclerView.ViewHolder {
 
-        private TextView goods_name,goods_price;//商品名称，商品价格
-        private TextView tv_number;//商品数量
+        private TextView goods_name,used_stock;//商品名称，商品原库存
+        private TextView new_stock;//新库存
 
-        private ImageView iv_edit_add,iv_edit_subtract;//加  减
         private ImageView goods_image;
 
 
@@ -146,10 +100,10 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
             super(itemView);
 
             goods_name = (TextView) itemView.findViewById(R.id.goods_name);
-            goods_price = (TextView) itemView.findViewById(R.id.goods_price);
-            tv_number = (TextView) itemView.findViewById(R.id.tv_number);
-            iv_edit_add = (ImageView) itemView.findViewById(R.id.iv_edit_add);
-            iv_edit_subtract = (ImageView) itemView.findViewById(R.id.iv_edit_subtract);
+
+            used_stock = (TextView) itemView.findViewById(R.id.used_stock);
+            new_stock = (TextView) itemView.findViewById(R.id.new_stock);
+
             goods_image = (ImageView) itemView.findViewById(R.id.goods_image);
 
 
@@ -195,17 +149,6 @@ public class InventoryRecycleAdapter extends RecyclerView.Adapter<InventoryRecyc
 
     private OnDeleteListener mDeleteListener;
 
-
-    //加减的监听的回调
-    public interface OnEditListener {
-        void onEdit(ScrollBean.SAASOrderBean lists,int position);
-    }
-
-    public void setOnEditListener(OnEditListener listener) {
-        mEditListener = listener;
-    }
-
-    private OnEditListener mEditListener;
 
 
     /**

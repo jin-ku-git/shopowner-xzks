@@ -2,6 +2,7 @@ package com.youwu.shopowner.ui.goods_operate;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import com.youwu.shopowner.utils_view.DividerItemDecorations;
 import com.youwu.shopowner.utils_view.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +77,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
     //购物车recyclerveiw的适配器
     private InventoryRecycleAdapter mInventoryRecycleAdapter;
     //定义以goodsentity实体类为对象的数据集合
-    private ArrayList<ScrollBean.SAASOrderBean> ShoppingEntityList = new ArrayList<ScrollBean.SAASOrderBean>();
+    private ArrayList<ScrollBean.SAASOrderBean> ShoppingEntityList = new ArrayList<>();
 
     public InventoryDao inventoryDao;
 
@@ -300,7 +302,6 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
 
         rightManager = new GridLayoutManager(mContext, 1);
 
-        if (rightAdapter == null) {
             rightAdapter = new InventoryRightAdapter(R.layout.inventory_right, R.layout.layout_right_title, null);
             binding.recRight.setLayoutManager(rightManager);
             binding.recRight.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -310,7 +311,7 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
                     outRect.set(0
                             , 0
                             , 0
-                            , dpToPx(mContext, getDimens(mContext, R.dimen.dp3)));
+                            , 0);
                 }
             });
             binding.recRight.setAdapter(rightAdapter);
@@ -324,22 +325,29 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
                     int  position=right.indexOf(scrollBean);
 
                     right.set(position,lists);
-
+                    KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
                     if (ShoppingEntityList.size()>0){
-                        List<ScrollBean.SAASOrderBean> lsit=new ArrayList<>();
 
-                        lsit.addAll(ShoppingEntityList);
 
-                        for (int i=0;i<lsit.size();i++) {
-                            if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setChange_stock(lists.t.getChange_stock());
-                            }else {
-                                ShoppingEntityList.add(scrollBean.t);
+                        List<ScrollBean.SAASOrderBean> list=new ArrayList<>();
+
+                        list=ShoppingEntityList;
+                        int pos=999;
+
+                        for (int i=0;i<list.size();i++) {
+                            if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                pos=i;
                             }
+                        }
+                        if (pos==999){
+                            ShoppingEntityList.add(lists.t);
+                        }else {
+                            ShoppingEntityList.get(pos).setChange_stock(lists.t.getChange_stock());
                         }
                     }else  {
                         ShoppingEntityList.add(scrollBean.t);
                     }
+                    KLog.a("ShoppingEntityList数量1："+ShoppingEntityList.size());
                     cll(3);
                 }
             });
@@ -347,35 +355,46 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             rightAdapter.setOnChangeListener(new InventoryRightAdapter.OnChangeListener() {
                 @Override
                 public void onChange(ScrollBean lists) {
-                    ScrollBean scrollBean=lists;
+
+
 
                     //获取下标
-                    int  position=right.indexOf(scrollBean);
+                    int  position=right.indexOf(lists);
 
                     right.set(position,lists);
 
+                    boolean t = ShoppingEntityList.contains(lists.t.getGoods_sku());
+
+                    KLog.a("是否："+(t?"是":"否"));
+
                     if (ShoppingEntityList.size()>0){
-                        List<ScrollBean.SAASOrderBean> lsit=new ArrayList<>();
 
-                        lsit.addAll(ShoppingEntityList);
+                        ArrayList<ScrollBean.SAASOrderBean> list=new ArrayList<>();
 
-                        for (int i=0;i<lsit.size();i++) {
-                            if (ShoppingEntityList.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
-                                ShoppingEntityList.get(i).setChange_stock(lists.t.getChange_stock());
-                            }else {
-                                ShoppingEntityList.add(scrollBean.t);
+                        list=ShoppingEntityList;
+
+
+                        int pos=999;
+
+                        for (int i=0;i<list.size();i++) {
+                            if (list.get(i).getGoods_sku().equals(lists.t.getGoods_sku())){
+                                pos=i;
                             }
                         }
+                        if (pos==999){
+                            ShoppingEntityList.add(lists.t);
+                        }else {
+                            ShoppingEntityList.get(pos).setChange_stock(lists.t.getChange_stock());
+
+                        }
                     }else  {
-                        ShoppingEntityList.add(scrollBean.t);
+                        ShoppingEntityList.add(lists.t);
                     }
-                    cll(1);
+                    cll(2);
 
                 }
             });
-        } else {
-            rightAdapter.notifyDataSetChanged();
-        }
+
 
         rightAdapter.setNewData(right);
 
@@ -537,6 +556,14 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             }
         });
 
+
+        dialog_shopping.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                KLog.a("弹窗关闭了");
+            }
+        });
+
     }
 
 
@@ -544,7 +571,6 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
      * 购物车列表
      */
     private void initRecyclerViewThree() {
-
 
         //创建adapter
         mInventoryRecycleAdapter = new InventoryRecycleAdapter(mContext, ShoppingEntityList);
@@ -589,7 +615,9 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
             public void onEdit(ScrollBean.SAASOrderBean lists, int position) {
                 ShoppingEntityList.get(position).setChange_stock(lists.getChange_stock());
 
-                cll(3);
+                KLog.a("ShoppingEntityList:"+ShoppingEntityList.size());
+
+                cll(2);
             }
         });
     }
@@ -598,36 +626,38 @@ public class InventoryActivity extends BaseActivity<ActivityInventoryBinding, In
      * 计算价格
      */
     private void cll(int type) {
-        if (type==1){
-            ShoppingEntityList=   duplicateRemovalBySet(ShoppingEntityList);
-        }
 
 
         double prick=0.0;
         int quantity=0;
 
+
         for (int i=0;i<ShoppingEntityList.size();i++){
             if (ShoppingEntityList.get(i).getChange_stock()==0){
                 ShoppingEntityList.remove(i);
+            }else {
+                prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
+                quantity+=ShoppingEntityList.get(i).getChange_stock();
             }
-        }
-        for (int i=0;i<ShoppingEntityList.size();i++){
-            prick+= BigDecimalUtils.formatRoundUp((Double.parseDouble(ShoppingEntityList.get(i).getOrder_price())*ShoppingEntityList.get(i).getChange_stock()),2);
-            quantity+=ShoppingEntityList.get(i).getChange_stock();
+
         }
         if(TotalPrice!=null){
-            TotalPrice.setText(prick+"");
+            TotalPrice.setText(BigDecimalUtils.formatRoundUp(prick,2)+"");
+
             TotalType.setText(ShoppingEntityList.size()+"");
             TotalQuantity.setText(quantity+"");
         }
-        if (type!=3){
+
+        if (mInventoryRecycleAdapter!=null){
+            initRecyclerViewThree();
+        }
+
+        if (type==2&&rightAdapter!=null){
             rightAdapter.notifyDataSetChanged();
-
-
         }
 
 
-//        viewModel.TotalPrice.set(prick+"");
+        viewModel.TotalPrice.set(BigDecimalUtils.formatRoundUp(prick,2)+"");
         viewModel.TotalType.set(ShoppingEntityList.size()+"");
         viewModel.shopping_visibility.set(ShoppingEntityList.size());
         viewModel.TotalQuantity.set(quantity+"");

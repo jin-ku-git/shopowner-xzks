@@ -24,6 +24,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:paddingLeft="@dimen/size_15dp"
+            android:gravity="center|left"
             android:orientation="vertical">
 
             <TextView
@@ -37,17 +38,12 @@
                 android:textSize="@dimen/size_14dp" />
 
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp25"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="@dimen/dp10">
 
 
                 <TextView
@@ -86,7 +82,7 @@
                         android:layout_height="@dimen/dp25"
                         android:src="@mipmap/jianhao" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/tv_number"
                         android:layout_width="50dp"
                         android:layout_height="@dimen/dp50"

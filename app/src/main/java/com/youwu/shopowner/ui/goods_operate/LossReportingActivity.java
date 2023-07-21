@@ -33,6 +33,7 @@ import com.youwu.shopowner.databinding.ActivityLoginBinding;
 import com.youwu.shopowner.databinding.ActivityLossReportingBinding;
 import com.youwu.shopowner.db.InventoryDao;
 import com.youwu.shopowner.ui.fragment.adapter.LossRightAdapter;
+import com.youwu.shopowner.ui.fragment.adapter.LossShoppingRecycleAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollLeftAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ScrollRightAdapter;
 import com.youwu.shopowner.ui.fragment.adapter.ShoppingRecycleAdapter;
@@ -79,7 +80,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
 
 
     //购物车recyclerveiw的适配器
-    private ShoppingRecycleAdapter mShoppingRecycleAdapter;
+    private LossShoppingRecycleAdapter mShoppingRecycleAdapter;
     //定义以goodsentity实体类为对象的数据集合
     private ArrayList<ScrollBean.SAASOrderBean> ShoppingEntityList = new ArrayList<ScrollBean.SAASOrderBean>();
 
@@ -669,7 +670,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
 
 
         //创建adapter
-        mShoppingRecycleAdapter = new ShoppingRecycleAdapter(mContext, ShoppingEntityList);
+        mShoppingRecycleAdapter = new LossShoppingRecycleAdapter(mContext, ShoppingEntityList);
         //给RecyclerView设置adapter
         shopping_recyclerview.setAdapter(mShoppingRecycleAdapter);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
@@ -683,7 +684,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         /**
          * 加减
          */
-        mShoppingRecycleAdapter.setOnChangeListener(new ShoppingRecycleAdapter.OnChangeListener() {
+        mShoppingRecycleAdapter.setOnChangeListener(new LossShoppingRecycleAdapter.OnChangeListener() {
             @Override
             public void onChange(ScrollBean.SAASOrderBean data, int position) {
 
@@ -696,7 +697,7 @@ public class LossReportingActivity  extends BaseActivity<ActivityLossReportingBi
         /**
          * 删除
          */
-        mShoppingRecycleAdapter.setOnDeleteListener(new ShoppingRecycleAdapter.OnDeleteListener() {
+        mShoppingRecycleAdapter.setOnDeleteListener(new LossShoppingRecycleAdapter.OnDeleteListener() {
             @Override
             public void onDelete(ScrollBean.SAASOrderBean data, int position) {
                 ShoppingEntityList.get(position).setQuantity(0);

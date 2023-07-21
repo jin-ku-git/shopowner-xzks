@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.youwu.shopowner.R;
 import com.youwu.shopowner.ui.fragment.bean.ScrollBean;
 
@@ -59,6 +60,8 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
 
         holder.store_unchecked_img.setImageResource(data.getQuantity()==1?R.mipmap.checked_iv:R.mipmap.unchecked_iv);
 
+        Glide.with(context).load(data.getGoods_img()).placeholder(R.mipmap.loading).into(holder.goods_image);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +110,7 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
         private TextView goods_stock;
 
         private ImageView store_unchecked_img;
+        private ImageView goods_image;
 
 
 
@@ -116,6 +120,7 @@ public class SellOffRecycleAdapter extends RecyclerView.Adapter<SellOffRecycleAd
             goods_name = (TextView) itemView.findViewById(R.id.goods_name);
             goods_stock = (TextView) itemView.findViewById(R.id.goods_stock);
             store_unchecked_img = itemView.findViewById(R.id.store_unchecked_img);
+            goods_image = itemView.findViewById(R.id.goods_image);
 
 
 
